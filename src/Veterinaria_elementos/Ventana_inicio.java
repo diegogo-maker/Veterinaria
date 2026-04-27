@@ -24,13 +24,13 @@ public class Ventana_inicio extends JFrame {
 		etiquetaTitulo.setBounds(850, 120, 350, 40);
 		this.add(etiquetaTitulo);
 
-		// ====== FRASE ======
-		JLabel etiquetaFrase = new JLabel("“Porque ellos también merecen lo mejor”", SwingConstants.CENTER);
+		// Slogan
+		JLabel etiquetaFrase = new JLabel("Porque ellos también merecen lo mejor", SwingConstants.CENTER);
 		etiquetaFrase.setFont(new Font("Serif", Font.PLAIN, 16));
 		etiquetaFrase.setBounds(800, 170, 450, 30);
 		this.add(etiquetaFrase);
 
-		// ====== USUARIO ======
+		// Usuario
 		JLabel etiquetaUsuario = new JLabel("Usuario:");
 		etiquetaUsuario.setFont(new Font("Serif", Font.PLAIN, 16));
 		etiquetaUsuario.setBounds(850, 230, 100, 25);
@@ -43,7 +43,7 @@ public class Ventana_inicio extends JFrame {
 		campoUsuario.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1, true));
 		this.add(campoUsuario);
 
-		// ====== CONTRASEÑA ======
+		// Contraseña
 		JLabel etiquetaContrasena = new JLabel("Contraseña:");
 		etiquetaContrasena.setFont(new Font("Serif", Font.PLAIN, 16));
 		etiquetaContrasena.setBounds(850, 320, 120, 25);
@@ -56,7 +56,7 @@ public class Ventana_inicio extends JFrame {
 		campoContrasena.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1, true));
 		this.add(campoContrasena);
 
-		// ====== RECORDARME ======
+		// Recordar contraseña
 		JLabel etiquetaRecordar = new JLabel("Recordarme:");
 		etiquetaRecordar.setFont(new Font("Serif", Font.PLAIN, 16));
 		etiquetaRecordar.setBounds(850, 410, 120, 25);
@@ -67,7 +67,7 @@ public class Ventana_inicio extends JFrame {
 		checkRecordar.setBackground(Color.WHITE);
 		this.add(checkRecordar);
 
-		// ====== BOTONES ======
+		// Botones
 		JButton botonSalir = new JButton("Salir");
 		botonSalir.setFont(new Font("Serif", Font.PLAIN, 16));
 		botonSalir.setBounds(850, 470, 150, 50);
@@ -82,7 +82,7 @@ public class Ventana_inicio extends JFrame {
 		botonAcceder.setBounds(1050, 470, 150, 50);
 		botonAcceder.setBackground(new Color(20, 80, 140));
 		botonAcceder.setForeground(Color.WHITE);
-		botonAcceder.setBorder(BorderFactory.createEmptyBorder());
+		botonAcceder.setBorder(null);
 		botonAcceder.setFocusPainted(false);
 		this.add(botonAcceder);
 
