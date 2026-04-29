@@ -1,28 +1,10 @@
 package Veterinaria_elementos;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.table.*;
 
 public class AuthView {
 
@@ -51,7 +33,6 @@ public void loginView() {
         panelIzquierdo.setLayout(new BorderLayout());
 
         JLabel fondo = new JLabel();
-
         ImageIcon imgFondo = new ImageIcon(getClass().getResource("/Imagenes/Fondo_login.png"));
         Image imgEscalada = imgFondo.getImage().getScaledInstance(500, 600, Image.SCALE_SMOOTH);
         fondo.setIcon(new ImageIcon(imgEscalada));
@@ -119,6 +100,11 @@ public void loginView() {
         salir.setForeground(Color.WHITE);
         salir.setFocusPainted(false);
         panelDerecho.add(salir);
+       
+        salir.addActionListener(e -> {
+        	ventana.dispose();
+
+        });
 
         JButton acceder = new JButton("Acceder");
         acceder.setFont(new Font("Adamina", Font.PLAIN, 20));
@@ -136,6 +122,7 @@ public void loginView() {
 
         ventana.setVisible(true);
 	}
+
 public void InicioView() {
 
 	
@@ -174,14 +161,6 @@ public void InicioView() {
     panel.setBorder(new LineBorder(Color.BLACK, 2, true));
     fondo.add(panel);
 
-    JButton cerrar = new JButton("Cerrar sesión");
-    cerrar.setBounds(15, 360, 170, 50);
-    cerrar.setFont(new Font("Adamina", Font.BOLD, 20));
-    cerrar.setBackground(Color.decode("#014F97"));
-    cerrar.setForeground(Color.WHITE);
-    cerrar.setFocusPainted(false);
-    cerrar.setBorder(BorderFactory.createLineBorder(Color.decode("#FFFFFFF"), 3, true));
-    panel.add(cerrar);
 
     JLabel rol = new JLabel("Veterinario");
     rol.setOpaque(true);
@@ -208,14 +187,24 @@ public void InicioView() {
 
     panel.add(logo);
 
-    JLabel img1 = new JLabel();
-    img1.setBounds(15, 120, 240, 150);
+    ImageIcon icono1 = new ImageIcon(getClass().getResource("/Imagenes/Citas_Inicio_paneles.jpg"));
+    Image img = icono1.getImage().getScaledInstance(240, 150, Image.SCALE_SMOOTH);
 
-    ImageIcon i1 = new ImageIcon(getClass().getResource("/Imagenes/Citas_Inicio_paneles.jpg"));
-    Image imgEscalada1 = i1.getImage().getScaledInstance(240, 150, Image.SCALE_SMOOTH);
-    img1.setIcon(new ImageIcon(imgEscalada1));
+    JButton boton = new JButton(new ImageIcon(img));
+    boton.setBounds(15, 120, 240, 150);
+    boton.setBorderPainted(false);
+    boton.setContentAreaFilled(false);
+    boton.setFocusPainted(false);
+    boton.setOpaque(false);
+    
+    ////// falta ventana citas ///////
+    
+    boton.addActionListener(e -> {
+    	ventana.dispose();
+    	//CitasView();
+    });
 
-    panel.add(img1);
+    panel.add(boton);
 
     JLabel img2 = new JLabel();
     img2.setBounds(330, 120, 240, 150);
@@ -244,6 +233,12 @@ public void InicioView() {
     citas.setFocusPainted(false);
     panel.add(citas);
 
+    citas.addActionListener(e -> {
+    	ventana.dispose();
+    	//CitasView();
+    });
+    
+    
     JButton clientes = new JButton("Clientes del recinto");
     clientes.setBounds(330, 280, 240, 55);
     clientes.setFont(new Font("Adamina", Font.BOLD, 20));
@@ -251,8 +246,14 @@ public void InicioView() {
     clientes.setForeground(Color.WHITE);
     clientes.setBorder(new LineBorder(Color.white, 1, true));
     clientes.setFocusPainted(false);
+    
+    clientes.addActionListener(e -> {
+    	ventana.dispose();
+    	//ClientesView();
+    });
+    
     panel.add(clientes);
-
+    
     JButton costos = new JButton("Costos de consultas");
     costos.setBounds(645, 280, 240, 55);
     costos.setFont(new Font("Adamina", Font.BOLD, 20));
@@ -261,11 +262,191 @@ public void InicioView() {
     costos.setBorder(new LineBorder(Color.white, 1, true));
     costos.setFocusPainted(false);
     panel.add(costos);
+
+    costos.addActionListener(e -> {
+    	ventana.dispose();
+    	CostosView();
+    });
+    
+    ventana.setVisible(true);
+
+    JButton cerrar = new JButton("Cerrar sesión");
+    cerrar.setBounds(15, 360, 170, 50);
+    cerrar.setFont(new Font("Adamina", Font.BOLD, 20));
+    cerrar.setBackground(Color.decode("#014F97"));
+    cerrar.setForeground(Color.WHITE);
+    cerrar.setFocusPainted(false);
+    cerrar.setBorder(BorderFactory.createLineBorder(Color.decode("#FFFFFFF"), 3, true));
+    
+    cerrar.addActionListener(e->{
+    	SalirView();
+    });
+
+    
+    panel.add(cerrar);
+}
+
+public void SalirView() {
+	
+	JFrame ventana = new JFrame();
+	ventana.setBounds(310,100, 400,400);
+	ventana.setBackground(Color.decode("#F2F2F2"));
+    ventana.setLayout(null);
+
+    JLabel logo = new JLabel();
+    logo.setBounds(425, 30, 170, 150);
+
+    ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg"));
+    Image img = icono.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+    logo.setIcon(new ImageIcon(img));
+
+    ventana.add(logo);
+
+    JLabel texto = new JLabel("¿Deseas cerrar la sesión?");
+    texto.setFont(new Font("Adamina", Font.PLAIN, 60));
+    texto.setBounds(155, 190, 700, 120);
+    ventana.add(texto);
+
+    JButton cancelar = new JButton("Cancelar");
+    cancelar.setBounds(200, 380, 250, 70);
+    cancelar.setBackground(Color.decode("#6B6B6B"));
+    cancelar.setForeground(Color.WHITE);
+    cancelar.setFont(new Font("Inter", Font.BOLD, 26));
+    cancelar.setFocusPainted(false);
+    ventana.add(cancelar);
+    
+    cancelar.addActionListener(e -> {
+    	ventana.dispose();
+    });
+
+    JButton confirmar = new JButton("Sí, estoy seguro");
+    confirmar.setBounds(550, 380,250,70);
+    confirmar.setBackground(Color.decode("#14508C"));
+    confirmar.setForeground(Color.WHITE);
+    confirmar.setFont(new Font("Inter", Font.BOLD, 26));
+    confirmar.setFocusPainted(false);
+    ventana.add(confirmar);
+    
+    confirmar.addActionListener(e -> {
+    	ventana.dispose();
+    	InicioView();
+    	ventana.dispose();
+    	loginView();
+    });
     
     ventana.setVisible(true);
 }
+
+public void CostosView() {
+	
+	JFrame ventana = new JFrame();
+	ventana.setBounds(0, 0, 1000, 600);
+	ventana.setBackground(Color.decode("#F2F2F2"));
+	ventana.setLayout(null);
+
+    JLabel titulo = new JLabel("Costo de consultas y medicamentos");
+    titulo.setFont(new Font("Adamina", Font.BOLD, 32));
+    titulo.setBounds(50, 30, 900, 40);
+    ventana.add(titulo);
+    
+    JPanel panel1 = new JPanel();
+    panel1.setBounds(50, 90, 400, 380);
+    panel1.setBackground(Color.decode("#8CACCB"));
+    panel1.setLayout(null);
+    panel1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
+    ventana.add(panel1);
+
+    JLabel label1 = new JLabel("Tipo de consultas:");
+    label1.setFont(new Font("Adamina", Font.PLAIN, 22));
+    label1.setBounds(10, 10, 300, 30);
+    panel1.add(label1);
+
+    String[] columnas1 = {"Consultas", "Costo"};
+    String[][] datos1 = {
+            {"Consulta rutinaria", "$700 MXN"},
+            {"Consulta urgencias", "$2,000 MXN"},
+            {"Consulta especializada", "$2,000 MXN"},
+            {"Vacunación", "$1,500 MXN"},
+            {"Desparasitación", "$600 MXN"},
+            {"Consulta a domicilio", "$1,800 MXN"}
+    };
+
+    JTable tabla1 = new JTable(datos1, columnas1);
+    tabla1.setFont(new Font("Adamina", Font.PLAIN, 16));
+    tabla1.setRowHeight(30);
+
+    JTableHeader header1 = tabla1.getTableHeader();
+    header1.setFont(new Font("Adamina", Font.BOLD, 18));
+
+    JScrollPane scroll1 = new JScrollPane(tabla1);
+    scroll1.setBounds(10, 50, 380, 300);
+    panel1.add(scroll1);
+
+    JPanel panel2 = new JPanel();
+    panel2.setBounds(500, 90, 400, 380);
+    panel2.setBackground(Color.decode("#8CACCB"));
+    panel2.setLayout(null);
+    panel2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
+    ventana.add(panel2);
+
+    JLabel label2 = new JLabel("Medicamentos:");
+    label2.setFont(new Font("Adamina", Font.PLAIN, 22));
+    label2.setBounds(10, 10, 300, 30);
+    panel2.add(label2);
+
+    String[] columnas2 = {"Medicamentos", "Costo"};
+    String[][] datos2 = {
+            {"Antibiótico clavoxivet (20 tabletas)", "$295 MXN"},
+            {"Desparacitante Care Max", "$85 MXN"},
+            {"Antiparasitarios", "$300 MXN"},
+            {"Analgésicos", "$200 MXN"},
+            {"Suplementos", "$400 MXN"},
+            {"Vendaje", "$45 MXN"}
+    };
+
+    JTable tabla2 = new JTable(datos2, columnas2);
+    tabla2.setFont(new Font("Adamina", Font.PLAIN, 16));
+    tabla2.setRowHeight(30);
+
+    JTableHeader header2 = tabla2.getTableHeader();
+    header2.setFont(new Font("Adamina", Font.BOLD, 18));
+
+    JScrollPane scroll2 = new JScrollPane(tabla2);
+    scroll2.setBounds(10, 50, 380, 300);
+    panel2.add(scroll2);
+
+    JButton regresar = new JButton("Regresar");
+    regresar.setBounds(50, 490, 180, 60);
+    regresar.setFont(new Font("Inter", Font.BOLD, 24));
+    regresar.setBackground(Color.decode("#6B6B6B"));
+    regresar.setForeground(Color.WHITE);
+    regresar.setFocusPainted(false);
+    regresar.setBorder(BorderFactory.createLineBorder(Color.decode("#6B6B6B"), 2, true));
+    
+    regresar.addActionListener(e->{
+    	ventana.dispose();
+    	InicioView();
+    });
+
+    
+    ventana.add(regresar);
+
+    
+    ventana.repaint();
+    ventana.setVisible(true);
 	
 }
+	public void CitasView() {
+		
+	}
+	
+	public void ClientesView() {
+		
+	}
+}
+	
+	
+
 
 	
 
