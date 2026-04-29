@@ -2,6 +2,8 @@ package Veterinaria_elementos;
 
 import javax.swing.JFrame;
 
+import Controller.AuthController;
+
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -13,9 +15,8 @@ public class Inicio {
 		
 		//Ventana_inicio miVentana = new Ventana_inicio();
 		
-		AuthController ac = new AuthController();
-		
-		ac.login();
+		AuthController ac = new AuthController();		
+		ac.showLogin();
 	}
 
 }

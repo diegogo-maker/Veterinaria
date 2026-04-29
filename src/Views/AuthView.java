@@ -1,30 +1,41 @@
-package Veterinaria_elementos;
+package Views;
 
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.JTableHeader;
 
-import java.awt.*;
-import javax.swing.border.LineBorder;
-
-public class Ventana_inicio extends JFrame {
-	
-	public Ventana_inicio() {
-		
-		//configuracion de ventana
-		this.setSize(1000,600);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
-		this.setMinimumSize(new Dimension(200,200));
-		this.setTitle("Veterinaria");
-		this.setLocation(0,0);
-		this.setResizable(true);
-		this.setLayout(null);
-		
-	}
+public class AuthView {
 	
 	public void Login() {
 
+		//configuracion de ventana
+		JFrame ventana = new JFrame();
+		ventana.setSize(1000,600);
+		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ventana.setLocationRelativeTo(null);
+		ventana.setMinimumSize(new Dimension(200,200));
+		ventana.setTitle("Veterinaria");
+		ventana.setLocation(0,0);
+		ventana.setResizable(true);
+		ventana.setLayout(null);
+		
 		// panel izquierdo = fondo
         JPanel panelIzquierdo = new JPanel();
         panelIzquierdo.setBounds(0, 0, 500, 600);
@@ -37,14 +48,14 @@ public class Ventana_inicio extends JFrame {
         fondo.setIcon(new ImageIcon(imgEscalada));
 
         panelIzquierdo.add(fondo, BorderLayout.CENTER);
-        this.add(panelIzquierdo);
+        ventana.add(panelIzquierdo);
 
         // panel derecho
         JPanel panelDerecho = new JPanel();
         panelDerecho.setBounds(500, 0, 500, 600);
         panelDerecho.setBackground(new Color(235, 235, 235));
         panelDerecho.setLayout(null);
-        this.add(panelDerecho);
+        ventana.add(panelDerecho);
 
         JLabel logo = new JLabel();
         logo.setBounds(170, 20, 200, 150);
@@ -99,6 +110,10 @@ public class Ventana_inicio extends JFrame {
         salir.setForeground(Color.WHITE);
         salir.setFocusPainted(false);
         panelDerecho.add(salir);
+        
+        salir.addActionListener(e -> {
+            ventana.dispose(); 
+        });
 
         JButton acceder = new JButton("Acceder");
         acceder.setFont(new Font("Adamina", Font.PLAIN, 20));
@@ -108,22 +123,33 @@ public class Ventana_inicio extends JFrame {
         acceder.setFocusPainted(false);
         panelDerecho.add(acceder);
         
-        acceder.addActionListener(e->{
-        	//Login.dispose();
-	    	//loginView();
+        acceder.addActionListener(e -> {
+            ventana.dispose(); 
+            Inicio();
         });
 
 
-		this.setVisible(true);
+		ventana.setVisible(true);
 	}
 	
 	public void Salir() {
 
-        JPanel fondo = new JPanel();
+		//configuracion de ventana
+		JFrame ventana = new JFrame();
+		ventana.setSize(1000,600);
+		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ventana.setLocationRelativeTo(null);
+		ventana.setMinimumSize(new Dimension(200,200));
+		ventana.setTitle("Veterinaria");
+		ventana.setLocation(0,0);
+		ventana.setResizable(true);
+		ventana.setLayout(null);
+		
+		JPanel fondo = new JPanel();
         fondo.setBounds(0, 0, 1000, 600);
         fondo.setBackground(Color.decode("#F2F2F2"));
         fondo.setLayout(null);
-        this.add(fondo);
+        ventana.add(fondo);
 
         JLabel logo = new JLabel();
         logo.setBounds(425, 30, 170, 150);
@@ -146,6 +172,11 @@ public class Ventana_inicio extends JFrame {
         cancelar.setFont(new Font("Inter", Font.BOLD, 26));
         cancelar.setFocusPainted(false);
         fondo.add(cancelar);
+        
+        cancelar.addActionListener(e -> {
+            ventana.dispose(); 
+            Inicio();
+        });
 
         JButton confirmar = new JButton("Sí, estoy seguro");
         confirmar.setBounds(550, 380,250,70);
@@ -155,16 +186,31 @@ public class Ventana_inicio extends JFrame {
         confirmar.setFocusPainted(false);
         fondo.add(confirmar);
         
-        this.setVisible(true);
+        confirmar.addActionListener(e -> {
+            ventana.dispose(); 
+        });
+        
+        ventana.setVisible(true);
 	}
 	
 	public void Inicio() {
+			
+		//configuracion de ventana
+		JFrame ventana = new JFrame();
+		ventana.setSize(1000,600);
+		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ventana.setLocationRelativeTo(null);
+		ventana.setMinimumSize(new Dimension(200,200));
+		ventana.setTitle("Veterinaria");
+		ventana.setLocation(0,0);
+		ventana.setResizable(true);
+		ventana.setLayout(null);
 		
-        JPanel fondo = new JPanel();
+		JPanel fondo = new JPanel();
         fondo.setBounds(0, 0, 1000, 600);
         fondo.setBackground(Color.decode("#F2F2F2"));
         fondo.setLayout(null);
-        this.add(fondo);
+        ventana.add(fondo);
 
         JLabel titulo = new JLabel("Sistema de gestión veterinaria");
         titulo.setFont(new Font("Adamina", Font.BOLD, 32));
@@ -191,6 +237,11 @@ public class Ventana_inicio extends JFrame {
         cerrar.setFocusPainted(false);
         cerrar.setBorder(BorderFactory.createLineBorder(Color.decode("#FFFFFFF"), 3, true));
         panel.add(cerrar);
+        
+        cerrar.addActionListener(e -> {
+            ventana.dispose();
+            Salir();
+        });
 
         JLabel rol = new JLabel("Veterinario");
         rol.setOpaque(true);
@@ -252,6 +303,11 @@ public class Ventana_inicio extends JFrame {
         citas.setBorder(new LineBorder(Color.white, 1, true));
         citas.setFocusPainted(false);
         panel.add(citas);
+        
+        citas.addActionListener(e -> {
+            ventana.dispose();
+            RegistroCitas();
+        });
 
         JButton clientes = new JButton("Clientes del recinto");
         clientes.setBounds(330, 280, 240, 55);
@@ -271,16 +327,32 @@ public class Ventana_inicio extends JFrame {
         costos.setFocusPainted(false);
         panel.add(costos);
         
-        this.setVisible(true);
+        costos.addActionListener(e -> {
+            ventana.dispose();
+            Costos();
+        });
+        
+        ventana.setVisible(true);
 	}
 	
 	public void Costos() {
 
-	    JPanel fondo = new JPanel();
+		//configuracion de ventana
+		JFrame ventana = new JFrame();
+		ventana.setSize(1000,600);
+		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ventana.setLocationRelativeTo(null);
+		ventana.setMinimumSize(new Dimension(200,200));
+		ventana.setTitle("Veterinaria");
+		ventana.setLocation(0,0);
+		ventana.setResizable(true);
+		ventana.setLayout(null);
+		
+		JPanel fondo = new JPanel();
 	    fondo.setBounds(0, 0, 1000, 600);
 	    fondo.setBackground(Color.decode("#F2F2F2"));
 	    fondo.setLayout(null);
-	    this.add(fondo);
+	    ventana.add(fondo);
 
 	    JLabel titulo = new JLabel("Costo de consultas y medicamentos");
 	    titulo.setFont(new Font("Adamina", Font.BOLD, 32));
@@ -359,12 +431,120 @@ public class Ventana_inicio extends JFrame {
 	    regresar.setBackground(Color.decode("#6B6B6B"));
 	    regresar.setForeground(Color.WHITE);
 	    regresar.setFocusPainted(false);
-	    regresar.setBorder(BorderFactory.createLineBorder(Color.decode("#6B6B6B"), 2, true));
+	    regresar.setBorder(BorderFactory.createLineBorder(Color.black, 2, true));
+	    fondo.add(regresar);
+	    
+	    regresar.addActionListener(e -> {
+	        ventana.dispose();
+	        Inicio();
+	    });
 
+	    ventana.repaint();
+	    
+	    ventana.setVisible(true);
+	}
+	
+	public void RegistroCitas() {
+
+	    JFrame ventana = new JFrame("Registro de citas");
+	    ventana.setSize(1000, 600);
+	    ventana.setLocationRelativeTo(null);
+	    ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    ventana.setLayout(null);
+
+	    JPanel fondo = new JPanel();
+	    fondo.setBounds(0, 0, 1000, 600);
+	    fondo.setLayout(null);
+	    fondo.setBackground(Color.decode("#EDEDED"));
+	    ventana.add(fondo);
+
+	    JLabel titulo = new JLabel("Registro de citas");
+	    titulo.setFont(new Font("Adamina", Font.BOLD, 34));
+	    titulo.setBounds(50, 20, 400, 40);
+	    fondo.add(titulo);
+
+	    JPanel contenedor = new JPanel();
+	    contenedor.setLayout(new BoxLayout(contenedor,BoxLayout.Y_AXIS));
+	    contenedor.setBackground(Color.decode("#EDEDED"));
+
+	    JScrollPane scroll = new JScrollPane(contenedor);
+	    scroll.setBounds(50, 80, 900, 400);
+	    scroll.setBorder(null);
+	    fondo.add(scroll);
+
+	    for (int i = 0; i < 6; i++) {
+
+	        JPanel panel = new JPanel();
+	        panel.setLayout(null);
+	        panel.setBackground(Color.decode("#3A8EDB"));
+
+	        panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
+	        panel.setPreferredSize(new Dimension(850, 120));
+
+	        panel.setBorder(BorderFactory.createCompoundBorder(
+	            new LineBorder(Color.BLACK, 2, true),
+	            BorderFactory.createEmptyBorder(10, 10, 10, 10)
+	        ));
+
+	        JButton foto = new JButton("Img");
+	        foto.setBounds(20, 20, 80, 80);
+	        foto.setBackground(Color.LIGHT_GRAY);
+	        foto.setFocusPainted(false);
+	        panel.add(foto);
+
+	        JLabel nombre = new JLabel("Nombre");
+	        nombre.setFont(new Font("Adamina", Font.BOLD, 28));
+	        nombre.setBounds(120, 10, 300, 40);
+	        panel.add(nombre);
+
+	        JLabel desc = new JLabel("Tipo / raza");
+	        desc.setFont(new Font("Adamina", Font.PLAIN, 18));
+	        desc.setBounds(120, 50, 300, 30);
+	        panel.add(desc);
+
+	        JLabel cita = new JLabel("Próxima cita: --/--/----");
+	        cita.setFont(new Font("Adamina", Font.PLAIN, 18));
+	        cita.setBounds(450, 20, 300, 30);
+	        panel.add(cita);
+
+	        JButton historial = new JButton("Historial");
+	        historial.setBounds(450, 60, 130, 35);
+	        historial.setBackground(Color.decode("#044E98"));
+	        historial.setForeground(Color.white);
+	        historial.setFont(new Font("Inter", Font.BOLD, 20));
+
+	        JButton crear = new JButton("Crear");
+	        crear.setBounds(590, 60, 100, 35);
+	        crear.setBackground(Color.decode("#044E98"));
+	        crear.setForeground(Color.white);
+	        crear.setFont(new Font("Inter", Font.BOLD, 20));
+
+	        JButton editar = new JButton("Editar");
+	        editar.setBounds(700, 60, 100, 35);
+	        editar.setBackground(Color.decode("#044E98"));
+	        editar.setForeground(Color.white);
+	        editar.setFont(new Font("Inter", Font.BOLD, 20));
+
+	        panel.add(historial);
+	        panel.add(crear);
+	        panel.add(editar);
+
+	        contenedor.add(panel);
+	    }
+
+	    JButton regresar = new JButton("Regresar");
+	    regresar.setBounds(50, 490, 180, 60);
+	    regresar.setFont(new Font("Inter", Font.BOLD, 20));
+	    regresar.setBackground(Color.decode("#6F6F6D"));
+	    regresar.setForeground(Color.white);
+	    regresar.setFocusPainted(false);
 	    fondo.add(regresar);
 
-	    this.repaint();
-	    
-	    this.setVisible(true);
+	    regresar.addActionListener(e -> {
+	        ventana.dispose();
+	        Inicio();
+	    });
+
+	    ventana.setVisible(true);
 	}
 }
