@@ -21,6 +21,14 @@ public class AuthController {
 	public void Costos() {	
 		vista.CostosView();}
 	
+
+	public void Citas() {	
+		vista.CostosView();}
+	
+	public void Clientes() {	
+		vista.CostosView();}
+	
+		
 		
 			
 	}

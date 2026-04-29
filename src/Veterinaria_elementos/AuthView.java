@@ -437,11 +437,12 @@ public void CostosView() {
 	
 }
 	public void CitasView() {
-		
+		/// Pantalla de citas pendiente. ///
 	}
 	
 	public void ClientesView() {
 		
+		/// Pantalla de Clientes pendiente. ///
 	}
 }
 	
