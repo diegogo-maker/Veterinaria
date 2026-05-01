@@ -188,6 +188,7 @@ public class AuthView {
         
         confirmar.addActionListener(e -> {
             ventana.dispose(); 
+            Login();
         });
         
         ventana.setVisible(true);
@@ -235,7 +236,7 @@ public class AuthView {
         cerrar.setBackground(Color.decode("#014F97"));
         cerrar.setForeground(Color.WHITE);
         cerrar.setFocusPainted(false);
-        cerrar.setBorder(BorderFactory.createLineBorder(Color.decode("#FFFFFFF"), 3, true));
+        cerrar.setBorder(BorderFactory.createLineBorder(Color.decode("#000000"), 3, true));
         panel.add(cerrar);
         
         cerrar.addActionListener(e -> {
@@ -512,6 +513,12 @@ public class AuthView {
 	        historial.setBackground(Color.decode("#044E98"));
 	        historial.setForeground(Color.white);
 	        historial.setFont(new Font("Inter", Font.BOLD, 20));
+	        
+	        historial.addActionListener(e -> {
+		        ventana.dispose();
+		        HistorialCostos();
+		    });
+
 
 	        JButton crear = new JButton("Crear");
 	        crear.setBounds(590, 60, 100, 35);
@@ -537,6 +544,7 @@ public class AuthView {
 	    regresar.setFont(new Font("Inter", Font.BOLD, 20));
 	    regresar.setBackground(Color.decode("#6F6F6D"));
 	    regresar.setForeground(Color.white);
+	    regresar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 	    regresar.setFocusPainted(false);
 	    fondo.add(regresar);
 
@@ -547,4 +555,115 @@ public class AuthView {
 
 	    ventana.setVisible(true);
 	}
+	
+	public void HistorialCostos() {
+
+		JFrame ventana = new JFrame("Costos");
+	    ventana.setSize(1000, 600);
+	    ventana.setLocationRelativeTo(null);
+	    ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    ventana.setLayout(null);
+
+	    JPanel fondo = new JPanel();
+	    fondo.setBounds(0, 0, 1000, 600);
+	    fondo.setLayout(null);
+	    fondo.setBackground(Color.decode("#EDEDED"));
+	    fondo.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+	    ventana.add(fondo);
+
+	    JLabel titulo = new JLabel("Costo final de consultas y medicamentos");
+	    titulo.setFont(new Font("Adamina", Font.BOLD, 28));
+	    titulo.setBounds(120, 20, 800, 40);
+	    fondo.add(titulo);
+
+	    JLabel paciente = new JLabel("Paciente:");
+	    paciente.setFont(new Font("Adamina", Font.PLAIN, 20));
+	    paciente.setBounds(50, 80, 120, 30);
+	    fondo.add(paciente);
+
+	    JTextField txtPaciente = new JTextField("Nombre");
+	    txtPaciente.setBounds(160, 80, 250, 35);
+	    txtPaciente.setEditable(false);
+	    txtPaciente.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+	    fondo.add(txtPaciente);
+
+	    JLabel dueno = new JLabel("Dueño:");
+	    dueno.setFont(new Font("Adamina", Font.PLAIN, 20));
+	    dueno.setBounds(500, 80, 100, 30);
+	    fondo.add(dueno);
+
+	    JTextField txtDueno = new JTextField("Nombre");
+	    txtDueno.setBounds(600, 80, 250, 35);
+	    txtDueno.setEditable(false);
+	    txtDueno.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+	    fondo.add(txtDueno);
+
+	    String[] col1 = {"Consultas anteriores", "Estado", "Costo"};
+	    String[][] data1 = {{"--", "--", "--"}};
+
+	    JTable tabla1 = new JTable(data1, col1);
+	    tabla1.setRowHeight(40);
+	    tabla1.setFont(new Font("Adamina", Font.PLAIN, 18));
+	    tabla1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+
+	    JScrollPane sp1 = new JScrollPane(tabla1);
+	    sp1.setBounds(50, 140, 850, 80);
+	    sp1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+	    fondo.add(sp1);
+
+	    String[] col2 = {"#", "Concepto", "Estado", "Costo"};
+	    String[][] data2 = {
+	        {"1", "Concepto", "Estado", "$0"},
+	        {"2", "Concepto", "Estado", "$0"}
+	    };
+
+	    JTable tabla2 = new JTable(data2, col2);
+	    tabla2.setRowHeight(40);
+	    tabla2.setFont(new Font("Adamina", Font.PLAIN, 18));
+	    tabla2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+
+	    JScrollPane sp2 = new JScrollPane(tabla2);
+	    sp2.setBounds(50, 250, 850, 120);
+	    sp2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+	    fondo.add(sp2);
+
+	    JButton regresar = new JButton("Regresar");
+	    regresar.setBounds(50, 440, 200, 60);
+	    regresar.setBackground(Color.decode("#6B6B6B"));
+	    regresar.setForeground(Color.WHITE);
+	    regresar.setFont(new Font("Inter", Font.BOLD, 20));
+	    regresar.setFocusPainted(false);
+	    regresar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+	    fondo.add(regresar);
+
+	    JLabel actualizacion = new JLabel("Última actualización:");
+	    actualizacion.setFont(new Font("Adamina", Font.PLAIN, 18));
+	    actualizacion.setBounds(370, 440, 240, 20);
+	    fondo.add(actualizacion);
+
+	    JTextField fecha = new JTextField("--/--/----");
+	    fecha.setBounds(370, 460, 240, 40);
+	    fecha.setEditable(false);
+	    fecha.setHorizontalAlignment(JTextField.CENTER);
+	    fecha.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+	    fondo.add(fecha);
+
+	    JButton descargar = new JButton("Descargar ticket");
+	    descargar.setBounds(700, 440, 200, 60);
+	    descargar.setBackground(Color.decode("#14508C"));
+	    descargar.setForeground(Color.WHITE);
+	    descargar.setFont(new Font("Inter", Font.BOLD, 18));
+	    descargar.setFocusPainted(false);
+	    descargar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+	    fondo.add(descargar);
+
+	    regresar.addActionListener(e -> {
+	        ventana.dispose();
+	        Inicio();
+	    });
+
+	    ventana.setVisible(true);
+	}
+	
+	
 }

@@ -29,4 +29,8 @@ public class AuthController {
 	public void showRegistroCitas() {
 		vista.RegistroCitas();
 	}
+	
+	public void showHistorialCostos() {
+		vista.HistorialCostos();
+	}
 }
