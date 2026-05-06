@@ -33,4 +33,52 @@ public class AuthController {
 	public void showHistorialCostos() {
 		vista.HistorialCostos();
 	}
+	
+	public void showCrearCita() {
+	    vista.CrearCita();
+	}
+
+	public void showEdicionCita() {
+	    vista.EdicionCita();
+	}
+
+	public void showCambiosCita() {
+	    vista.CambiosCita();
+	}
+
+	public void showEliminarCita() {
+	    vista.EliminarCita();
+	}
+	
+	public void showPanelDueno() {
+		vista.PanelDuenos();
+	}
+	
+	public void showCrearDueno() {
+		vista.CrearDueno();
+	}
+	
+	public void showCrearPaciente() {
+		vista.CrearPaciente();
+	}
+	
+	public void showEliminarRegistroDueno() {
+		vista.EliminarRegistroDueno();
+	}
+	
+	public void showEliminadoExitoso() {
+		vista.EliminadoExitoso();
+	}
+	
+	public void showRegistroExitoso() {
+		vista.RegistroExitoso();
+	}
+	
+	public void showDetallesDueno() {
+		vista.DetallesDueno();
+	}
+	
+	public void showDetallesPaciente() {
+		vista.DetallesPaciente();
+	}
 }
