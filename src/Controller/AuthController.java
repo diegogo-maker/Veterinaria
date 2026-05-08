@@ -4,7 +4,7 @@ import Views.AuthView;
 
 public class AuthController {
 	
-	private AuthView vista;
+	AuthView vista;
 	
 	public AuthController() {
 		vista = new AuthView();

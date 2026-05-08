@@ -56,7 +56,7 @@ public class AuthView {
         // panel derecho
         JPanel panelDerecho = new JPanel();
         panelDerecho.setBounds(500, 0, 500, 600);
-        panelDerecho.setBackground(new Color(235, 235, 235));
+        panelDerecho.setBackground(Color.decode("#FFFFFF"));
         panelDerecho.setLayout(null);
         ventana.add(panelDerecho);
 
@@ -109,7 +109,7 @@ public class AuthView {
         JButton salir = new JButton("Salir");
         salir.setFont(new Font("Adamina", Font.PLAIN, 20));
         salir.setBounds(50, 430, 150, 50);
-        salir.setBackground(Color.decode("#565654"));
+        salir.setBackground(Color.decode("#D81F10"));
         salir.setForeground(Color.WHITE);
         salir.setFocusPainted(false);
         panelDerecho.add(salir);
@@ -142,14 +142,14 @@ public class AuthView {
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.setLocationRelativeTo(null);
 		ventana.setMinimumSize(new Dimension(200,200));
-		ventana.setTitle("Veterinaria");
+		ventana.setTitle("Salir");
 		ventana.setLocation(0,0);
 		ventana.setResizable(true);
 		ventana.setLayout(null);
 		
 		JPanel fondo = new JPanel();
         fondo.setBounds(0, 0, 1000, 600);
-        fondo.setBackground(Color.decode("#F2F2F2"));
+        fondo.setBackground(Color.decode("#FFFFFF"));
         fondo.setLayout(null);
         ventana.add(fondo);
 
@@ -169,7 +169,7 @@ public class AuthView {
 
         JButton cancelar = new JButton("Cancelar");
         cancelar.setBounds(200, 380, 250, 70);
-        cancelar.setBackground(Color.decode("#6B6B6B"));
+        cancelar.setBackground(Color.decode("#14518C"));
         cancelar.setForeground(Color.WHITE);
         cancelar.setFont(new Font("Inter", Font.BOLD, 26));
         cancelar.setFocusPainted(false);
@@ -182,7 +182,7 @@ public class AuthView {
 
         JButton confirmar = new JButton("Sí, estoy seguro");
         confirmar.setBounds(550, 380,250,70);
-        confirmar.setBackground(Color.decode("#14508C"));
+        confirmar.setBackground(Color.decode("#D81F10"));
         confirmar.setForeground(Color.WHITE);
         confirmar.setFont(new Font("Inter", Font.BOLD, 26));
         confirmar.setFocusPainted(false);
@@ -204,14 +204,14 @@ public class AuthView {
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.setLocationRelativeTo(null);
 		ventana.setMinimumSize(new Dimension(200,200));
-		ventana.setTitle("Veterinaria");
+		ventana.setTitle("Inicio");
 		ventana.setLocation(0,0);
 		ventana.setResizable(true);
 		ventana.setLayout(null);
 		
 		JPanel fondo = new JPanel();
         fondo.setBounds(0, 0, 1000, 600);
-        fondo.setBackground(Color.decode("#F2F2F2"));
+        fondo.setBackground(Color.decode("#FFFFFF"));
         fondo.setLayout(null);
         ventana.add(fondo);
 
@@ -227,7 +227,7 @@ public class AuthView {
 
         JPanel panel = new JPanel();
         panel.setBounds(45, 120, 900, 420);
-        panel.setBackground(Color.decode("#7F9BB3"));
+        panel.setBackground(Color.decode("#8CACCB"));
         panel.setLayout(null);
         panel.setBorder(new LineBorder(Color.BLACK, 2, true));
         fondo.add(panel);
@@ -235,10 +235,10 @@ public class AuthView {
         JButton cerrar = new JButton("Cerrar sesión");
         cerrar.setBounds(15, 360, 170, 50);
         cerrar.setFont(new Font("Adamina", Font.BOLD, 20));
-        cerrar.setBackground(Color.decode("#014F97"));
+        cerrar.setBackground(Color.decode("#D81F10"));
         cerrar.setForeground(Color.WHITE);
         cerrar.setFocusPainted(false);
-        cerrar.setBorder(BorderFactory.createLineBorder(Color.decode("#000000"), 3, true));
+        cerrar.setBorder(BorderFactory.createLineBorder(Color.decode("#FFFFFF"), 3, true));
         panel.add(cerrar);
         
         cerrar.addActionListener(e -> {
@@ -251,6 +251,7 @@ public class AuthView {
         rol.setFont(new Font("Adamina", Font.BOLD, 20));
         rol.setBackground(Color.decode("#FFFFFF"));
         rol.setBounds(15, 10, 165, 40);
+        rol.setHorizontalAlignment(JLabel.CENTER);
         rol.setBorder(new LineBorder(Color.BLACK, 1, true));
         panel.add(rol);
 
@@ -258,18 +259,10 @@ public class AuthView {
         nombre.setOpaque(true);
         nombre.setFont(new Font("Adamina", Font.BOLD, 20));
         nombre.setBackground(Color.decode("#FFFFFF"));
-        nombre.setBounds(190, 10, 400, 40);
+        nombre.setBounds(190, 10, 695, 40);
+        nombre.setHorizontalAlignment(JLabel.CENTER);
         nombre.setBorder(new LineBorder(Color.BLACK, 1, true));
         panel.add(nombre);
-
-        JLabel logo = new JLabel();
-        logo.setBounds(785, 10, 100, 100);
-
-        ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg"));
-        Image imgLogo = icono.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-        logo.setIcon(new ImageIcon(imgLogo));
-
-        panel.add(logo);
 
         JLabel img1 = new JLabel();
         img1.setBounds(15, 120, 240, 150);
@@ -351,14 +344,14 @@ public class AuthView {
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.setLocationRelativeTo(null);
 		ventana.setMinimumSize(new Dimension(200,200));
-		ventana.setTitle("Veterinaria");
+		ventana.setTitle("Costos de consultas");
 		ventana.setLocation(0,0);
 		ventana.setResizable(true);
 		ventana.setLayout(null);
 		
 		JPanel fondo = new JPanel();
 	    fondo.setBounds(0, 0, 1000, 600);
-	    fondo.setBackground(Color.decode("#F2F2F2"));
+	    fondo.setBackground(Color.decode("#FFFFFF"));
 	    fondo.setLayout(null);
 	    ventana.add(fondo);
 
@@ -436,7 +429,7 @@ public class AuthView {
 	    JButton regresar = new JButton("Regresar");
 	    regresar.setBounds(50, 490, 180, 60);
 	    regresar.setFont(new Font("Inter", Font.BOLD, 24));
-	    regresar.setBackground(Color.decode("#6B6B6B"));
+	    regresar.setBackground(Color.decode("#D81F10"));
 	    regresar.setForeground(Color.WHITE);
 	    regresar.setFocusPainted(false);
 	    regresar.setBorder(BorderFactory.createLineBorder(Color.black, 2, true));
@@ -457,13 +450,14 @@ public class AuthView {
 	    JFrame ventana = new JFrame("Registro de citas");
 	    ventana.setSize(1000, 600);
 	    ventana.setLocationRelativeTo(null);
+	    ventana.setTitle("Registro de citas");
 	    ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    ventana.setLayout(null);
 
 	    JPanel fondo = new JPanel();
 	    fondo.setBounds(0, 0, 1000, 600);
 	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#EDEDED"));
+	    fondo.setBackground(Color.decode("#FFFFFF"));
 	    ventana.add(fondo);
 
 	    JLabel titulo = new JLabel("Registro de citas");
@@ -473,7 +467,7 @@ public class AuthView {
 
 	    JPanel contenedor = new JPanel();
 	    contenedor.setLayout(new BoxLayout(contenedor,BoxLayout.Y_AXIS));
-	    contenedor.setBackground(Color.decode("#EDEDED"));
+	    contenedor.setBackground(Color.decode("#FFFFFF"));
 
 	    JScrollPane scroll = new JScrollPane(contenedor);
 	    scroll.setBounds(50, 80, 900, 400);
@@ -483,7 +477,7 @@ public class AuthView {
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
-        panel.setBackground(Color.decode("#3A8EDB"));
+        panel.setBackground(Color.decode("#8CACCB"));
 
         panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
         panel.setPreferredSize(new Dimension(850, 120));
@@ -527,7 +521,7 @@ public class AuthView {
 
         JButton historial = new JButton("Historial");
         historial.setBounds(450, 60, 130, 35);
-        historial.setBackground(Color.decode("#044E98"));
+        historial.setBackground(Color.decode("#14518C"));
         historial.setForeground(Color.white);
         historial.setFont(new Font("Inter", Font.BOLD, 20));
         
@@ -539,7 +533,7 @@ public class AuthView {
 
         JButton crear = new JButton("Crear");
         crear.setBounds(590, 60, 100, 35);
-        crear.setBackground(Color.decode("#044E98"));
+        crear.setBackground(Color.decode("#14518C"));
         crear.setForeground(Color.white);
         crear.setFont(new Font("Inter", Font.BOLD, 20));
         
@@ -550,7 +544,7 @@ public class AuthView {
 
         JButton editar = new JButton("Editar");
         editar.setBounds(700, 60, 100, 35);
-        editar.setBackground(Color.decode("#044E98"));
+        editar.setBackground(Color.decode("#14518C"));
         editar.setForeground(Color.white);
         editar.setFont(new Font("Inter", Font.BOLD, 20));
         
@@ -569,7 +563,7 @@ public class AuthView {
 	    JButton regresar = new JButton("Regresar");
 	    regresar.setBounds(50, 490, 180, 60);
 	    regresar.setFont(new Font("Inter", Font.BOLD, 20));
-	    regresar.setBackground(Color.decode("#6F6F6D"));
+	    regresar.setBackground(Color.decode("#D81F10"));
 	    regresar.setForeground(Color.white);
 	    regresar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 	    regresar.setFocusPainted(false);
@@ -587,6 +581,7 @@ public class AuthView {
 
 		JFrame ventana = new JFrame("Costos");
 	    ventana.setSize(1000, 600);
+	    ventana.setTitle("Historial de costos");
 	    ventana.setLocationRelativeTo(null);
 	    ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    ventana.setLayout(null);
@@ -594,13 +589,13 @@ public class AuthView {
 	    JPanel fondo = new JPanel();
 	    fondo.setBounds(0, 0, 1000, 600);
 	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#EDEDED"));
+	    fondo.setBackground(Color.decode("#FFFFFF"));
 	    fondo.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 	    ventana.add(fondo);
 
 	    JLabel titulo = new JLabel("Costo final de consultas y medicamentos");
 	    titulo.setFont(new Font("Adamina", Font.BOLD, 28));
-	    titulo.setBounds(120, 20, 800, 40);
+	    titulo.setBounds(50, 20, 800, 40);
 	    fondo.add(titulo);
 
 	    JLabel paciente = new JLabel("Paciente:");
@@ -656,12 +651,17 @@ public class AuthView {
 
 	    JButton regresar = new JButton("Regresar");
 	    regresar.setBounds(50, 440, 200, 60);
-	    regresar.setBackground(Color.decode("#6B6B6B"));
+	    regresar.setBackground(Color.decode("#D81F10"));
 	    regresar.setForeground(Color.WHITE);
 	    regresar.setFont(new Font("Inter", Font.BOLD, 20));
 	    regresar.setFocusPainted(false);
 	    regresar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 	    fondo.add(regresar);
+	    
+	    regresar.addActionListener(e -> {
+	        ventana.dispose();
+	        RegistroCitas();
+	    });
 
 	    JLabel actualizacion = new JLabel("Última actualización:");
 	    actualizacion.setFont(new Font("Adamina", Font.PLAIN, 18));
@@ -683,12 +683,7 @@ public class AuthView {
 	    descargar.setFocusPainted(false);
 	    descargar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 	    fondo.add(descargar);
-
-	    regresar.addActionListener(e -> {
-	        ventana.dispose();
-	        RegistroCitas();
-	    });
-
+	    
 	    ventana.setVisible(true);
 	}
 	
@@ -696,13 +691,14 @@ public class AuthView {
 
 	    JFrame ventana = new JFrame();
 	    ventana.setSize(1000,600);
+	    ventana.setTitle("Crear cita del paciente");
 	    ventana.setLocationRelativeTo(null);
 	    ventana.setLayout(null);
 
 	    JPanel fondo = new JPanel();
 	    fondo.setBounds(0,0,1000,600);
 	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#EDEDED"));
+	    fondo.setBackground(Color.decode("#FFFFFF"));
 	    fondo.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 	    ventana.add(fondo);
 
@@ -714,7 +710,7 @@ public class AuthView {
 	    JPanel panelFormulario = new JPanel();
 	    panelFormulario.setBounds(40,80,900,320);
 	    panelFormulario.setLayout(null);
-	    panelFormulario.setBackground(Color.decode("#3A8EDB"));
+	    panelFormulario.setBackground(Color.decode("#8CACCB"));
 	    panelFormulario.setBorder(BorderFactory.createLineBorder(Color.BLACK,2,true));
 	    fondo.add(panelFormulario);
 
@@ -828,7 +824,7 @@ public class AuthView {
 
 	    JButton botonRegresar = new JButton("Regresar");
 	    botonRegresar.setBounds(40,440,220,70);
-	    botonRegresar.setBackground(Color.decode("#6B6B6B"));
+	    botonRegresar.setBackground(Color.decode("#D81F10"));
 	    botonRegresar.setForeground(Color.WHITE);
 	    botonRegresar.setFont(new Font("Inter",Font.BOLD,22));
 	    fondo.add(botonRegresar);
@@ -840,8 +836,15 @@ public class AuthView {
 	    botonGuardar.setFont(new Font("Inter",Font.BOLD,22));
 	    fondo.add(botonGuardar);
 
-	    botonRegresar.addActionListener(e->{ventana.dispose();RegistroCitas();});
-	    botonGuardar.addActionListener(e->{ventana.dispose();CambiosCita();});
+	    botonRegresar.addActionListener(e->{
+	    	ventana.dispose();
+	    	RegistroCitas();
+	    });
+	    
+	    botonGuardar.addActionListener(e->{
+	    	ventana.dispose();
+	    	CambiosCita();
+	    });
 
 	    ventana.setVisible(true);
 	}
@@ -850,13 +853,14 @@ public class AuthView {
 
 	    JFrame ventana = new JFrame();
 	    ventana.setSize(1000,600);
+	    ventana.setTitle("Edicion de citas");
 	    ventana.setLocationRelativeTo(null);
 	    ventana.setLayout(null);
 
 	    JPanel fondo = new JPanel();
 	    fondo.setBounds(0,0,1000,600);
 	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#EDEDED"));
+	    fondo.setBackground(Color.decode("#FFFFFF"));
 	    fondo.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 	    ventana.add(fondo);
 
@@ -868,7 +872,7 @@ public class AuthView {
 	    JPanel panelFormulario = new JPanel();
 	    panelFormulario.setBounds(40,80,900,320);
 	    panelFormulario.setLayout(null);
-	    panelFormulario.setBackground(Color.decode("#3A8EDB"));
+	    panelFormulario.setBackground(Color.decode("#8CACCB"));
 	    panelFormulario.setBorder(BorderFactory.createLineBorder(Color.BLACK,2,true));
 	    fondo.add(panelFormulario);
 
@@ -982,7 +986,7 @@ public class AuthView {
 
 	    JButton botonRegresar = new JButton("Regresar");
 	    botonRegresar.setBounds(40,440,220,70);
-	    botonRegresar.setBackground(Color.decode("#6B6B6B"));
+	    botonRegresar.setBackground(Color.decode("#D81F10"));
 	    botonRegresar.setForeground(Color.WHITE);
 	    botonRegresar.setFont(new Font("Inter",Font.BOLD,22));
 	    fondo.add(botonRegresar);
@@ -1023,13 +1027,14 @@ public class AuthView {
 
 	    JFrame ventana = new JFrame();
 	    ventana.setSize(1000,600);
+	    ventana.setTitle("Cambios cita");
 	    ventana.setLocationRelativeTo(null);
 	    ventana.setLayout(null);
 
 	    JPanel fondo = new JPanel();
 	    fondo.setBounds(0,0,1000,600);
 	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#EDEDED"));
+	    fondo.setBackground(Color.decode("#FFFFFF"));
 	    fondo.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 	    ventana.add(fondo);
 	    
@@ -1066,13 +1071,14 @@ public class AuthView {
 
 		JFrame ventana = new JFrame();
 	    ventana.setSize(1000,600);
+	    ventana.setTitle("Eliminar cita");
 	    ventana.setLocationRelativeTo(null);
 	    ventana.setLayout(null);
 
 	    JPanel fondo = new JPanel();
 	    fondo.setBounds(0,0,1000,600);
 	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#EDEDED"));
+	    fondo.setBackground(Color.decode("#FFFFFF"));
 	    fondo.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 	    ventana.add(fondo);
 	    
@@ -1092,7 +1098,7 @@ public class AuthView {
 
 	    JButton botonCancelar = new JButton("Cancelar");
 	    botonCancelar.setBounds(250,360,220,70);
-	    botonCancelar.setBackground(Color.decode("#6B6B6B"));
+	    botonCancelar.setBackground(Color.decode("#14508C"));
 	    botonCancelar.setForeground(Color.WHITE);
 	    botonCancelar.setFont(new Font("Inter",Font.BOLD,22));
 	    botonCancelar.setFocusPainted(false);
@@ -1101,7 +1107,7 @@ public class AuthView {
 
 	    JButton botonConfirmar = new JButton("Si, estoy seguro");
 	    botonConfirmar.setBounds(530,360,250,70);
-	    botonConfirmar.setBackground(Color.decode("#14508C"));
+	    botonConfirmar.setBackground(Color.decode("#D81F10"));
 	    botonConfirmar.setForeground(Color.WHITE);
 	    botonConfirmar.setFont(new Font("Inter",Font.BOLD,22));
 	    botonConfirmar.setFocusPainted(false);
@@ -1125,6 +1131,7 @@ public class AuthView {
 
 		JFrame ventana = new JFrame();
 	    ventana.setSize(1000,600);
+	    ventana.setTitle("Panel de dueños");
 	    ventana.setLocationRelativeTo(null);
 	    ventana.setLayout(null);
 
@@ -1151,7 +1158,7 @@ public class AuthView {
 	    Image img = icono.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
 	    ImageIcon iconoEscalado = new ImageIcon(img);
 	    
-	    JButton botonFotoDueno = new JButton(iconoEscalado);
+	    JLabel botonFotoDueno = new JLabel(iconoEscalado);
 	    botonFotoDueno.setBounds(20,40,120,120);
 	    panelRegistro.add(botonFotoDueno);    
 
@@ -1173,35 +1180,35 @@ public class AuthView {
 	    Image img2 = icono2.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
 	    ImageIcon iconoEscalado2 = new ImageIcon(img2);
 
-	    JButton botonFotoMascota = new JButton(iconoEscalado2);
+	    JLabel botonFotoMascota = new JLabel(iconoEscalado2);
 	    botonFotoMascota.setBounds(500,40,120,120);
 	    panelRegistro.add(botonFotoMascota);
 
 	    JButton botonDetalles = new JButton("Detalles");
 	    botonDetalles.setBounds(650,40,120,40);
 	    botonDetalles.setFont(new Font("Inter", Font.BOLD, 20));
-	    botonDetalles.setBackground(Color.decode("#044E98"));
+	    botonDetalles.setBackground(Color.decode("#14518C"));
 	    botonDetalles.setForeground(Color.WHITE);
 	    panelRegistro.add(botonDetalles);
 
 	    JButton botonEditar = new JButton("Editar");
 	    botonEditar.setBounds(650,90,120,40);
 	    botonEditar.setFont(new Font("Inter", Font.BOLD, 20));
-	    botonEditar.setBackground(Color.decode("#044E98"));
+	    botonEditar.setBackground(Color.decode("#14518C"));
 	    botonEditar.setForeground(Color.WHITE);
 	    panelRegistro.add(botonEditar);
 
 	    JButton botonEliminar = new JButton("Eliminar");
 	    botonEliminar.setBounds(650,140,120,40);
 	    botonEliminar.setFont(new Font("Inter", Font.BOLD, 20));
-	    botonEliminar.setBackground(Color.decode("#044E98"));
+	    botonEliminar.setBackground(Color.decode("#14518C"));
 	    botonEliminar.setForeground(Color.WHITE);
 	    panelRegistro.add(botonEliminar);
 
 	    JButton botonRegresar = new JButton("Regresar");
 	    botonRegresar.setBounds(40,500,150,50);
 	    botonRegresar.setFont(new Font("Inter", Font.BOLD, 20));
-	    botonRegresar.setBackground(Color.decode("#6F6F6D"));
+	    botonRegresar.setBackground(Color.decode("#D81F10"));
 	    botonRegresar.setForeground(Color.WHITE);
 	    fondo.add(botonRegresar);
 
@@ -1245,13 +1252,14 @@ public class AuthView {
 
 	    JFrame ventana = new JFrame();
 	    ventana.setSize(1000,600);
+	    ventana.setTitle("Crear perfil del dueño");
 	    ventana.setLocationRelativeTo(null);
 	    ventana.setLayout(null);
 
 	    JPanel fondo = new JPanel();
 	    fondo.setBounds(0,0,1000,600);
 	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#EDEDED"));
+	    fondo.setBackground(Color.decode("#FFFFFF"));
 	    ventana.add(fondo);
 	    
 	    JLabel titulo = new JLabel("Crear dueño");
@@ -1262,7 +1270,7 @@ public class AuthView {
 	    JPanel panelDatos = new JPanel();
 	    panelDatos.setBounds(40,80,500,350);
 	    panelDatos.setLayout(null);
-	    panelDatos.setBackground(Color.decode("#8CA6BF"));
+	    panelDatos.setBackground(Color.decode("#8CACCB"));
 	    panelDatos.setBorder(BorderFactory.createLineBorder(Color.BLACK,2,true));
 	    fondo.add(panelDatos);
 
@@ -1340,7 +1348,7 @@ public class AuthView {
 	    JPanel panelFoto = new JPanel();
 	    panelFoto.setBounds(560,80,350,350);
 	    panelFoto.setLayout(null);
-	    panelFoto.setBackground(Color.decode("#3A8EDB"));
+	    panelFoto.setBackground(Color.decode("#8CACCB"));
 	    panelFoto.setBorder(BorderFactory.createLineBorder(Color.BLACK,2,true));
 	    fondo.add(panelFoto);
 
@@ -1367,7 +1375,7 @@ public class AuthView {
 
 	    JButton botonRegresar = new JButton("Regresar");
 	    botonRegresar.setBounds(40,470,150,50);
-	    botonRegresar.setBackground(Color.decode("#6F6F6D"));
+	    botonRegresar.setBackground(Color.decode("#D81F10"));
 	    botonRegresar.setForeground(Color.WHITE);
 	    fondo.add(botonRegresar);
 
@@ -1410,13 +1418,14 @@ public class AuthView {
 
 	    JFrame ventana = new JFrame();
 	    ventana.setSize(1000,600);
+	    ventana.setTitle("Crear registro de pacientes");
 	    ventana.setLocationRelativeTo(null);
 	    ventana.setLayout(null);
 
 	    JPanel fondo = new JPanel();
 	    fondo.setBounds(0,0,1000,600);
 	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#EDEDED"));
+	    fondo.setBackground(Color.decode("#FFFFFF"));
 	    ventana.add(fondo);
 	    
 	    JLabel titulo = new JLabel("Crear paciente");
@@ -1427,7 +1436,7 @@ public class AuthView {
 	    JPanel panelDatos = new JPanel();
 	    panelDatos.setBounds(40, 80, 500, 350);
 	    panelDatos.setLayout(null);
-	    panelDatos.setBackground(Color.decode("#8CA6BF"));
+	    panelDatos.setBackground(Color.decode("#8CACCB"));
 	    panelDatos.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
 	    fondo.add(panelDatos);
 
@@ -1499,7 +1508,7 @@ public class AuthView {
 	    JPanel panelAdministrativo = new JPanel();
 	    panelAdministrativo.setBounds(560,80,350,170);
 	    panelAdministrativo.setLayout(null);
-	    panelAdministrativo.setBackground(Color.decode("#3A8EDB"));
+	    panelAdministrativo.setBackground(Color.decode("#8CACCB"));
 	    panelAdministrativo.setBorder(BorderFactory.createLineBorder(Color.BLACK,2,true));
 	    fondo.add(panelAdministrativo);
 
@@ -1537,14 +1546,14 @@ public class AuthView {
 	    
 	    JButton botonCargarImagen = new JButton("img mascota");
 	    botonCargarImagen.setBounds(220,120,110,30);
-	    botonCargarImagen.setBackground(Color.decode("#6F6F6D"));
+	    botonCargarImagen.setBackground(Color.decode("#14518C"));
 	    botonCargarImagen.setForeground(Color.decode("#FFFFFF"));
 	    panelAdministrativo.add(botonCargarImagen);
 
 	    JPanel panelHistorial = new JPanel();
 	    panelHistorial.setBounds(560,270,350,160);
 	    panelHistorial.setLayout(null);
-	    panelHistorial.setBackground(Color.decode("#3A8EDB"));
+	    panelHistorial.setBackground(Color.decode("#8CACCB"));
 	    panelHistorial.setBorder(BorderFactory.createLineBorder(Color.BLACK,2,true));
 	    fondo.add(panelHistorial);
 
@@ -1561,7 +1570,7 @@ public class AuthView {
 
 	    JButton botonRegresar = new JButton("Regresar");
 	    botonRegresar.setBounds(40,470,150,50);
-	    botonRegresar.setBackground(Color.decode("#6B6B6B"));
+	    botonRegresar.setBackground(Color.decode("#D81F10"));
 	    botonRegresar.setForeground(Color.WHITE);
 	    fondo.add(botonRegresar);
 
@@ -1607,13 +1616,14 @@ public class AuthView {
 
 	    JFrame ventana = new JFrame();
 	    ventana.setSize(1000,600);
+	    ventana.setTitle("Eliminar registro del dueño");
 	    ventana.setLocationRelativeTo(null);
 	    ventana.setLayout(null);
 
 	    JPanel fondo = new JPanel();
 	    fondo.setBounds(0,0,1000,600);
 	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#EDEDED"));
+	    fondo.setBackground(Color.decode("#FFFFFF"));
 	    fondo.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 	    ventana.add(fondo);	    
 
@@ -1633,14 +1643,14 @@ public class AuthView {
 
 	    JButton cancelar = new JButton("Cancelar");
 	    cancelar.setBounds(290, 330, 180, 60);
-	    cancelar.setBackground(Color.decode("#6B6B6B"));
+	    cancelar.setBackground(Color.decode("#14518C"));
 	    cancelar.setForeground(Color.WHITE);
 	    cancelar.setFocusPainted(false);
 	    fondo.add(cancelar);
 
 	    JButton confirmar = new JButton("Sí, estoy seguro");
 	    confirmar.setBounds(530, 330, 220, 60);
-	    confirmar.setBackground(Color.decode("#14508C"));
+	    confirmar.setBackground(Color.decode("#D81F10"));
 	    confirmar.setForeground(Color.WHITE);
 	    confirmar.setFocusPainted(false);
 	    fondo.add(confirmar);
@@ -1662,13 +1672,14 @@ public class AuthView {
 
 	    JFrame ventana = new JFrame();
 	    ventana.setSize(1000,600);
+	    ventana.setTitle("Eliminado exitoso");
 	    ventana.setLocationRelativeTo(null);
 	    ventana.setLayout(null);
 
 	    JPanel fondo = new JPanel();
 	    fondo.setBounds(0,0,1000,600);
 	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#EDEDED"));
+	    fondo.setBackground(Color.decode("#FFFFFF"));
 	    fondo.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 	    ventana.add(fondo);
 	    
@@ -1704,13 +1715,14 @@ public class AuthView {
 
 	    JFrame ventana = new JFrame();
 	    ventana.setSize(1000,600);
+	    ventana.setTitle("Registro exitoso");
 	    ventana.setLocationRelativeTo(null);
 	    ventana.setLayout(null);
 
 	    JPanel fondo = new JPanel();
 	    fondo.setBounds(0,0,1000,600);
 	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#EDEDED"));
+	    fondo.setBackground(Color.decode("#FFFFFF"));
 	    fondo.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
 	    ventana.add(fondo);
 	    
@@ -1747,13 +1759,14 @@ public class AuthView {
 
 	    JFrame ventana = new JFrame();
 	    ventana.setSize(1000,600);
+	    ventana.setTitle("Detalles del dueño");
 	    ventana.setLocationRelativeTo(null);
 	    ventana.setLayout(null);
 
 	    JPanel fondo = new JPanel();
 	    fondo.setBounds(0,0,1000,600);
 	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#EDEDED"));
+	    fondo.setBackground(Color.decode("#FFFFFF"));
 	    ventana.add(fondo);
 
 	    JLabel ultima = new JLabel("Ultima modificacion: 7 de Marzo del 2026");
@@ -1763,7 +1776,7 @@ public class AuthView {
 	    JPanel panel = new JPanel();
 	    panel.setBounds(40,40,900,380);
 	    panel.setLayout(null);
-	    panel.setBackground(Color.decode("#8CA6BF"));
+	    panel.setBackground(Color.decode("#8CACCB"));
 	    panel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2,true));
 	    fondo.add(panel);
 
@@ -1771,13 +1784,14 @@ public class AuthView {
 	    Image imgDueno = iconoDueno.getImage().getScaledInstance(110,110,Image.SCALE_SMOOTH);
 	    
 	    JLabel fotoDueno = new JLabel(new ImageIcon(imgDueno));
-	    fotoDueno.setBounds(20,60,110,110);
+	    fotoDueno.setBounds(20,70,110,110);
 	    panel.add(fotoDueno);
 
 	    ImageIcon iconoMascota = new ImageIcon(getClass().getResource("/Imagenes/fotomascota.jpg"));
 	    Image imgMascota = iconoMascota.getImage().getScaledInstance(110,110,Image.SCALE_SMOOTH);
+	   
 	    JButton fotoMascota = new JButton(new ImageIcon(imgMascota));
-	    fotoMascota.setBounds(20,200,110,110);
+	    fotoMascota.setBounds(20,215,110,110);
 	    panel.add(fotoMascota);
 
 	    fotoMascota.addActionListener(e -> {
@@ -1786,8 +1800,8 @@ public class AuthView {
 	    });
 
 	    Font tituloFont = new Font("Adamina", Font.BOLD, 26);
-	    Font labelFont = new Font("Arial", Font.BOLD, 14);
-	    Font valorFont = new Font("Arial", Font.PLAIN, 14);
+	    Font labelFont = new Font("Adamina", Font.BOLD, 14);
+	    Font valorFont = new Font("Adamina", Font.PLAIN, 14);
 
 	    JLabel titulo = new JLabel("Información completa del cliente");
 	    titulo.setFont(tituloFont);
@@ -1795,14 +1809,14 @@ public class AuthView {
 	    panel.add(titulo);
 
 	    String[][] datos = {
-	        {"Nombre","Nombre"},
-	        {"Apellidos","Apellidos"},
-	        {"Dirección","Dirección"},
-	        {"Colonia","Colonia"},
-	        {"Teléfono","Teléfono"},
-	        {"Correo","Correo"},
-	        {"Mascota","Mascota"},
-	        {"Estado","Estado"}
+	        {"Nombre",""},
+	        {"Apellidos",""},
+	        {"Dirección",""},
+	        {"Colonia",""},
+	        {"Teléfono",""},
+	        {"Correo",""},
+	        {"Mascota",""},
+	        {"Estado",""}
 	    };
 
 	    int y = 70;
@@ -1831,18 +1845,21 @@ public class AuthView {
 
 	    JButton botonRegresar = new JButton("Regresar");
 	    botonRegresar.setBounds(40,450,150,50);
-	    botonRegresar.setBackground(Color.decode("#6B6B6B"));
+	    botonRegresar.setFont(new Font("Inter", Font.BOLD, 20));
+	    botonRegresar.setBackground(Color.decode("#D81F10"));
 	    botonRegresar.setForeground(Color.WHITE);
 	    fondo.add(botonRegresar);
 
 	    JButton botonAgregarMascota = new JButton("Añadir mascota");
-	    botonAgregarMascota.setBounds(300,450,200,50);
+	    botonAgregarMascota.setBounds(390,450,200,50);
+	    botonAgregarMascota.setFont(new Font("Inter", Font.BOLD, 20));
 	    botonAgregarMascota.setBackground(Color.decode("#14508C"));
 	    botonAgregarMascota.setForeground(Color.WHITE);
 	    fondo.add(botonAgregarMascota);
 
 	    JButton botonPagos = new JButton("Pagos");
-	    botonPagos.setBounds(700,450,200,50);
+	    botonPagos.setBounds(740,450,200,50);
+	    botonPagos.setFont(new Font("Inter", Font.BOLD, 20));
 	    botonPagos.setBackground(Color.decode("#0B2545"));
 	    botonPagos.setForeground(Color.WHITE);
 	    fondo.add(botonPagos);
@@ -1869,13 +1886,14 @@ public class AuthView {
 
 	    JFrame ventana = new JFrame();
 	    ventana.setSize(1000,600);
+	    ventana.setTitle("Detalles del paciente");
 	    ventana.setLocationRelativeTo(null);
 	    ventana.setLayout(null);
 
 	    JPanel fondo = new JPanel();
 	    fondo.setBounds(0,0,1000,600);
 	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#EDEDED"));
+	    fondo.setBackground(Color.decode("#FFFFFF"));
 	    ventana.add(fondo);
 
 	    JLabel ultima = new JLabel("Ultima modificacion: 7 de Marzo del 2026");
@@ -1885,7 +1903,7 @@ public class AuthView {
 	    JPanel panel = new JPanel();
 	    panel.setBounds(40,40,900,380);
 	    panel.setLayout(null);
-	    panel.setBackground(Color.decode("#8CA6BF"));
+	    panel.setBackground(Color.decode("#8CACCB"));
 	    panel.setBorder(BorderFactory.createLineBorder(Color.BLACK,2,true));
 	    fondo.add(panel);
 
@@ -1893,14 +1911,14 @@ public class AuthView {
 	    Image imgMascota = iconoMascota.getImage().getScaledInstance(110,110,Image.SCALE_SMOOTH);
 	    
 	    JLabel fotoMascota = new JLabel(new ImageIcon(imgMascota));
-	    fotoMascota.setBounds(20,60,110,110);
+	    fotoMascota.setBounds(20,70,110,110);
 	    panel.add(fotoMascota);
 
 	    ImageIcon iconoDueno = new ImageIcon(getClass().getResource("/Imagenes/Doctor_Registro.jpg"));
 	    Image imgDueno = iconoDueno.getImage().getScaledInstance(110,110,Image.SCALE_SMOOTH);
 	    
 	    JButton fotoDueno = new JButton(new ImageIcon(imgDueno));
-	    fotoDueno.setBounds(20,200,110,110);
+	    fotoDueno.setBounds(20,215,110,110);
 	    panel.add(fotoDueno);
 
 	    fotoDueno.addActionListener(e -> {
@@ -1909,8 +1927,8 @@ public class AuthView {
 	    });
 
 	    Font tituloFont = new Font("Adamina", Font.BOLD, 26);
-	    Font labelFont = new Font("Arial", Font.BOLD, 14);
-	    Font valorFont = new Font("Arial", Font.PLAIN, 14);
+	    Font labelFont = new Font("Adamina", Font.BOLD, 14);
+	    Font valorFont = new Font("Adamina", Font.PLAIN, 14);
 
 	    JLabel titulo = new JLabel("Información completa del paciente");
 	    titulo.setFont(tituloFont);
@@ -1954,24 +1972,28 @@ public class AuthView {
 
 	    JButton botonRegresar = new JButton("Regresar");
 	    botonRegresar.setBounds(40,450,150,50);
-	    botonRegresar.setBackground(Color.decode("#6B6B6B"));
+	    botonRegresar.setFont(new Font("Inter", Font.BOLD, 20));
+	    botonRegresar.setBackground(Color.decode("#D81F10"));
 	    botonRegresar.setForeground(Color.WHITE);
 	    fondo.add(botonRegresar);
 
 	    JButton botonCarnet = new JButton("Carnet");
 	    botonCarnet.setBounds(250,450,150,50);
+	    botonCarnet.setFont(new Font("Inter", Font.BOLD, 20));
 	    botonCarnet.setBackground(Color.decode("#14508C"));
 	    botonCarnet.setForeground(Color.WHITE);
 	    fondo.add(botonCarnet);
 
 	    JButton botonDescargar = new JButton("Descargar ficha");
-	    botonDescargar.setBounds(420,450,200,50);
+	    botonDescargar.setBounds(465,450,200,50);
+	    botonDescargar.setFont(new Font("Inter", Font.BOLD, 20));
 	    botonDescargar.setBackground(Color.decode("#14508C"));
 	    botonDescargar.setForeground(Color.WHITE);
 	    fondo.add(botonDescargar);
 
 	    JButton botonHistorial = new JButton("Historial");
-	    botonHistorial.setBounds(700,450,200,50);
+	    botonHistorial.setBounds(740,450,200,50);
+	    botonHistorial.setFont(new Font("Inter", Font.BOLD, 20));
 	    botonHistorial.setBackground(Color.decode("#0B2545"));
 	    botonHistorial.setForeground(Color.WHITE);
 	    fondo.add(botonHistorial);
