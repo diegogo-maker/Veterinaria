@@ -11,14 +11,18 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.table.JTableHeader;
 
@@ -35,7 +39,6 @@ public class AuthView {
 		ventana.setLocationRelativeTo(null);
 		ventana.setMinimumSize(new Dimension(200,200));
 		ventana.setTitle("Veterinaria");
-		ventana.setLocation(0,0);
 		ventana.setResizable(true);
 		ventana.setLayout(null);
 		
@@ -46,7 +49,7 @@ public class AuthView {
 
         JLabel fondo = new JLabel();
 
-        ImageIcon imgFondo = new ImageIcon(getClass().getResource("/Imagenes/Fondo_login.png"));
+        ImageIcon imgFondo = new ImageIcon(getClass().getResource("/Imagenes/fondo.png"));
         Image imgEscalada = imgFondo.getImage().getScaledInstance(500, 600, Image.SCALE_SMOOTH);
         fondo.setIcon(new ImageIcon(imgEscalada));
 
@@ -136,64 +139,71 @@ public class AuthView {
 	
 	public void Salir() {
 
-		//configuracion de ventana
-		JFrame ventana = new JFrame();
-		ventana.setSize(1000,600);
-		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ventana.setLocationRelativeTo(null);
-		ventana.setMinimumSize(new Dimension(200,200));
-		ventana.setTitle("Salir");
-		ventana.setLocation(0,0);
-		ventana.setResizable(true);
-		ventana.setLayout(null);
-		
-		JPanel fondo = new JPanel();
-        fondo.setBounds(0, 0, 1000, 600);
-        fondo.setBackground(Color.decode("#FFFFFF"));
-        fondo.setLayout(null);
-        ventana.add(fondo);
+	    JPanel panel = new JPanel();
+	    panel.setLayout(null);
+	    panel.setBackground(Color.WHITE);
+	    panel.setPreferredSize(new Dimension(420, 180));
 
-        JLabel logo = new JLabel();
-        logo.setBounds(425, 30, 170, 150);
+	    ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg"));
+	    Image img = icono.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 
-        ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg"));
-        Image img = icono.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-        logo.setIcon(new ImageIcon(img));
+	    JLabel logo = new JLabel(new ImageIcon(img));
+	    logo.setBounds(185, 5, 50, 50);
+	    panel.add(logo);
 
-        fondo.add(logo);
+	    JLabel texto = new JLabel("¿Deseas cerrar la sesión?");
+	    texto.setBounds(40, 60, 340, 30);
+	    texto.setHorizontalAlignment(SwingConstants.CENTER);
+	    texto.setFont(new Font("Adamina", Font.PLAIN, 22));
+	    panel.add(texto);
 
-        JLabel texto = new JLabel("¿Deseas cerrar la sesión?");
-        texto.setFont(new Font("Adamina", Font.PLAIN, 60));
-        texto.setBounds(155, 190, 700, 120);
-        fondo.add(texto);
+	    JButton confirmar = new JButton("Sí, salir");
+	    confirmar.setBounds(55, 110, 140, 40);
+	    confirmar.setBackground(Color.decode("#D81F10"));
+	    confirmar.setForeground(Color.WHITE);
+	    confirmar.setFont(new Font("Inter", Font.BOLD, 16));
+	    confirmar.setFocusPainted(false);
+	    confirmar.setBorder(BorderFactory.createLineBorder(Color.BLACK,1,true));
 
-        JButton cancelar = new JButton("Cancelar");
-        cancelar.setBounds(200, 380, 250, 70);
-        cancelar.setBackground(Color.decode("#14518C"));
-        cancelar.setForeground(Color.WHITE);
-        cancelar.setFont(new Font("Inter", Font.BOLD, 26));
-        cancelar.setFocusPainted(false);
-        fondo.add(cancelar);
-        
-        cancelar.addActionListener(e -> {
-            ventana.dispose(); 
-            Inicio();
-        });
+	    JButton cancelar = new JButton("Cancelar");
+	    cancelar.setBounds(225, 110, 140, 40);
+	    cancelar.setBackground(Color.decode("#14518C"));
+	    cancelar.setForeground(Color.WHITE);
+	    cancelar.setFont(new Font("Inter", Font.BOLD, 16));
+	    cancelar.setFocusPainted(false);
+	    cancelar.setBorder(BorderFactory.createLineBorder(Color.BLACK,1,true));
 
-        JButton confirmar = new JButton("Sí, estoy seguro");
-        confirmar.setBounds(550, 380,250,70);
-        confirmar.setBackground(Color.decode("#D81F10"));
-        confirmar.setForeground(Color.WHITE);
-        confirmar.setFont(new Font("Inter", Font.BOLD, 26));
-        confirmar.setFocusPainted(false);
-        fondo.add(confirmar);
-        
-        confirmar.addActionListener(e -> {
-            ventana.dispose(); 
-            Login();
-        });
-        
-        ventana.setVisible(true);
+	    panel.add(confirmar);
+	    panel.add(cancelar);
+
+	    UIManager.put("OptionPane.background", Color.WHITE);
+	    UIManager.put("Panel.background", Color.WHITE);
+
+	    JOptionPane optionPane = new JOptionPane(
+	            panel,
+	            JOptionPane.PLAIN_MESSAGE,
+	            JOptionPane.DEFAULT_OPTION,
+	            null,
+	            new Object[]{},
+	            null
+	    );
+
+	    JDialog dialog = optionPane.createDialog("Salir");
+
+	    dialog.setIconImage(icono.getImage());
+
+	    confirmar.addActionListener(e -> {
+	        dialog.dispose();
+	        Login();
+	    });
+
+	    cancelar.addActionListener(e -> {
+	        dialog.dispose();
+	        Inicio();
+	    });
+	    
+	    dialog.setLocationRelativeTo(null);
+	    dialog.setVisible(true);
 	}
 	
 	public void Inicio() {
@@ -205,7 +215,6 @@ public class AuthView {
 		ventana.setLocationRelativeTo(null);
 		ventana.setMinimumSize(new Dimension(200,200));
 		ventana.setTitle("Inicio");
-		ventana.setLocation(0,0);
 		ventana.setResizable(true);
 		ventana.setLayout(null);
 		
@@ -242,7 +251,7 @@ public class AuthView {
         panel.add(cerrar);
         
         cerrar.addActionListener(e -> {
-            ventana.dispose();
+        	ventana.dispose();
             Salir();
         });
 
@@ -345,7 +354,6 @@ public class AuthView {
 		ventana.setLocationRelativeTo(null);
 		ventana.setMinimumSize(new Dimension(200,200));
 		ventana.setTitle("Costos de consultas");
-		ventana.setLocation(0,0);
 		ventana.setResizable(true);
 		ventana.setLayout(null);
 		
@@ -466,99 +474,99 @@ public class AuthView {
 	    fondo.add(titulo);
 
 	    JPanel contenedor = new JPanel();
-	    contenedor.setLayout(new BoxLayout(contenedor,BoxLayout.Y_AXIS));
+	    contenedor.setLayout(new BoxLayout(contenedor, BoxLayout.Y_AXIS));
 	    contenedor.setBackground(Color.decode("#FFFFFF"));
 
 	    JScrollPane scroll = new JScrollPane(contenedor);
 	    scroll.setBounds(50, 80, 900, 400);
 	    scroll.setBorder(null);
 	    fondo.add(scroll);
-    
 
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-        panel.setBackground(Color.decode("#8CACCB"));
+	    for(int i = 1; i <= 6; i++) {
 
-        panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
-        panel.setPreferredSize(new Dimension(850, 120));
+	        JPanel panel = new JPanel();
+	        panel.setLayout(null);
+	        panel.setBackground(Color.decode("#8CACCB"));
 
-        panel.setBorder(BorderFactory.createCompoundBorder(
-            new LineBorder(Color.BLACK, 2, true),
-            BorderFactory.createEmptyBorder(10, 10, 10, 10)
-        ));
+	        panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
+	        panel.setPreferredSize(new Dimension(850, 120));
 
-        ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/fotomascota.jpg"));
+	        panel.setBorder(BorderFactory.createCompoundBorder(
+	            new LineBorder(Color.BLACK, 2, true),
+	            BorderFactory.createEmptyBorder(10, 10, 10, 10)
+	        ));
 
-	    Image img = icono.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-	    ImageIcon iconoEscalado = new ImageIcon(img);
-	
-	    JButton foto = new JButton(iconoEscalado);
-	    foto.setBounds(20, 20, 80, 80);
-	    foto.setBackground(Color.LIGHT_GRAY);
-	    foto.setFocusPainted(false);
-	    foto.setBorder(null);	
-	    panel.add(foto);
-	    
-	    foto.addActionListener(e -> {
-	        ventana.dispose();
-	        DetallesPaciente();
-	    });
+	        ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/fotomascota.jpg"));
 
-        JLabel nombre = new JLabel("Nombre");
-        nombre.setFont(new Font("Adamina", Font.BOLD, 28));
-        nombre.setBounds(120, 10, 300, 40);
-        panel.add(nombre);
+	        Image img = icono.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+	        ImageIcon iconoEscalado = new ImageIcon(img);
 
-        JLabel desc = new JLabel("Tipo / raza");
-        desc.setFont(new Font("Adamina", Font.PLAIN, 18));
-        desc.setBounds(120, 50, 300, 30);
-        panel.add(desc);
+	        JButton foto = new JButton(iconoEscalado);
+	        foto.setBounds(20, 20, 80, 80);
+	        foto.setBackground(Color.LIGHT_GRAY);
+	        foto.setFocusPainted(false);
+	        foto.setBorder(null);
+	        panel.add(foto);
 
-        JLabel cita = new JLabel("Próxima cita: --/--/----");
-        cita.setFont(new Font("Adamina", Font.PLAIN, 18));
-        cita.setBounds(450, 20, 300, 30);
-        panel.add(cita);
+	        foto.addActionListener(e -> {
+	            ventana.dispose();
+	            DetallesPaciente();
+	        });
 
-        JButton historial = new JButton("Historial");
-        historial.setBounds(450, 60, 130, 35);
-        historial.setBackground(Color.decode("#14518C"));
-        historial.setForeground(Color.white);
-        historial.setFont(new Font("Inter", Font.BOLD, 20));
-        
-        historial.addActionListener(e -> {
-	        ventana.dispose();
-	        HistorialCostos();
-	    });
+	        JLabel nombre = new JLabel("Mascota " + i);
+	        nombre.setFont(new Font("Adamina", Font.BOLD, 28));
+	        nombre.setBounds(120, 10, 300, 40);
+	        panel.add(nombre);
 
+	        JLabel desc = new JLabel("Tipo / raza");
+	        desc.setFont(new Font("Adamina", Font.PLAIN, 18));
+	        desc.setBounds(120, 50, 300, 30);
+	        panel.add(desc);
 
-        JButton crear = new JButton("Crear");
-        crear.setBounds(590, 60, 100, 35);
-        crear.setBackground(Color.decode("#14518C"));
-        crear.setForeground(Color.white);
-        crear.setFont(new Font("Inter", Font.BOLD, 20));
-        
-        crear.addActionListener(e -> {
-	        ventana.dispose();
-	        CrearCita();
-	    });
+	        JLabel cita = new JLabel("Próxima cita: --/--/----");
+	        cita.setFont(new Font("Adamina", Font.PLAIN, 18));
+	        cita.setBounds(450, 20, 300, 30);
+	        panel.add(cita);
 
-        JButton editar = new JButton("Editar");
-        editar.setBounds(700, 60, 100, 35);
-        editar.setBackground(Color.decode("#14518C"));
-        editar.setForeground(Color.white);
-        editar.setFont(new Font("Inter", Font.BOLD, 20));
-        
-        editar.addActionListener(e -> {
-	        ventana.dispose();
-	        EdicionCita();
-	    });
+	        JButton historial = new JButton("Historial");
+	        historial.setBounds(450, 60, 130, 35);
+	        historial.setBackground(Color.decode("#14518C"));
+	        historial.setForeground(Color.white);
+	        historial.setFont(new Font("Inter", Font.BOLD, 20));
 
-        panel.add(historial);
-        panel.add(crear);
-        panel.add(editar);
+	        historial.addActionListener(e -> {
+	            ventana.dispose();
+	            HistorialCostos();
+	        });
 
-        contenedor.add(panel);
-	    
+	        JButton crear = new JButton("Crear");
+	        crear.setBounds(590, 60, 100, 35);
+	        crear.setBackground(Color.decode("#14518C"));
+	        crear.setForeground(Color.white);
+	        crear.setFont(new Font("Inter", Font.BOLD, 20));
+
+	        crear.addActionListener(e -> {
+	            ventana.dispose();
+	            CrearCita();
+	        });
+
+	        JButton editar = new JButton("Editar");
+	        editar.setBounds(700, 60, 100, 35);
+	        editar.setBackground(Color.decode("#14518C"));
+	        editar.setForeground(Color.white);
+	        editar.setFont(new Font("Inter", Font.BOLD, 20));
+
+	        editar.addActionListener(e -> {
+	            ventana.dispose();
+	            EdicionCita();
+	        });
+
+	        panel.add(historial);
+	        panel.add(crear);
+	        panel.add(editar);
+
+	        contenedor.add(panel);
+	    }
 
 	    JButton regresar = new JButton("Regresar");
 	    regresar.setBounds(50, 490, 180, 60);
@@ -1025,111 +1033,131 @@ public class AuthView {
 	
 	public void CambiosCita() {
 
-	    JFrame ventana = new JFrame();
-	    ventana.setSize(1000,600);
-	    ventana.setTitle("Cambios cita");
-	    ventana.setLocationRelativeTo(null);
-	    ventana.setLayout(null);
-
-	    JPanel fondo = new JPanel();
-	    fondo.setBounds(0,0,1000,600);
-	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#FFFFFF"));
-	    fondo.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-	    ventana.add(fondo);
-	    
-	    JLabel logo = new JLabel();
-	    logo.setBounds(425,40,160,160);
+	    JPanel panel = new JPanel();
+	    panel.setLayout(null);
+	    panel.setBackground(Color.WHITE);
+	    panel.setPreferredSize(new Dimension(430, 190));
 
 	    ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg"));
-	    Image imagen = icono.getImage().getScaledInstance(160,160,Image.SCALE_SMOOTH);
-	    logo.setIcon(new ImageIcon(imagen));
-	    fondo.add(logo);
+	    Image imagen = icono.getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
+
+	    JLabel logo = new JLabel(new ImageIcon(imagen));
+	    logo.setBounds(187, 5, 55, 55);
+	    panel.add(logo);
 
 	    JLabel mensaje = new JLabel("Se han guardado los nuevos cambios.");
-	    mensaje.setFont(new Font("Adamina",Font.BOLD,36));
-	    mensaje.setBounds(100,200,800,120);
-	    mensaje.setHorizontalAlignment(JLabel.CENTER);
-	    fondo.add(mensaje);
+	    mensaje.setBounds(25, 65, 380, 35);
+	    mensaje.setHorizontalAlignment(SwingConstants.CENTER);
+	    mensaje.setFont(new Font("Adamina", Font.BOLD, 18));
+	    panel.add(mensaje);
 
-	    JButton botonAceptar = new JButton("Aceptar");
-	    botonAceptar.setBounds(390,350,220,90);
-	    botonAceptar.setFont(new Font("Inter",Font.BOLD,28));
-	    botonAceptar.setBackground(Color.decode("#14508C"));
-	    botonAceptar.setForeground(Color.WHITE);
-	    fondo.add(botonAceptar);
+	    JButton aceptar = new JButton("Aceptar");
+	    aceptar.setBounds(125, 120, 180, 45);
+	    aceptar.setBackground(Color.decode("#14508C"));
+	    aceptar.setForeground(Color.WHITE);
+	    aceptar.setFont(new Font("Inter", Font.BOLD, 18));
+	    aceptar.setFocusPainted(false);
+	    aceptar.setBorder(BorderFactory.createLineBorder(Color.BLACK,1,true));
 
-	    botonAceptar.addActionListener(e->{
-	    	ventana.dispose();
-	    	Inicio();
+	    panel.add(aceptar);
+
+	    UIManager.put("OptionPane.background", Color.WHITE);
+	    UIManager.put("Panel.background", Color.WHITE);
+
+	    JOptionPane optionPane = new JOptionPane(
+	            panel,
+	            JOptionPane.PLAIN_MESSAGE,
+	            JOptionPane.DEFAULT_OPTION,
+	            null,
+	            new Object[]{},
+	            null
+	    );
+
+	    JDialog dialog = optionPane.createDialog("Cambios cita");
+
+	    dialog.setIconImage(icono.getImage());
+
+	    aceptar.addActionListener(e -> {
+	        dialog.dispose();
+	        Inicio();
 	    });
-
-	    ventana.setVisible(true);
+	    
+	    dialog.setLocationRelativeTo(null);
+	    dialog.setVisible(true);
 	}
 	
 	public void EliminarCita() {
 
-		JFrame ventana = new JFrame();
-	    ventana.setSize(1000,600);
-	    ventana.setTitle("Eliminar cita");
-	    ventana.setLocationRelativeTo(null);
-	    ventana.setLayout(null);
-
-	    JPanel fondo = new JPanel();
-	    fondo.setBounds(0,0,1000,600);
-	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#FFFFFF"));
-	    fondo.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-	    ventana.add(fondo);
-	    
-	    JLabel logo = new JLabel();
-	    logo.setBounds(425,40,160,160);
+	    JPanel panel = new JPanel();
+	    panel.setLayout(null);
+	    panel.setBackground(Color.WHITE);
+	    panel.setPreferredSize(new Dimension(460, 210));
 
 	    ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg"));
-	    Image imagen = icono.getImage().getScaledInstance(160,160,Image.SCALE_SMOOTH);
-	    logo.setIcon(new ImageIcon(imagen));
-	    fondo.add(logo);
-	    
-	    JLabel mensaje = new JLabel("¿Estás seguro de que deseas eliminar la cita?");
-	    mensaje.setFont(new Font("Adamina",Font.BOLD,36));
-	    mensaje.setBounds(100,200,800,120);
-	    mensaje.setHorizontalAlignment(JLabel.CENTER);
-	    fondo.add(mensaje);
+	    Image imagen = icono.getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
 
-	    JButton botonCancelar = new JButton("Cancelar");
-	    botonCancelar.setBounds(250,360,220,70);
-	    botonCancelar.setBackground(Color.decode("#14508C"));
-	    botonCancelar.setForeground(Color.WHITE);
-	    botonCancelar.setFont(new Font("Inter",Font.BOLD,22));
-	    botonCancelar.setFocusPainted(false);
-	    botonCancelar.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-	    fondo.add(botonCancelar);
+	    JLabel logo = new JLabel(new ImageIcon(imagen));
+	    logo.setBounds(202, 5, 55, 55);
+	    panel.add(logo);
 
-	    JButton botonConfirmar = new JButton("Si, estoy seguro");
-	    botonConfirmar.setBounds(530,360,250,70);
-	    botonConfirmar.setBackground(Color.decode("#D81F10"));
-	    botonConfirmar.setForeground(Color.WHITE);
-	    botonConfirmar.setFont(new Font("Inter",Font.BOLD,22));
-	    botonConfirmar.setFocusPainted(false);
-	    botonConfirmar.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-	    fondo.add(botonConfirmar);
+	    JLabel mensaje = new JLabel("¿Deseas eliminar la cita?");
+	    mensaje.setBounds(30, 65, 400, 35);
+	    mensaje.setHorizontalAlignment(SwingConstants.CENTER);
+	    mensaje.setFont(new Font("Adamina", Font.BOLD, 22));
+	    panel.add(mensaje);
 
-	    botonCancelar.addActionListener(e->{
-	    	ventana.dispose();
-	    	EdicionCita();
+	    JButton cancelar = new JButton("Cancelar");
+	    cancelar.setBounds(55, 125, 150, 45);
+	    cancelar.setBackground(Color.decode("#14508C"));
+	    cancelar.setForeground(Color.WHITE);
+	    cancelar.setFont(new Font("Inter", Font.BOLD, 18));
+	    cancelar.setFocusPainted(false);
+	    cancelar.setBorder(BorderFactory.createLineBorder(Color.BLACK,1,true));
+
+	    JButton confirmar = new JButton("Sí, eliminar");
+	    confirmar.setBounds(245, 125, 160, 45);
+	    confirmar.setBackground(Color.decode("#D81F10"));
+	    confirmar.setForeground(Color.WHITE);
+	    confirmar.setFont(new Font("Inter", Font.BOLD, 18));
+	    confirmar.setFocusPainted(false);
+	    confirmar.setBorder(BorderFactory.createLineBorder(Color.BLACK,1,true));
+
+	    panel.add(cancelar);
+	    panel.add(confirmar);
+
+	    UIManager.put("OptionPane.background", Color.WHITE);
+	    UIManager.put("Panel.background", Color.WHITE);
+
+	    JOptionPane optionPane = new JOptionPane(
+	            panel,
+	            JOptionPane.PLAIN_MESSAGE,
+	            JOptionPane.DEFAULT_OPTION,
+	            null,
+	            new Object[]{},
+	            null
+	    );
+
+	    JDialog dialog = optionPane.createDialog("Eliminar cita");
+
+	    dialog.setIconImage(icono.getImage());
+
+	    cancelar.addActionListener(e -> {
+	        dialog.dispose();
+	        EdicionCita();
+	    });
+
+	    confirmar.addActionListener(e -> {
+	        dialog.dispose();
+	        RegistroCitas();
 	    });
 	    
-	    botonConfirmar.addActionListener(e->{
-	    	ventana.dispose();
-	    	RegistroCitas();
-	    });
-
-	    ventana.setVisible(true);
+	    dialog.setLocationRelativeTo(null);
+	    dialog.setVisible(true);
 	}
 	
 	public void PanelDuenos() {
 
-		JFrame ventana = new JFrame();
+	    JFrame ventana = new JFrame();
 	    ventana.setSize(1000,600);
 	    ventana.setTitle("Panel de dueños");
 	    ventana.setLocationRelativeTo(null);
@@ -1146,64 +1174,95 @@ public class AuthView {
 	    titulo.setBounds(40,20,400,40);
 	    fondo.add(titulo);
 
-	    JPanel panelRegistro = new JPanel();
-	    panelRegistro.setBounds(40,80,900,200);
-	    panelRegistro.setLayout(null);
-	    panelRegistro.setBackground(Color.decode("#8CACCB"));
-	    panelRegistro.setBorder(BorderFactory.createLineBorder(Color.BLACK,2,true));
-	    fondo.add(panelRegistro);
-	    
-	    ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/Doctor_Registro.jpg"));
+	    JPanel contenedor = new JPanel();
+	    contenedor.setLayout(new BoxLayout(contenedor, BoxLayout.Y_AXIS));
+	    contenedor.setBackground(Color.WHITE);
 
-	    Image img = icono.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
-	    ImageIcon iconoEscalado = new ImageIcon(img);
-	    
-	    JLabel botonFotoDueno = new JLabel(iconoEscalado);
-	    botonFotoDueno.setBounds(20,40,120,120);
-	    panelRegistro.add(botonFotoDueno);    
+	    JScrollPane scroll = new JScrollPane(contenedor);
+	    scroll.setBounds(40,80,900,390);
+	    scroll.setBorder(null);
+	    fondo.add(scroll);
 
-	    JLabel labelNombreDueno = new JLabel("Nombre del dueño");
-	    labelNombreDueno.setFont(new Font("Adamina", Font.BOLD, 28));
-	    labelNombreDueno.setBounds(160,40,400,40);
-	    panelRegistro.add(labelNombreDueno);
+	    for(int i = 1; i <= 6; i++) {
 
-	    JLabel labelMascotaTexto = new JLabel("Mascota:");
-	    labelMascotaTexto.setBounds(160,90,100,25);
-	    panelRegistro.add(labelMascotaTexto);
+	        JPanel panelRegistro = new JPanel();
+	        panelRegistro.setLayout(null);
+	        panelRegistro.setBackground(Color.decode("#8CACCB"));
 
-	    JLabel labelNombreMascota = new JLabel("Nombre mascota");
-	    labelNombreMascota.setBounds(240,90,200,25);
-	    panelRegistro.add(labelNombreMascota);
-	    
-	    ImageIcon icono2 = new ImageIcon(getClass().getResource("/Imagenes/fotomascota.jpg"));
+	        panelRegistro.setMaximumSize(new Dimension(Integer.MAX_VALUE, 200));
+	        panelRegistro.setPreferredSize(new Dimension(850, 200));
 
-	    Image img2 = icono2.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
-	    ImageIcon iconoEscalado2 = new ImageIcon(img2);
+	        panelRegistro.setBorder(BorderFactory.createLineBorder(Color.BLACK,2,true));
 
-	    JLabel botonFotoMascota = new JLabel(iconoEscalado2);
-	    botonFotoMascota.setBounds(500,40,120,120);
-	    panelRegistro.add(botonFotoMascota);
+	        ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/Doctor_Registro.jpg"));
 
-	    JButton botonDetalles = new JButton("Detalles");
-	    botonDetalles.setBounds(650,40,120,40);
-	    botonDetalles.setFont(new Font("Inter", Font.BOLD, 20));
-	    botonDetalles.setBackground(Color.decode("#14518C"));
-	    botonDetalles.setForeground(Color.WHITE);
-	    panelRegistro.add(botonDetalles);
+	        Image img = icono.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+	        ImageIcon iconoEscalado = new ImageIcon(img);
 
-	    JButton botonEditar = new JButton("Editar");
-	    botonEditar.setBounds(650,90,120,40);
-	    botonEditar.setFont(new Font("Inter", Font.BOLD, 20));
-	    botonEditar.setBackground(Color.decode("#14518C"));
-	    botonEditar.setForeground(Color.WHITE);
-	    panelRegistro.add(botonEditar);
+	        JLabel botonFotoDueno = new JLabel(iconoEscalado);
+	        botonFotoDueno.setBounds(20,40,120,120);
+	        panelRegistro.add(botonFotoDueno);
 
-	    JButton botonEliminar = new JButton("Eliminar");
-	    botonEliminar.setBounds(650,140,120,40);
-	    botonEliminar.setFont(new Font("Inter", Font.BOLD, 20));
-	    botonEliminar.setBackground(Color.decode("#14518C"));
-	    botonEliminar.setForeground(Color.WHITE);
-	    panelRegistro.add(botonEliminar);
+	        JLabel labelNombreDueno = new JLabel("Dueño " + i);
+	        labelNombreDueno.setFont(new Font("Adamina", Font.BOLD, 28));
+	        labelNombreDueno.setBounds(160,40,400,40);
+	        panelRegistro.add(labelNombreDueno);
+
+	        JLabel labelMascotaTexto = new JLabel("Mascota:");
+	        labelMascotaTexto.setBounds(160,90,100,25);
+	        panelRegistro.add(labelMascotaTexto);
+
+	        JLabel labelNombreMascota = new JLabel("Mascota " + i);
+	        labelNombreMascota.setBounds(240,90,200,25);
+	        panelRegistro.add(labelNombreMascota);
+
+	        ImageIcon icono2 = new ImageIcon(getClass().getResource("/Imagenes/fotomascota.jpg"));
+
+	        Image img2 = icono2.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+	        ImageIcon iconoEscalado2 = new ImageIcon(img2);
+
+	        JLabel botonFotoMascota = new JLabel(iconoEscalado2);
+	        botonFotoMascota.setBounds(500,40,120,120);
+	        panelRegistro.add(botonFotoMascota);
+
+	        JButton botonDetalles = new JButton("Detalles");
+	        botonDetalles.setBounds(650,40,120,40);
+	        botonDetalles.setFont(new Font("Inter", Font.BOLD, 20));
+	        botonDetalles.setBackground(Color.decode("#14518C"));
+	        botonDetalles.setForeground(Color.WHITE);
+	        panelRegistro.add(botonDetalles);
+
+	        JButton botonEditar = new JButton("Editar");
+	        botonEditar.setBounds(650,90,120,40);
+	        botonEditar.setFont(new Font("Inter", Font.BOLD, 20));
+	        botonEditar.setBackground(Color.decode("#14518C"));
+	        botonEditar.setForeground(Color.WHITE);
+	        panelRegistro.add(botonEditar);
+
+	        JButton botonEliminar = new JButton("Eliminar");
+	        botonEliminar.setBounds(650,140,120,40);
+	        botonEliminar.setFont(new Font("Inter", Font.BOLD, 20));
+	        botonEliminar.setBackground(Color.decode("#14518C"));
+	        botonEliminar.setForeground(Color.WHITE);
+	        panelRegistro.add(botonEliminar);
+
+	        botonDetalles.addActionListener(e -> {
+	            ventana.dispose();
+	            DetallesDueno();
+	        });
+
+	        botonEditar.addActionListener(e -> {
+	            ventana.dispose();
+	            CrearDueno();
+	        });
+
+	        botonEliminar.addActionListener(e -> {
+	            ventana.dispose();
+	            EliminarRegistroDueno();
+	        });
+
+	        contenedor.add(panelRegistro);
+	    }
 
 	    JButton botonRegresar = new JButton("Regresar");
 	    botonRegresar.setBounds(40,500,150,50);
@@ -1229,23 +1288,7 @@ public class AuthView {
 	        CrearDueno();
 	    });
 
-	    botonDetalles.addActionListener(e -> {
-	        ventana.dispose();
-	        DetallesDueno();
-	    });
-
-	    botonEditar.addActionListener(e -> {
-	        ventana.dispose();
-	        CrearDueno();
-	    });
-
-	    botonEliminar.addActionListener(e -> {
-	        ventana.dispose();
-	        EliminarRegistroDueno();
-	    });
-
 	    ventana.setVisible(true);
-	    
 	}
 	
 	public void CrearDueno() {
@@ -1582,7 +1625,7 @@ public class AuthView {
 
 	    JButton botonGuardar = new JButton("Guardar");
 	    botonGuardar.setBounds(760,470,150,50);
-	    botonGuardar.setBackground(Color.decode("#0B2545"));
+	    botonGuardar.setBackground(Color.decode("#014F97"));
 	    botonGuardar.setForeground(Color.WHITE);
 	    fondo.add(botonGuardar);
 
@@ -1614,145 +1657,180 @@ public class AuthView {
 	
 	public void EliminarRegistroDueno() {
 
-	    JFrame ventana = new JFrame();
-	    ventana.setSize(1000,600);
-	    ventana.setTitle("Eliminar registro del dueño");
-	    ventana.setLocationRelativeTo(null);
-	    ventana.setLayout(null);
-
-	    JPanel fondo = new JPanel();
-	    fondo.setBounds(0,0,1000,600);
-	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#FFFFFF"));
-	    fondo.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-	    ventana.add(fondo);	    
-
-	    JLabel logo = new JLabel();
-	    logo.setBounds(425,40,160,160);
+	    JPanel panel = new JPanel();
+	    panel.setLayout(null);
+	    panel.setBackground(Color.WHITE);
+	    panel.setPreferredSize(new Dimension(470, 210));
 
 	    ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg"));
-	    Image imagen = icono.getImage().getScaledInstance(160,160,Image.SCALE_SMOOTH);
-	    logo.setIcon(new ImageIcon(imagen));
-	    fondo.add(logo);
+	    Image imagen = icono.getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
+
+	    JLabel logo = new JLabel(new ImageIcon(imagen));
+	    logo.setBounds(207, 5, 55, 55);
+	    panel.add(logo);
 
 	    JLabel texto = new JLabel("¿Deseas eliminar el registro?");
-	    texto.setBounds(200, 210, 600, 60);
-	    texto.setFont(new Font("Adamina", Font.BOLD, 32));
-	    texto.setHorizontalAlignment(JLabel.CENTER);
-	    fondo.add(texto);
+	    texto.setBounds(35, 65, 400, 35);
+	    texto.setHorizontalAlignment(SwingConstants.CENTER);
+	    texto.setFont(new Font("Adamina", Font.BOLD, 22));
+	    panel.add(texto);
 
 	    JButton cancelar = new JButton("Cancelar");
-	    cancelar.setBounds(290, 330, 180, 60);
+	    cancelar.setBounds(55, 125, 150, 45);
 	    cancelar.setBackground(Color.decode("#14518C"));
 	    cancelar.setForeground(Color.WHITE);
+	    cancelar.setFont(new Font("Inter", Font.BOLD, 18));
 	    cancelar.setFocusPainted(false);
-	    fondo.add(cancelar);
+	    cancelar.setBorder(BorderFactory.createLineBorder(Color.BLACK,1,true));
 
-	    JButton confirmar = new JButton("Sí, estoy seguro");
-	    confirmar.setBounds(530, 330, 220, 60);
+	    JButton confirmar = new JButton("Sí, eliminar");
+	    confirmar.setBounds(245, 125, 170, 45);
 	    confirmar.setBackground(Color.decode("#D81F10"));
 	    confirmar.setForeground(Color.WHITE);
+	    confirmar.setFont(new Font("Inter", Font.BOLD, 18));
 	    confirmar.setFocusPainted(false);
-	    fondo.add(confirmar);
+	    confirmar.setBorder(BorderFactory.createLineBorder(Color.BLACK,1,true));
 
-	    cancelar.addActionListener(e->{
-	    	ventana.dispose();
-	    	PanelDuenos();
+	    panel.add(cancelar);
+	    panel.add(confirmar);
+
+	    UIManager.put("OptionPane.background", Color.WHITE);
+	    UIManager.put("Panel.background", Color.WHITE);
+
+	    JOptionPane optionPane = new JOptionPane(
+	            panel,
+	            JOptionPane.PLAIN_MESSAGE,
+	            JOptionPane.DEFAULT_OPTION,
+	            null,
+	            new Object[]{},
+	            null
+	    );
+
+	    JDialog dialog = optionPane.createDialog("Eliminar registro del dueño");
+
+	    dialog.setIconImage(icono.getImage());
+
+	    cancelar.addActionListener(e -> {
+	        dialog.dispose();
+	        PanelDuenos();
+	    });
+
+	    confirmar.addActionListener(e -> {
+	        dialog.dispose();
+	        EliminadoExitoso();
 	    });
 	    
-	    confirmar.addActionListener(e->{
-	    	ventana.dispose();
-	    	EliminadoExitoso();
-	    });
-
-	    ventana.setVisible(true);
+	    dialog.setLocationRelativeTo(null);
+	    dialog.setVisible(true);
 	}
 	
 	public void EliminadoExitoso() {
 
-	    JFrame ventana = new JFrame();
-	    ventana.setSize(1000,600);
-	    ventana.setTitle("Eliminado exitoso");
-	    ventana.setLocationRelativeTo(null);
-	    ventana.setLayout(null);
-
-	    JPanel fondo = new JPanel();
-	    fondo.setBounds(0,0,1000,600);
-	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#FFFFFF"));
-	    fondo.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-	    ventana.add(fondo);
-	    
-	    JLabel logo = new JLabel();
-	    logo.setBounds(425,40,160,160);
+	    JPanel panel = new JPanel();
+	    panel.setLayout(null);
+	    panel.setBackground(Color.WHITE);
+	    panel.setPreferredSize(new Dimension(450, 190));
 
 	    ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg"));
-	    Image imagen = icono.getImage().getScaledInstance(160,160,Image.SCALE_SMOOTH);
-	    logo.setIcon(new ImageIcon(imagen));
-	    fondo.add(logo);
+	    Image imagen = icono.getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
+
+	    JLabel logo = new JLabel(new ImageIcon(imagen));
+	    logo.setBounds(197, 5, 55, 55);
+	    panel.add(logo);
 
 	    JLabel texto = new JLabel("Se eliminó el registro correctamente.");
-	    texto.setBounds(100,200,800,80);
-	    texto.setFont(new Font("Adamina",Font.BOLD,34));
-	    texto.setHorizontalAlignment(JLabel.CENTER);
-	    fondo.add(texto);
+	    texto.setBounds(25, 65, 400, 35);
+	    texto.setHorizontalAlignment(SwingConstants.CENTER);
+	    texto.setFont(new Font("Adamina", Font.BOLD, 20));
+	    panel.add(texto);
 
 	    JButton aceptar = new JButton("Aceptar");
-	    aceptar.setBounds(400,350,200,70);
+	    aceptar.setBounds(135, 120, 180, 45);
 	    aceptar.setBackground(Color.decode("#14508C"));
 	    aceptar.setForeground(Color.WHITE);
-	    fondo.add(aceptar);
+	    aceptar.setFont(new Font("Inter", Font.BOLD, 18));
+	    aceptar.setFocusPainted(false);
+	    aceptar.setBorder(BorderFactory.createLineBorder(Color.BLACK,1,true));
 
-	    aceptar.addActionListener(e->{
-	    	ventana.dispose();
-	    	PanelDuenos();
+	    panel.add(aceptar);
+
+	    UIManager.put("OptionPane.background", Color.WHITE);
+	    UIManager.put("Panel.background", Color.WHITE);
+
+	    JOptionPane optionPane = new JOptionPane(
+	            panel,
+	            JOptionPane.PLAIN_MESSAGE,
+	            JOptionPane.DEFAULT_OPTION,
+	            null,
+	            new Object[]{},
+	            null
+	    );
+
+	    JDialog dialog = optionPane.createDialog("Eliminado exitoso");
+
+	    dialog.setIconImage(icono.getImage());
+
+	    aceptar.addActionListener(e -> {
+	        dialog.dispose();
+	        PanelDuenos();
 	    });
 
-	    ventana.setVisible(true);
+	    dialog.setVisible(true);
 	}
 	
 	public void RegistroExitoso() {
 
-	    JFrame ventana = new JFrame();
-	    ventana.setSize(1000,600);
-	    ventana.setTitle("Registro exitoso");
-	    ventana.setLocationRelativeTo(null);
-	    ventana.setLayout(null);
-
-	    JPanel fondo = new JPanel();
-	    fondo.setBounds(0,0,1000,600);
-	    fondo.setLayout(null);
-	    fondo.setBackground(Color.decode("#FFFFFF"));
-	    fondo.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-	    ventana.add(fondo);
-	    
-	    JLabel logo = new JLabel();
-	    logo.setBounds(425,40,160,160);
+	    JPanel panel = new JPanel();
+	    panel.setLayout(null);
+	    panel.setBackground(Color.WHITE);
+	    panel.setPreferredSize(new Dimension(470, 190));
 
 	    ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg"));
-	    Image imagen = icono.getImage().getScaledInstance(160,160,Image.SCALE_SMOOTH);
-	    logo.setIcon(new ImageIcon(imagen));
-	    fondo.add(logo);
+	    Image imagen = icono.getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
+
+	    JLabel logo = new JLabel(new ImageIcon(imagen));
+	    logo.setBounds(207, 5, 55, 55);
+	    panel.add(logo);
 
 	    JLabel texto = new JLabel("Se agregó el nuevo registro exitosamente.");
-	    texto.setBounds(100,220,800,80);
-	    texto.setFont(new Font("Adamina",Font.BOLD,34));
-	    texto.setHorizontalAlignment(JLabel.CENTER);
-	    fondo.add(texto);
+	    texto.setBounds(20, 65, 430, 35);
+	    texto.setHorizontalAlignment(SwingConstants.CENTER);
+	    texto.setFont(new Font("Adamina", Font.BOLD, 18));
+	    panel.add(texto);
 
 	    JButton aceptar = new JButton("Aceptar");
-	    aceptar.setBounds(405,350,200,70);
-	    aceptar.setFont(new Font("Adamina",Font.BOLD,34));
+	    aceptar.setBounds(145, 120, 180, 45);
 	    aceptar.setBackground(Color.decode("#14508C"));
 	    aceptar.setForeground(Color.WHITE);
-	    fondo.add(aceptar);
+	    aceptar.setFont(new Font("Inter", Font.BOLD, 18));
+	    aceptar.setFocusPainted(false);
+	    aceptar.setBorder(BorderFactory.createLineBorder(Color.BLACK,1,true));
 
-	    aceptar.addActionListener(e->{
-	    	ventana.dispose();
-	    	PanelDuenos();
+	    panel.add(aceptar);
+
+	    UIManager.put("OptionPane.background", Color.WHITE);
+	    UIManager.put("Panel.background", Color.WHITE);
+
+	    JOptionPane optionPane = new JOptionPane(
+	            panel,
+	            JOptionPane.PLAIN_MESSAGE,
+	            JOptionPane.DEFAULT_OPTION,
+	            null,
+	            new Object[]{},
+	            null
+	    );
+
+	    JDialog dialog = optionPane.createDialog("Registro exitoso");
+
+	    dialog.setIconImage(icono.getImage());
+
+	    aceptar.addActionListener(e -> {
+	        dialog.dispose();
+	        PanelDuenos();
 	    });
-
-	    ventana.setVisible(true);
+	    
+	    dialog.setLocationRelativeTo(null);
+	    dialog.setVisible(true);
 	}
 	
 	public void DetallesDueno() {
@@ -1978,34 +2056,22 @@ public class AuthView {
 	    fondo.add(botonRegresar);
 
 	    JButton botonCarnet = new JButton("Carnet");
-	    botonCarnet.setBounds(250,450,150,50);
+	    botonCarnet.setBounds(550,450,150,50);
 	    botonCarnet.setFont(new Font("Inter", Font.BOLD, 20));
 	    botonCarnet.setBackground(Color.decode("#14508C"));
 	    botonCarnet.setForeground(Color.WHITE);
 	    fondo.add(botonCarnet);
 
 	    JButton botonDescargar = new JButton("Descargar ficha");
-	    botonDescargar.setBounds(465,450,200,50);
+	    botonDescargar.setBounds(740,450,200,50);
 	    botonDescargar.setFont(new Font("Inter", Font.BOLD, 20));
 	    botonDescargar.setBackground(Color.decode("#14508C"));
 	    botonDescargar.setForeground(Color.WHITE);
 	    fondo.add(botonDescargar);
 
-	    JButton botonHistorial = new JButton("Historial");
-	    botonHistorial.setBounds(740,450,200,50);
-	    botonHistorial.setFont(new Font("Inter", Font.BOLD, 20));
-	    botonHistorial.setBackground(Color.decode("#0B2545"));
-	    botonHistorial.setForeground(Color.WHITE);
-	    fondo.add(botonHistorial);
-
 	    botonRegresar.addActionListener(e -> {
 	        ventana.dispose();
 	        PanelDuenos();
-	    });
-
-	    botonHistorial.addActionListener(e -> {
-	        ventana.dispose();
-	        HistorialCostos();
 	    });
 
 	    ventana.setVisible(true);
