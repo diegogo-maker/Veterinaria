@@ -6,10 +6,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -141,6 +143,12 @@ public class AuthView {
     	    });
 
     	    ventana.setVisible(true);
+    	    
+    	    Image aplicacion = new ImageIcon(
+    	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
+    	    	).getImage();
+
+    	    	ventana.setIconImage(aplicacion);
     	}
 
      public void Salir() {
@@ -195,11 +203,14 @@ public class AuthView {
 
          cancelar.addActionListener(e -> {
              dialog.dispose();
-             Inicio(nombreUsuarioActual);
+             
          });
 
          dialog.setLocationRelativeTo(null);
          dialog.setVisible(true);
+         
+         JDialog aplicacion = optionPane.createDialog("Salir");
+         dialog.setIconImage(icono.getImage());
      }
 	
      public void Inicio(String nombre) {
@@ -247,7 +258,7 @@ public class AuthView {
          panel.add(cerrar);
 
          cerrar.addActionListener(e -> {
-             ventana.dispose();
+             
              Salir();
          });
 
@@ -333,6 +344,12 @@ public class AuthView {
          });
 
          ventana.setVisible(true);
+        
+         Image aplicacion = new ImageIcon(
+ 	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
+ 	    	).getImage();
+
+ 	    	ventana.setIconImage(aplicacion);
      }
 
      public void Costos() {
@@ -433,6 +450,12 @@ public class AuthView {
          });
 
          ventana.setVisible(true);
+         
+         Image aplicacion = new ImageIcon(
+  	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
+  	    	).getImage();
+
+  	    	ventana.setIconImage(aplicacion);
      }
 
      public void RegistroCitas() {
@@ -563,6 +586,12 @@ public class AuthView {
          });
 
          ventana.setVisible(true);
+     
+         Image aplicacion = new ImageIcon(
+  	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
+  	    	).getImage();
+
+  	    	ventana.setIconImage(aplicacion);
      }
 
      public void DetallesPaciente(Paciente paciente) {
@@ -658,7 +687,21 @@ public class AuthView {
          });
 
          ventana.setVisible(true);
+         
+         Image aplicacion = new ImageIcon(
+  	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
+  	    	).getImage();
+
+  	    	ventana.setIconImage(aplicacion);
+     
+  	    	 Image apk = new ImageIcon(
+  	 	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
+  	 	    	).getImage();
+
+  	 	    	ventana.setIconImage(apk);
+     
      }
+     
 
      public void HistorialCostos(Paciente paciente, Dueno dueno) {
          JFrame ventana = new JFrame("Historial de costos");
@@ -727,6 +770,13 @@ public class AuthView {
          fondo.add(regresar);
 
          ventana.setVisible(true);
+     
+         Image aplicacion = new ImageIcon(
+  	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
+  	    	).getImage();
+
+  	    	ventana.setIconImage(aplicacion);
+     
      }
 
      public void CrearCita() {
@@ -953,6 +1003,13 @@ public class AuthView {
          });
 
          ventana.setVisible(true);
+
+         Image aplicacion = new ImageIcon(
+  	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
+  	    	).getImage();
+
+  	    	ventana.setIconImage(aplicacion); 
+     
      }
 
      private void actualizarCosto(JComboBox<String> comboTipo, JComboBox<String> comboUrgencia, 
@@ -975,6 +1032,8 @@ public class AuthView {
 
          double total = costoConsulta + costoMedicamento;
          campoCosto.setText("$" + total + " MXN");
+     
+     
      }
 
      public void EdicionCita(Paciente paciente) {
@@ -1211,7 +1270,13 @@ public class AuthView {
     	    });
 
     	    ventana.setVisible(true);
-    	}
+    	
+    	    Image aplicacion = new ImageIcon(
+     	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
+     	    	).getImage();
+
+     	    	ventana.setIconImage(aplicacion);
+     }
 	
     public void PanelDuenos() {
         JFrame ventana = new JFrame("Registro de dueños");
@@ -1360,6 +1425,18 @@ public class AuthView {
         });
 
         ventana.setVisible(true);
+    
+        Image aplicacion = new ImageIcon(
+ 	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
+ 	    	).getImage();
+
+ 	    	ventana.setIconImage(aplicacion);
+    
+ 	    	 Image apk = new ImageIcon(
+ 	 	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
+ 	 	    	).getImage();
+
+ 	 	    	ventana.setIconImage(apk);
     }
 
     public void CrearDueno() {
@@ -1519,6 +1596,12 @@ public class AuthView {
         });
 
         ventana.setVisible(true);
+    
+        Image aplicacion = new ImageIcon(
+ 	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
+ 	    	).getImage();
+
+ 	    	ventana.setIconImage(aplicacion);
     }
 
     public void CrearDueno(Dueno dueno) {
@@ -1694,6 +1777,12 @@ public class AuthView {
         });
 
         ventana.setVisible(true);
+    
+        Image aplicacion = new ImageIcon(
+ 	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
+ 	    	).getImage();
+
+ 	    	ventana.setIconImage(aplicacion);
     }
 
     public void CrearPaciente(Dueno dueno) {
@@ -1973,6 +2062,12 @@ public class AuthView {
         });
 
         ventana.setVisible(true);
+    
+        Image aplicacion = new ImageIcon(
+ 	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
+ 	    	).getImage();
+
+ 	    	ventana.setIconImage(aplicacion);
     }
 
     private JLabel crearLabel(String texto, Font fuente) {
@@ -2264,6 +2359,12 @@ public class AuthView {
         });
 
         ventana.setVisible(true);
+    
+        Image aplicacion = new ImageIcon(
+ 	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
+ 	    	).getImage();
+
+ 	    	ventana.setIconImage(aplicacion);
     }
 	
     public void EliminarRegistroDueno(int idDueno) {
@@ -2286,7 +2387,7 @@ public class AuthView {
         panel.add(texto);
 
         JButton cancelar = new JButton("Cancelar");
-        cancelar.setBounds(70, 125, 140, 45);
+        cancelar.setBounds(250, 125, 150, 45);
         cancelar.setBackground(Color.decode("#14508C"));
         cancelar.setForeground(Color.WHITE);
         cancelar.setFont(new Font("Inter", Font.BOLD, 18));
@@ -2295,7 +2396,7 @@ public class AuthView {
         panel.add(cancelar);
 
         JButton confirmar = new JButton("Sí, eliminar");
-        confirmar.setBounds(250, 125, 150, 45);
+        confirmar.setBounds(70, 125, 140, 45);
         confirmar.setBackground(Color.decode("#D81F10"));
         confirmar.setForeground(Color.WHITE);
         confirmar.setFont(new Font("Inter", Font.BOLD, 18));
@@ -2313,10 +2414,11 @@ public class AuthView {
 
         cancelar.addActionListener(e -> {
             dialog.dispose();
-            PanelDuenos();
+            
         });
 
         confirmar.addActionListener(e -> {
+        	dialog.dispose();
             boolean exito = controller.eliminarDueno(idDueno);
             dialog.dispose();
             if (exito) {
@@ -2329,6 +2431,9 @@ public class AuthView {
 
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
+    
+        JDialog aplicacion = optionPane.createDialog("Salir");
+        dialog.setIconImage(icono.getImage());
     }
 
     public void EliminadoExitoso() {
@@ -2368,12 +2473,15 @@ public class AuthView {
         dialog.setIconImage(icono.getImage());
 
         aceptar.addActionListener(e -> {
-            dialog.dispose();
+        	dialog.dispose();
             PanelDuenos();
         });
 
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
+    
+        JDialog aplicacion = optionPane.createDialog("Salir");
+        dialog.setIconImage(icono.getImage());
     }
 
     public void RegistroExitoso() {
@@ -2419,6 +2527,9 @@ public class AuthView {
 
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
+    
+        JDialog aplicacion = optionPane.createDialog("Salir");
+        dialog.setIconImage(icono.getImage());
     }
 
     public void DetallesDueno(Dueno dueno) {
@@ -2526,5 +2637,11 @@ public class AuthView {
         });
 
         ventana.setVisible(true);
+    
+        Image aplicacion = new ImageIcon(
+ 	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
+ 	    	).getImage();
+
+ 	    	ventana.setIconImage(aplicacion);
     }
 }
