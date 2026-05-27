@@ -459,140 +459,143 @@ public class AuthView {
      }
 
      public void RegistroCitas() {
-         JFrame ventana = new JFrame("Registro de citas");
-         ventana.setSize(1000, 600);
-         ventana.setLocationRelativeTo(null);
-         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         ventana.setLayout(null);
+    	    JFrame ventana = new JFrame("Registro de citas");
+    	    ventana.setSize(1000, 600);
+    	    ventana.setLocationRelativeTo(null);
+    	    ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	    ventana.setLayout(null);
 
-         JPanel fondo = new JPanel();
-         fondo.setBounds(0, 0, 1000, 600);
-         fondo.setLayout(null);
-         fondo.setBackground(Color.decode("#FFFFFF"));
-         ventana.add(fondo);
+    	    JPanel fondo = new JPanel();
+    	    fondo.setBounds(0, 0, 1000, 600);
+    	    fondo.setLayout(null);
+    	    fondo.setBackground(Color.decode("#FFFFFF"));
+    	    ventana.add(fondo);
 
-         JLabel titulo = new JLabel("Registro de citas");
-         titulo.setFont(new Font("Adamina", Font.BOLD, 34));
-         titulo.setBounds(50, 20, 400, 40);
-         fondo.add(titulo);
+    	    JLabel titulo = new JLabel("Registro de citas");
+    	    titulo.setFont(new Font("Adamina", Font.BOLD, 34));
+    	    titulo.setBounds(50, 20, 400, 40);
+    	    fondo.add(titulo);
 
-         JPanel contenedor = new JPanel();
-         contenedor.setLayout(new BoxLayout(contenedor, BoxLayout.Y_AXIS));
-         contenedor.setBackground(Color.decode("#FFFFFF"));
+    	    JPanel contenedor = new JPanel();
+    	    contenedor.setLayout(new BoxLayout(contenedor, BoxLayout.Y_AXIS));
+    	    contenedor.setBackground(Color.decode("#FFFFFF"));
 
-         JScrollPane scroll = new JScrollPane(contenedor);
-         scroll.setBounds(50, 80, 900, 380);
-         scroll.setBorder(null);
-         scroll.getVerticalScrollBar().setUnitIncrement(16);
-         fondo.add(scroll);
+    	    JScrollPane scroll = new JScrollPane(contenedor);
+    	    scroll.setBounds(50, 80, 900, 380);
+    	    scroll.setBorder(null);
+    	    scroll.getVerticalScrollBar().setUnitIncrement(16);
+    	    fondo.add(scroll);
 
-         ArrayList<Paciente> listaPacientes = controller.listarPacientes();
+    	    ArrayList<Paciente> listaPacientes = controller.listarPacientes();
 
-         for (Paciente paciente : listaPacientes) {
-             JPanel panel = new JPanel();
-             panel.setLayout(null);
-             panel.setBackground(Color.decode("#8CACCB"));
-             panel.setPreferredSize(new Dimension(850, 120));
-             panel.setMaximumSize(new Dimension(850, 120));
-             panel.setMinimumSize(new Dimension(850, 120));
-             panel.setBorder(BorderFactory.createCompoundBorder(
-                     BorderFactory.createEmptyBorder(0, 0, 10, 0),
-                     new LineBorder(Color.BLACK, 2, true)));
+    	    for (Paciente paciente : listaPacientes) {
+    	        JPanel panel = new JPanel();
+    	        panel.setLayout(null);
+    	        panel.setBackground(Color.decode("#8CACCB"));
+    	        panel.setPreferredSize(new Dimension(850, 120));
+    	        panel.setMaximumSize(new Dimension(850, 120));
+    	        panel.setMinimumSize(new Dimension(850, 120));
+    	        panel.setBorder(BorderFactory.createCompoundBorder(
+    	                BorderFactory.createEmptyBorder(0, 0, 10, 0),
+    	                new LineBorder(Color.BLACK, 2, true)));
 
-             ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/fotomascota.jpg"));
-             Image img = icono.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-             ImageIcon iconoEscalado = new ImageIcon(img);
+    	        ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/fotomascota.jpg"));
+    	        Image img = icono.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+    	        ImageIcon iconoEscalado = new ImageIcon(img);
 
-             JButton foto = new JButton(iconoEscalado);
-             foto.setBounds(20, 20, 80, 80);
-             foto.setBackground(Color.LIGHT_GRAY);
-             foto.setFocusPainted(false);
-             foto.setBorder(null);
-             panel.add(foto);
+    	        JButton foto = new JButton(iconoEscalado);
+    	        foto.setBounds(20, 20, 80, 80);
+    	        foto.setBackground(Color.LIGHT_GRAY);
+    	        foto.setFocusPainted(false);
+    	        foto.setBorder(null);
+    	        panel.add(foto);
 
-             foto.addActionListener(e -> {
-                 ventana.dispose();
-                 DetallesPaciente(paciente);
-             });
+    	        foto.addActionListener(e -> {
+    	            ventana.dispose();
+    	            DetallesPaciente(paciente);
+    	        });
 
-             JLabel nombre = new JLabel(paciente.getNombre());
-             nombre.setFont(new Font("Adamina", Font.BOLD, 28));
-             nombre.setBounds(120, 10, 300, 40);
-             panel.add(nombre);
+    	        JLabel nombre = new JLabel(paciente.getNombre());
+    	        nombre.setFont(new Font("Adamina", Font.BOLD, 28));
+    	        nombre.setBounds(120, 10, 300, 40);
+    	        panel.add(nombre);
 
-             JLabel desc = new JLabel(paciente.getEspecie() + " / " + paciente.getRaza());
-             desc.setFont(new Font("Adamina", Font.PLAIN, 18));
-             desc.setBounds(120, 50, 300, 30);
-             panel.add(desc);
+    	        JLabel desc = new JLabel(paciente.getEspecie() + " / " + paciente.getRaza());
+    	        desc.setFont(new Font("Adamina", Font.PLAIN, 18));
+    	        desc.setBounds(120, 50, 300, 30);
+    	        panel.add(desc);
 
-             String fechaCita = paciente.getFecha() != null ? paciente.getFecha() : "No asignada";
-             JLabel cita = new JLabel("Próxima cita: " + fechaCita);
-             cita.setFont(new Font("Adamina", Font.PLAIN, 18));
-             cita.setBounds(450, 20, 300, 30);
-             panel.add(cita);
+    	        String fechaCita = paciente.getFecha() != null ? paciente.getFecha() : "No asignada";
+    	        JLabel cita = new JLabel("Próxima cita: " + fechaCita);
+    	        cita.setFont(new Font("Adamina", Font.PLAIN, 18));
+    	        cita.setBounds(450, 20, 300, 30);
+    	        panel.add(cita);
 
-             JButton historial = new JButton("Historial");
-             historial.setBounds(450, 60, 130, 35);
-             historial.setBackground(Color.decode("#14518C"));
-             historial.setForeground(Color.white);
-             historial.setFont(new Font("Inter", Font.BOLD, 20));
-             historial.addActionListener(e -> {
-                 ventana.dispose();
-                 Dueno dueno = controller.obtenerDuenoPorId(paciente.getIdDueno());
-                 HistorialCostos(paciente, dueno);
-             });
-             panel.add(historial);
+    	        ImageIcon iconoHistorial = new ImageIcon(getClass().getResource("/Imagenes/historial.png"));
+    	        Image imgHistorial = iconoHistorial.getImage().getScaledInstance(80, 45, Image.SCALE_SMOOTH);
+    	        JButton historial = new JButton(new ImageIcon(imgHistorial));
+    	        historial.setBounds(450, 55, 80, 45);
+    	        historial.setBackground(Color.decode("#14518C"));
+    	        historial.setFocusPainted(false);
+    	        historial.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1, true));
+    	        historial.addActionListener(e -> {
+    	            ventana.dispose();
+    	            Dueno dueno = controller.obtenerDuenoPorId(paciente.getIdDueno());
+    	            HistorialCostos(paciente, dueno);
+    	        });
+    	        panel.add(historial);
 
-             JButton crear = new JButton("Crear");
-             crear.setBounds(590, 60, 100, 35);
-             crear.setBackground(Color.decode("#14518C"));
-             crear.setForeground(Color.white);
-             crear.setFont(new Font("Inter", Font.BOLD, 20));
-             crear.addActionListener(e -> {
-                 ventana.dispose();
-                 CrearCita();
-             });
-             panel.add(crear);
+    	        ImageIcon iconoCrear = new ImageIcon(getClass().getResource("/Imagenes/crearcita.jpg"));
+    	        Image imgCrear = iconoCrear.getImage().getScaledInstance(80, 45, Image.SCALE_SMOOTH);
+    	        JButton crear = new JButton(new ImageIcon(imgCrear));
+    	        crear.setBounds(545, 55, 80, 45);
+    	        crear.setBackground(Color.decode("#14518C"));
+    	        crear.setFocusPainted(false);
+    	        crear.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1, true));
+    	        crear.addActionListener(e -> {
+    	            ventana.dispose();
+    	            CrearCita();
+    	        });
+    	        panel.add(crear);
 
-             JButton editar = new JButton("Editar");
-             editar.setBounds(700, 60, 100, 35);
-             editar.setBackground(Color.decode("#14518C"));
-             editar.setForeground(Color.white);
-             editar.setFont(new Font("Inter", Font.BOLD, 20));
-             editar.addActionListener(e -> {
-                 ventana.dispose();
-                 EdicionCita(paciente);
-             });
-             panel.add(editar);
+    	        ImageIcon iconoEditar = new ImageIcon(getClass().getResource("/Imagenes/Editar.jpg"));
+    	        Image imgEditar = iconoEditar.getImage().getScaledInstance(80, 45, Image.SCALE_SMOOTH);
+    	        JButton editar = new JButton(new ImageIcon(imgEditar));
+    	        editar.setBounds(640, 55, 80, 45);
+    	        editar.setBackground(Color.decode("#14518C"));
+    	        editar.setFocusPainted(false);
+    	        editar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1, true));
+    	        editar.addActionListener(e -> {
+    	            ventana.dispose();
+    	            EdicionCita(paciente);
+    	        });
+    	        panel.add(editar);
 
-             contenedor.add(panel);
-         }
+    	        contenedor.add(panel);
+    	    }
 
-         contenedor.revalidate();
-         contenedor.repaint();
+    	    contenedor.revalidate();
+    	    contenedor.repaint();
 
-         JButton regresar = new JButton("Regresar");
-         regresar.setBounds(50, 490, 180, 60);
-         regresar.setFont(new Font("Inter", Font.BOLD, 20));
-         regresar.setBackground(Color.decode("#D81F10"));
-         regresar.setForeground(Color.white);
-         regresar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-         regresar.setFocusPainted(false);
-         fondo.add(regresar);
+    	    JButton regresar = new JButton("Regresar");
+    	    regresar.setBounds(50, 490, 180, 60);
+    	    regresar.setFont(new Font("Inter", Font.BOLD, 20));
+    	    regresar.setBackground(Color.decode("#D81F10"));
+    	    regresar.setForeground(Color.white);
+    	    regresar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    	    regresar.setFocusPainted(false);
+    	    fondo.add(regresar);
 
-         regresar.addActionListener(e -> {
-             ventana.dispose();
-             Inicio(nombreUsuarioActual);
-         });
+    	    regresar.addActionListener(e -> {
+    	        ventana.dispose();
+    	        Inicio(nombreUsuarioActual);
+    	    });
 
-         ventana.setVisible(true);
-     
-         Image aplicacion = new ImageIcon(
-  	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
-  	    	).getImage();
+    	    Image aplicacion = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg")).getImage();
+    	    ventana.setIconImage(aplicacion);
 
-  	    	ventana.setIconImage(aplicacion);
-     }
+    	    ventana.setVisible(true);
+    	}
 
      public void DetallesPaciente(Paciente paciente) {
          JFrame ventana = new JFrame();
@@ -704,80 +707,176 @@ public class AuthView {
      
 
      public void HistorialCostos(Paciente paciente, Dueno dueno) {
-         JFrame ventana = new JFrame("Historial de costos");
-         ventana.setSize(1000, 600);
-         ventana.setLocationRelativeTo(null);
-         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         ventana.setLayout(null);
+    	    JFrame ventana = new JFrame("Historial de costos");
+    	    ventana.setSize(1000, 600);
+    	    ventana.setLocationRelativeTo(null);
+    	    ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	    ventana.setLayout(null);
 
-         JPanel fondo = new JPanel();
-         fondo.setBounds(0, 0, 1000, 600);
-         fondo.setLayout(null);
-         fondo.setBackground(Color.WHITE);
-         ventana.add(fondo);
+    	    JPanel fondo = new JPanel();
+    	    fondo.setBounds(0, 0, 1000, 600);
+    	    fondo.setLayout(null);
+    	    fondo.setBackground(Color.WHITE);
+    	    ventana.add(fondo);
 
-         JLabel titulo = new JLabel("Costo final de consultas y medicamentos");
-         titulo.setBounds(50, 20, 900, 40);
-         titulo.setFont(new Font("Adamina", Font.BOLD, 28));
-         fondo.add(titulo);
+    	    JLabel titulo = new JLabel("Historial de costos");
+    	    titulo.setBounds(40, 20, 400, 40);
+    	    titulo.setFont(new Font("Adamina", Font.BOLD, 34));
+    	    fondo.add(titulo);
 
-         String urgencia = (paciente.getUrgencia() != null) ? paciente.getUrgencia() : "Baja";
-         String medicamento = (paciente.getMedicamento() != null) ? paciente.getMedicamento() : "Ninguno";
+    	    JLabel linea = new JLabel();
+    	    linea.setBounds(40, 65, 920, 2);
+    	    linea.setBackground(Color.decode("#8CACCB"));
+    	    linea.setOpaque(true);
+    	    fondo.add(linea);
 
-         String costoConsulta = "$700";
-         if (urgencia.equals("Alta")) costoConsulta = "$2000";
-         else if (urgencia.equals("Media")) costoConsulta = "$1200";
+    	    JPanel infoPanel = new JPanel();
+    	    infoPanel.setBounds(40, 80, 920, 80);
+    	    infoPanel.setLayout(new GridLayout(1, 2, 20, 0));
+    	    infoPanel.setBackground(Color.decode("#8CACCB"));
+    	    infoPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
+    	    fondo.add(infoPanel);
 
-         String costoMedicamento = "$0";
-         if (medicamento.equals("Antibiótico clavoxivet")) costoMedicamento = "$295";
-         else if (medicamento.equals("Antiparasitarios")) costoMedicamento = "$300";
-         else if (medicamento.equals("Desparacitante Care Max")) costoMedicamento = "$85";
+    	    JPanel duenoPanel = new JPanel();
+    	    duenoPanel.setLayout(null);
+    	    duenoPanel.setBackground(Color.decode("#8CACCB"));
+    	    duenoPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
+    	    
+    	    JLabel duenoIcono = new JLabel("👤");
+    	    duenoIcono.setFont(new Font("Segoe UI", Font.PLAIN, 24));
+    	    duenoIcono.setBounds(10, 10, 40, 40);
+    	    duenoPanel.add(duenoIcono);
+    	    
+    	    JLabel duenoLabel = new JLabel("Dueño: " + dueno.getNombre() + " " + dueno.getApellidos());
+    	    duenoLabel.setFont(new Font("Adamina", Font.BOLD, 18));
+    	    duenoLabel.setBounds(55, 10, 350, 25);
+    	    duenoPanel.add(duenoLabel);
+    	    
+    	    JLabel telefonoLabel = new JLabel("📞 " + dueno.getTelefono());
+    	    telefonoLabel.setFont(new Font("Adamina", Font.PLAIN, 14));
+    	    telefonoLabel.setBounds(55, 40, 300, 20);
+    	    duenoPanel.add(telefonoLabel);
+    	    
+    	    infoPanel.add(duenoPanel);
 
-         int total = Integer.parseInt(costoConsulta.replace("$", "")) +
-                     Integer.parseInt(costoMedicamento.replace("$", ""));
+    	    JPanel mascotaPanel = new JPanel();
+    	    mascotaPanel.setLayout(null);
+    	    mascotaPanel.setBackground(Color.decode("#8CACCB"));
+    	    mascotaPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
+    	    
+    	    JLabel mascotaIcono = new JLabel("🐾");
+    	    mascotaIcono.setFont(new Font("Segoe UI", Font.PLAIN, 24));
+    	    mascotaIcono.setBounds(10, 10, 40, 40);
+    	    mascotaPanel.add(mascotaIcono);
+    	    
+    	    JLabel mascotaLabel = new JLabel("Mascota: " + paciente.getNombre());
+    	    mascotaLabel.setFont(new Font("Adamina", Font.BOLD, 18));
+    	    mascotaLabel.setBounds(55, 10, 350, 25);
+    	    mascotaPanel.add(mascotaLabel);
+    	    
+    	    JLabel especieLabel = new JLabel("🐕 " + paciente.getEspecie() + " / " + paciente.getRaza());
+    	    especieLabel.setFont(new Font("Adamina", Font.PLAIN, 14));
+    	    especieLabel.setBounds(55, 40, 300, 20);
+    	    mascotaPanel.add(especieLabel);
+    	    
+    	    infoPanel.add(mascotaPanel);
 
-         String[][] data = {{
-             paciente.getTipoCita() != null ? paciente.getTipoCita() : "No especificada",
-             urgencia,
-             medicamento,
-             costoConsulta,
-             costoMedicamento,
-             "$" + total
-         }};
+    	    String urgencia = (paciente.getUrgencia() != null) ? paciente.getUrgencia() : "Baja";
+    	    String medicamento = (paciente.getMedicamento() != null) ? paciente.getMedicamento() : "Ninguno";
 
-         String[] cols = {"Consulta", "Urgencia", "Medicamento", "Costo consulta", "Costo medicamento", "Total"};
+    	    double costoConsultaValue = 700;
+    	    if (urgencia.equals("Alta")) costoConsultaValue = 2000;
+    	    else if (urgencia.equals("Media")) costoConsultaValue = 1200;
+    	    
+    	    String costoConsulta = "$" + costoConsultaValue;
 
-         JTable tabla = new JTable(data, cols);
-         tabla.setRowHeight(40);
-         JScrollPane sp = new JScrollPane(tabla);
-         sp.setBounds(50, 140, 850, 200);
-         fondo.add(sp);
+    	    double costoMedicamentoValue = 0;
+    	    if (medicamento.equals("Antibiótico clavoxivet")) costoMedicamentoValue = 295;
+    	    else if (medicamento.equals("Antiparasitarios")) costoMedicamentoValue = 300;
+    	    else if (medicamento.equals("Desparacitante Care Max")) costoMedicamentoValue = 85;
+    	    
+    	    String costoMedicamentoStr = (costoMedicamentoValue > 0) ? "$" + costoMedicamentoValue : "$0";
 
-         JLabel totalLabel = new JLabel("Costo total: $" + total);
-         totalLabel.setBounds(600, 360, 300, 40);
-         totalLabel.setFont(new Font("Adamina", Font.BOLD, 26));
-         fondo.add(totalLabel);
+    	    double total = costoConsultaValue + costoMedicamentoValue;
 
-         JButton regresar = new JButton("Regresar");
-         regresar.setBounds(50, 450, 180, 50);
-         regresar.setFont(new Font("Inter", Font.BOLD, 20));
-         regresar.setBackground(Color.decode("#D81F10"));
-         regresar.setForeground(Color.WHITE);
-         regresar.addActionListener(e -> {
-             ventana.dispose();
-             RegistroCitas();
-         });
-         fondo.add(regresar);
+    	    String[][] data = {{
+    	        paciente.getTipoCita() != null ? paciente.getTipoCita() : "No especificada",
+    	        urgencia,
+    	        medicamento,
+    	        costoConsulta,
+    	        costoMedicamentoStr,
+    	        "$" + total
+    	    }};
 
-         ventana.setVisible(true);
-     
-         Image aplicacion = new ImageIcon(
-  	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
-  	    	).getImage();
+    	    String[] cols = {"Consulta", "Urgencia", "Medicamento", "Costo consulta", "Costo medicina", "Total"};
 
-  	    	ventana.setIconImage(aplicacion);
-     
-     }
+    	    JTable tabla = new JTable(data, cols);
+    	    tabla.setRowHeight(45);
+    	    tabla.setFont(new Font("Adamina", Font.PLAIN, 16));
+    	    tabla.getTableHeader().setFont(new Font("Adamina", Font.BOLD, 16));
+    	    tabla.getTableHeader().setBackground(Color.decode("#072548"));
+    	    tabla.getTableHeader().setForeground(Color.WHITE);
+    	    tabla.setForeground(Color.BLACK);
+    	    
+    	    ((javax.swing.table.DefaultTableCellRenderer) tabla.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+    	    
+    	    JScrollPane sp = new JScrollPane(tabla);
+    	    sp.setBounds(40, 180, 920, 150);
+    	    sp.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+    	    fondo.add(sp);
+
+    	    JPanel totalPanel = new JPanel();
+    	    totalPanel.setBounds(300, 360, 400, 80);
+    	    totalPanel.setLayout(null);
+    	    totalPanel.setBackground(Color.decode("#072548"));
+    	    totalPanel.setBorder(BorderFactory.createLineBorder(Color.decode("#14518C"), 3, true));
+    	    fondo.add(totalPanel);
+
+    	    JLabel totalTexto = new JLabel("COSTO TOTAL");
+    	    totalTexto.setBounds(0, 10, 400, 30);
+    	    totalTexto.setFont(new Font("Adamina", Font.BOLD, 20));
+    	    totalTexto.setForeground(Color.WHITE);
+    	    totalTexto.setHorizontalAlignment(JLabel.CENTER);
+    	    totalPanel.add(totalTexto);
+
+    	    JLabel totalLabel = new JLabel("$" + total + " MXN");
+    	    totalLabel.setBounds(0, 40, 400, 35);
+    	    totalLabel.setFont(new Font("Adamina", Font.BOLD, 28));
+    	    totalLabel.setForeground(Color.decode("#FFD700"));
+    	    totalLabel.setHorizontalAlignment(JLabel.CENTER);
+    	    totalPanel.add(totalLabel);
+
+    	    JButton regresar = new JButton("Regresar");
+    	    regresar.setBounds(40, 480, 180, 55);
+    	    regresar.setFont(new Font("Inter", Font.BOLD, 20));
+    	    regresar.setBackground(Color.decode("#D81F10"));
+    	    regresar.setForeground(Color.WHITE);
+    	    regresar.setFocusPainted(false);
+    	    regresar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
+    	    regresar.addActionListener(e -> {
+
+    	        ventana.dispose();
+    	        RegistroCitas();
+    	    });
+    	    fondo.add(regresar);
+
+    	    JButton imprimir = new JButton("🖨️ Imprimir");
+    	    imprimir.setBounds(760, 480, 200, 55);
+    	    imprimir.setFont(new Font("Inter", Font.BOLD, 18));
+    	    imprimir.setBackground(Color.decode("#14518C"));
+    	    imprimir.setForeground(Color.WHITE);
+    	    imprimir.setFocusPainted(false);
+    	    imprimir.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
+    	    imprimir.addActionListener(e -> {
+    	        JOptionPane.showMessageDialog(null, "Funcionalidad de impresión en desarrollo");
+    	    });
+    	    fondo.add(imprimir);
+
+    	    Image aplicacion = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg")).getImage();
+    	    ventana.setIconImage(aplicacion);
+
+    	    ventana.setVisible(true);
+    	}
 
      public void CrearCita() {
          JFrame ventana = new JFrame();
@@ -805,7 +904,6 @@ public class AuthView {
          panel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
          fondo.add(panel);
 
-         // Obtener el último dueño registrado
          Dueno dueno = controller.obtenerUltimoDueno();
          
          if (dueno == null) {
@@ -815,7 +913,6 @@ public class AuthView {
              return;
          }
          
-         // Obtener la mascota del dueño
          Paciente paciente = controller.obtenerPacientePorDueno(dueno.getId());
          
          if (paciente == null) {
@@ -825,7 +922,6 @@ public class AuthView {
              return;
          }
 
-         // Mostrar información del dueño
          JLabel labelDueno = new JLabel("Dueño:");
          labelDueno.setBounds(40, 40, 150, 30);
          labelDueno.setFont(new Font("Adamina", Font.BOLD, 16));
@@ -837,7 +933,6 @@ public class AuthView {
          campoDueno.setFont(new Font("Adamina", Font.PLAIN, 14));
          panel.add(campoDueno);
 
-         // Mostrar información de la mascota
          JLabel labelMascota = new JLabel("Mascota:");
          labelMascota.setBounds(470, 40, 150, 30);
          labelMascota.setFont(new Font("Adamina", Font.BOLD, 16));
@@ -849,7 +944,6 @@ public class AuthView {
          campoMascota.setFont(new Font("Adamina", Font.PLAIN, 14));
          panel.add(campoMascota);
 
-         // Fecha de la cita
          JLabel labelFecha = new JLabel("Fecha:");
          labelFecha.setBounds(40, 100, 150, 30);
          labelFecha.setFont(new Font("Adamina", Font.BOLD, 16));
@@ -861,7 +955,6 @@ public class AuthView {
          spinnerFecha.setBounds(180, 100, 250, 30);
          panel.add(spinnerFecha);
 
-         // Doctor
          JLabel labelDoctor = new JLabel("Doctor:");
          labelDoctor.setBounds(470, 100, 150, 30);
          labelDoctor.setFont(new Font("Adamina", Font.BOLD, 16));
@@ -870,8 +963,7 @@ public class AuthView {
          JComboBox<String> comboDoctor = new JComboBox<>(controller.listarDoctores().toArray(new String[0]));
          comboDoctor.setBounds(620, 100, 220, 30);
          panel.add(comboDoctor);
-
-         // Urgencia
+         
          JLabel labelUrgencia = new JLabel("Urgencia:");
          labelUrgencia.setBounds(40, 160, 150, 30);
          labelUrgencia.setFont(new Font("Adamina", Font.BOLD, 16));
@@ -881,7 +973,6 @@ public class AuthView {
          comboUrgencia.setBounds(180, 160, 250, 30);
          panel.add(comboUrgencia);
 
-         // Tipo de cita
          JLabel labelTipo = new JLabel("Tipo:");
          labelTipo.setBounds(470, 160, 150, 30);
          labelTipo.setFont(new Font("Adamina", Font.BOLD, 16));
@@ -894,7 +985,6 @@ public class AuthView {
          comboTipo.setBounds(620, 160, 220, 30);
          panel.add(comboTipo);
 
-         // Medicamento
          JLabel labelMed = new JLabel("Medicamento:");
          labelMed.setBounds(40, 220, 150, 30);
          labelMed.setFont(new Font("Adamina", Font.BOLD, 16));
@@ -906,7 +996,6 @@ public class AuthView {
          comboMed.setBounds(180, 220, 250, 30);
          panel.add(comboMed);
 
-         // Costo (se calcula automáticamente)
          JLabel labelCosto = new JLabel("Costo:");
          labelCosto.setBounds(470, 220, 150, 30);
          labelCosto.setFont(new Font("Adamina", Font.BOLD, 16));
@@ -918,14 +1007,12 @@ public class AuthView {
          campoCosto.setFont(new Font("Adamina", Font.BOLD, 14));
          campoCosto.setBackground(Color.WHITE);
          panel.add(campoCosto);
-
-         // Actualizar costo cuando cambien los valores
+         
          comboUrgencia.addActionListener(e -> actualizarCosto(comboTipo, comboUrgencia, comboMed, campoCosto));
          comboTipo.addActionListener(e -> actualizarCosto(comboTipo, comboUrgencia, comboMed, campoCosto));
          comboMed.addActionListener(e -> actualizarCosto(comboTipo, comboUrgencia, comboMed, campoCosto));
          actualizarCosto(comboTipo, comboUrgencia, comboMed, campoCosto);
 
-         // Botón Guardar
          JButton guardar = new JButton("Guardar cita");
          guardar.setBounds(620, 300, 220, 50);
          guardar.setBackground(Color.decode("#14518C"));
@@ -934,7 +1021,6 @@ public class AuthView {
          guardar.setFocusPainted(false);
          panel.add(guardar);
 
-         // Variable final para usar en el listener
          final Paciente pacienteFinal = paciente;
          final Dueno duenoFinal = dueno;
 
@@ -988,7 +1074,6 @@ public class AuthView {
              }
          });
 
-         // Botón Regresar
          JButton regresar = new JButton("Regresar");
          regresar.setBounds(40, 500, 180, 50);
          regresar.setBackground(Color.decode("#D81F10"));
@@ -1278,166 +1363,162 @@ public class AuthView {
      	    	ventana.setIconImage(aplicacion);
      }
 	
-    public void PanelDuenos() {
-        JFrame ventana = new JFrame("Registro de dueños");
-        ventana.setSize(1000, 600);
-        ventana.setLocationRelativeTo(null);
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setLayout(null);
+     public void PanelDuenos() {
+    	    JFrame ventana = new JFrame("Registro de dueños");
+    	    ventana.setSize(1000, 600);
+    	    ventana.setLocationRelativeTo(null);
+    	    ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	    ventana.setLayout(null);
 
-        JPanel fondo = new JPanel();
-        fondo.setBounds(0, 0, 1000, 600);
-        fondo.setLayout(null);
-        fondo.setBackground(Color.WHITE);
-        ventana.add(fondo);
+    	    JPanel fondo = new JPanel();
+    	    fondo.setBounds(0, 0, 1000, 600);
+    	    fondo.setLayout(null);
+    	    fondo.setBackground(Color.WHITE);
+    	    ventana.add(fondo);
 
-        JLabel titulo = new JLabel("Registro de dueños");
-        titulo.setBounds(40, 20, 400, 40);
-        titulo.setFont(new Font("Adamina", Font.BOLD, 34));
-        fondo.add(titulo);
+    	    JLabel titulo = new JLabel("Registro de dueños");
+    	    titulo.setBounds(40, 20, 400, 40);
+    	    titulo.setFont(new Font("Adamina", Font.BOLD, 34));
+    	    fondo.add(titulo);
 
-        JPanel contenedor = new JPanel();
-        contenedor.setLayout(new BoxLayout(contenedor, BoxLayout.Y_AXIS));
-        contenedor.setBackground(Color.WHITE);
+    	    JPanel contenedor = new JPanel();
+    	    contenedor.setLayout(new BoxLayout(contenedor, BoxLayout.Y_AXIS));
+    	    contenedor.setBackground(Color.WHITE);
 
-        JScrollPane scroll = new JScrollPane(contenedor);
-        scroll.setBounds(40, 80, 900, 380);
-        scroll.setBorder(null);
-        fondo.add(scroll);
+    	    JScrollPane scroll = new JScrollPane(contenedor);
+    	    scroll.setBounds(40, 80, 900, 380);
+    	    scroll.setBorder(null);
+    	    fondo.add(scroll);
 
-        ArrayList<Dueno> listaDuenos = controller.listarDuenos();
+    	    ArrayList<Dueno> listaDuenos = controller.listarDuenos();
 
-        for (Dueno dueno : listaDuenos) {
-            JPanel panel = new JPanel();
-            panel.setLayout(null);
-            panel.setBackground(Color.decode("#8CACCB"));
-            panel.setPreferredSize(new Dimension(850, 120));
-            panel.setMaximumSize(new Dimension(850, 120));
-            panel.setMinimumSize(new Dimension(850, 120));
-            panel.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createEmptyBorder(0, 0, 10, 0),
-                    new LineBorder(Color.BLACK, 2, true)));
+    	    for (Dueno dueno : listaDuenos) {
+    	        JPanel panel = new JPanel();
+    	        panel.setLayout(null);
+    	        panel.setBackground(Color.decode("#8CACCB"));
+    	        panel.setPreferredSize(new Dimension(850, 120));
+    	        panel.setMaximumSize(new Dimension(850, 120));
+    	        panel.setMinimumSize(new Dimension(850, 120));
+    	        panel.setBorder(BorderFactory.createCompoundBorder(
+    	                BorderFactory.createEmptyBorder(0, 0, 10, 0),
+    	                new LineBorder(Color.BLACK, 2, true)));
 
-            if (dueno.getFoto() != null && !dueno.getFoto().isEmpty()) {
-                ImageIcon icono = new ImageIcon(dueno.getFoto());
-                Image img = icono.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-                JButton foto = new JButton(new ImageIcon(img));
-                foto.setBounds(20, 20, 80, 80);
-                foto.setBorder(null);
-                foto.setFocusPainted(false);
-                foto.addActionListener(e -> {
-                    Paciente paciente = controller.obtenerPacientePorDueno(dueno.getId());
-                    if (paciente != null) {
-                        ventana.dispose();
-                        DetallesPaciente(paciente);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Este dueño no tiene mascota registrada");
-                    }
-                });
-                panel.add(foto);
-            } else {
-                JLabel foto = new JLabel("Sin foto");
-                foto.setBounds(20, 20, 80, 80);
-                foto.setHorizontalAlignment(SwingConstants.CENTER);
-                foto.setVerticalAlignment(SwingConstants.CENTER);
-                foto.setFont(new Font("Inter", Font.BOLD, 12));
-                foto.setOpaque(true);
-                foto.setBackground(Color.LIGHT_GRAY);
-                foto.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-                panel.add(foto);
-            }
+    	        if (dueno.getFoto() != null && !dueno.getFoto().isEmpty()) {
+    	            ImageIcon icono = new ImageIcon(dueno.getFoto());
+    	            Image img = icono.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+    	            JButton foto = new JButton(new ImageIcon(img));
+    	            foto.setBounds(20, 20, 80, 80);
+    	            foto.setBorder(null);
+    	            foto.setFocusPainted(false);
+    	            foto.addActionListener(e -> {
+    	                Paciente paciente = controller.obtenerPacientePorDueno(dueno.getId());
+    	                if (paciente != null) {
+    	                    ventana.dispose();
+    	                    DetallesPaciente(paciente);
+    	                } else {
+    	                    JOptionPane.showMessageDialog(null, "Este dueño no tiene mascota registrada");
+    	                }
+    	            });
+    	            panel.add(foto);
+    	        } else {
+    	            JLabel foto = new JLabel("Sin foto");
+    	            foto.setBounds(20, 20, 80, 80);
+    	            foto.setHorizontalAlignment(SwingConstants.CENTER);
+    	            foto.setVerticalAlignment(SwingConstants.CENTER);
+    	            foto.setFont(new Font("Inter", Font.BOLD, 12));
+    	            foto.setOpaque(true);
+    	            foto.setBackground(Color.LIGHT_GRAY);
+    	            foto.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+    	            panel.add(foto);
+    	        }
 
-            JLabel nombre = new JLabel(dueno.getNombre() + " " + dueno.getApellidos());
-            nombre.setBounds(120, 15, 350, 35);
-            nombre.setFont(new Font("Adamina", Font.BOLD, 24));
-            panel.add(nombre);
+    	        JLabel nombre = new JLabel(dueno.getNombre() + " " + dueno.getApellidos());
+    	        nombre.setBounds(120, 15, 350, 35);
+    	        nombre.setFont(new Font("Adamina", Font.BOLD, 24));
+    	        panel.add(nombre);
 
-            JLabel mascota = new JLabel("Mascota: " + dueno.getMascota());
-            mascota.setBounds(120, 55, 300, 30);
-            mascota.setFont(new Font("Adamina", Font.PLAIN, 18));
-            panel.add(mascota);
+    	        JLabel mascota = new JLabel("Mascota: " + dueno.getMascota());
+    	        mascota.setBounds(120, 55, 300, 30);
+    	        mascota.setFont(new Font("Adamina", Font.PLAIN, 18));
+    	        panel.add(mascota);
 
-            JLabel telefono = new JLabel("Teléfono: " + dueno.getTelefono());
-            telefono.setBounds(450, 20, 300, 30);
-            telefono.setFont(new Font("Adamina", Font.PLAIN, 18));
-            panel.add(telefono);
+    	        JLabel telefono = new JLabel("Teléfono: " + dueno.getTelefono());
+    	        telefono.setBounds(450, 15, 300, 30);
+    	        telefono.setFont(new Font("Adamina", Font.PLAIN, 18));
+    	        panel.add(telefono);
 
-            JButton detalles = new JButton("Detalles");
-            detalles.setBounds(450, 60, 120, 35);
-            detalles.setBackground(Color.decode("#14518C"));
-            detalles.setForeground(Color.WHITE);
-            detalles.setFont(new Font("Inter", Font.BOLD, 18));
-            panel.add(detalles);
+    	        ImageIcon iconoDetalles = new ImageIcon(getClass().getResource("/Imagenes/detalles.jpg"));
+    	        Image imgDetalles = iconoDetalles.getImage().getScaledInstance(80, 45, Image.SCALE_SMOOTH);
+    	        JButton detalles = new JButton(new ImageIcon(imgDetalles));
+    	        detalles.setBounds(450, 55, 80, 45);
+    	        detalles.setBackground(Color.decode("#14518C"));
+    	        detalles.setFocusPainted(false);
+    	        detalles.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1, true));
+    	        detalles.addActionListener(e -> {
+    	            ventana.dispose();
+    	            DetallesDueno(dueno);
+    	        });
+    	        panel.add(detalles);
 
-            JButton editar = new JButton("Editar");
-            editar.setBounds(590, 60, 100, 35);
-            editar.setBackground(Color.decode("#14518C"));
-            editar.setForeground(Color.WHITE);
-            editar.setFont(new Font("Inter", Font.BOLD, 18));
-            panel.add(editar);
+    	        ImageIcon iconoEditar = new ImageIcon(getClass().getResource("/Imagenes/registrar.png"));
+    	        Image imgEditar = iconoEditar.getImage().getScaledInstance(80, 45, Image.SCALE_SMOOTH);
+    	        JButton editar = new JButton(new ImageIcon(imgEditar));
+    	        editar.setBounds(545, 55, 80, 45);
+    	        editar.setBackground(Color.decode("#14518C"));
+    	        editar.setFocusPainted(false);
+    	        editar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1, true));
+    	        editar.addActionListener(e -> {
+    	            ventana.dispose();
+    	            CrearDueno(dueno);
+    	        });
+    	        panel.add(editar);
 
-            JButton eliminar = new JButton("Eliminar");
-            eliminar.setBounds(710, 60, 120, 35);
-            eliminar.setBackground(Color.decode("#D81F10"));
-            eliminar.setForeground(Color.WHITE);
-            eliminar.setFont(new Font("Inter", Font.BOLD, 18));
-            panel.add(eliminar);
+    	        ImageIcon iconoEliminar = new ImageIcon(getClass().getResource("/Imagenes/eliminar.png"));
+    	        Image imgEliminar = iconoEliminar.getImage().getScaledInstance(80, 45, Image.SCALE_SMOOTH);
+    	        JButton eliminar = new JButton(new ImageIcon(imgEliminar));
+    	        eliminar.setBounds(640, 55, 80, 45);
+    	        eliminar.setBackground(Color.decode("#D81F10"));
+    	        eliminar.setFocusPainted(false);
+    	        eliminar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1, true));
+    	        eliminar.addActionListener(e -> {
+    	            EliminarRegistroDueno(dueno.getId());
+    	        });
+    	        panel.add(eliminar);
 
-            detalles.addActionListener(e -> {
-                ventana.dispose();
-                DetallesDueno(dueno);
-            });
+    	        contenedor.add(panel);
+    	    }
 
-            editar.addActionListener(e -> {
-                ventana.dispose();
-                CrearDueno(dueno);
-            });
+    	    JButton regresar = new JButton("Regresar");
+    	    regresar.setBounds(40, 490, 180, 60);
+    	    regresar.setBackground(Color.decode("#D81F10"));
+    	    regresar.setForeground(Color.WHITE);
+    	    regresar.setFont(new Font("Inter", Font.BOLD, 20));
+    	    regresar.setFocusPainted(false);
+    	    fondo.add(regresar);
 
-            eliminar.addActionListener(e -> {
-                EliminarRegistroDueno(dueno.getId());
-            });
+    	    regresar.addActionListener(e -> {
+    	        ventana.dispose();
+    	        Inicio(nombreUsuarioActual);
+    	    });
 
-            contenedor.add(panel);
-        }
+    	    JButton crear = new JButton("Crear nuevo");
+    	    crear.setBounds(730, 490, 210, 60);
+    	    crear.setBackground(Color.decode("#14518C"));
+    	    crear.setForeground(Color.WHITE);
+    	    crear.setFont(new Font("Inter", Font.BOLD, 20));
+    	    crear.setFocusPainted(false);
+    	    fondo.add(crear);
 
-        JButton regresar = new JButton("Regresar");
-        regresar.setBounds(40, 490, 180, 60);
-        regresar.setBackground(Color.decode("#D81F10"));
-        regresar.setForeground(Color.WHITE);
-        regresar.setFont(new Font("Inter", Font.BOLD, 20));
-        fondo.add(regresar);
+    	    crear.addActionListener(e -> {
+    	        ventana.dispose();
+    	        CrearDueno();
+    	    });
 
-        regresar.addActionListener(e -> {
-            ventana.dispose();
-            Inicio(nombreUsuarioActual);
-        });
+    	    Image aplicacion = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg")).getImage();
+    	    ventana.setIconImage(aplicacion);
 
-        JButton crear = new JButton("Crear nuevo");
-        crear.setBounds(730, 490, 210, 60);
-        crear.setBackground(Color.decode("#14518C"));
-        crear.setForeground(Color.WHITE);
-        crear.setFont(new Font("Inter", Font.BOLD, 20));
-        fondo.add(crear);
-
-        crear.addActionListener(e -> {
-            ventana.dispose();
-            CrearDueno();
-        });
-
-        ventana.setVisible(true);
-    
-        Image aplicacion = new ImageIcon(
- 	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
- 	    	).getImage();
-
- 	    	ventana.setIconImage(aplicacion);
-    
- 	    	 Image apk = new ImageIcon(
- 	 	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
- 	 	    	).getImage();
-
- 	 	    	ventana.setIconImage(apk);
-    }
+    	    ventana.setVisible(true);
+    	}
 
     public void CrearDueno() {
         JFrame ventana = new JFrame();
