@@ -2042,192 +2042,198 @@ public class AuthView {
     	    ventana.setIconImage(aplicacion);
     	}
 
-    public void EditarDueno(Dueno dueno) {
-        JFrame ventana = new JFrame();
-        ventana.setSize(1000, 600);
-        ventana.setTitle("Editar dueño");
-        ventana.setLocationRelativeTo(null);
-        ventana.setLayout(null);
-        ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    	public void EditarDueno(Dueno dueno) {
+    	    JFrame ventana = new JFrame();
+    	    ventana.setSize(1000, 600);
+    	    ventana.setTitle("Editar dueño");
+    	    ventana.setLocationRelativeTo(null);
+    	    ventana.setLayout(null);
+    	    ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        JPanel fondo = new JPanel();
-        fondo.setBounds(0, 0, 1000, 600);
-        fondo.setLayout(null);
-        fondo.setBackground(Color.decode("#FFFFFF"));
-        ventana.add(fondo);
+    	    JPanel fondo = new JPanel();
+    	    fondo.setBounds(0, 0, 1000, 600);
+    	    fondo.setLayout(null);
+    	    fondo.setBackground(Color.decode("#FFFFFF"));
+    	    ventana.add(fondo);
 
-        JLabel titulo = new JLabel("Editar dueño");
-        titulo.setFont(new Font("Adamina", Font.BOLD, 34));
-        titulo.setBounds(40, 20, 500, 40);
-        fondo.add(titulo);
+    	    JLabel titulo = new JLabel("Editar dueño");
+    	    titulo.setFont(new Font("Adamina", Font.BOLD, 34));
+    	    titulo.setBounds(40, 20, 500, 40);
+    	    fondo.add(titulo);
 
-        JPanel panelPrincipal = new JPanel();
-        panelPrincipal.setBounds(40, 90, 900, 380);
-        panelPrincipal.setBackground(Color.decode("#8CACCB"));
-        panelPrincipal.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
-        panelPrincipal.setLayout(new GridLayout(1, 2, 20, 20));
-        fondo.add(panelPrincipal);
+    	    JPanel panelPrincipal = new JPanel();
+    	    panelPrincipal.setBounds(40, 90, 900, 380);
+    	    panelPrincipal.setBackground(Color.decode("#8CACCB"));
+    	    panelPrincipal.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
+    	    panelPrincipal.setLayout(new GridLayout(1, 2, 20, 20));
+    	    fondo.add(panelPrincipal);
 
-        JPanel panelCampos = new JPanel();
-        panelCampos.setBackground(Color.decode("#8CACCB"));
-        panelCampos.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panelCampos.setLayout(new GridLayout(7, 2, 10, 15));
+    	    JPanel panelCampos = new JPanel();
+    	    panelCampos.setBackground(Color.decode("#8CACCB"));
+    	    panelCampos.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+    	    panelCampos.setLayout(new GridLayout(7, 2, 10, 15));
 
-        Font fuente = new Font("Adamina", Font.BOLD, 18);
+    	    Font fuente = new Font("Adamina", Font.BOLD, 18);
 
-        JTextField campoNombre = new JTextField(dueno.getNombre() != null ? dueno.getNombre() : "");
-        JTextField campoApellidos = new JTextField(dueno.getApellidos() != null ? dueno.getApellidos() : "");
-        JTextField campoTelefono = new JTextField(dueno.getTelefono() != null ? dueno.getTelefono() : "");
-        JTextField campoCorreo = new JTextField(dueno.getCorreo() != null ? dueno.getCorreo() : "");
-        JTextField campoMascota = new JTextField(dueno.getMascota() != null ? dueno.getMascota() : "");
-        JTextField campoColonia = new JTextField(dueno.getColonia() != null ? dueno.getColonia() : "");
-        JTextField campoDireccion = new JTextField(dueno.getDireccion() != null ? dueno.getDireccion() : "");
+    	    JTextField campoNombre = new JTextField(dueno.getNombre() != null ? dueno.getNombre() : "");
+    	    JTextField campoApellidos = new JTextField(dueno.getApellidos() != null ? dueno.getApellidos() : "");
+    	    JTextField campoTelefono = new JTextField(dueno.getTelefono() != null ? dueno.getTelefono() : "");
+    	    JTextField campoCorreo = new JTextField(dueno.getCorreo() != null ? dueno.getCorreo() : "");
+    	    JTextField campoMascota = new JTextField(dueno.getMascota() != null ? dueno.getMascota() : "");
+    	    JTextField campoColonia = new JTextField(dueno.getColonia() != null ? dueno.getColonia() : "");
+    	    JTextField campoDireccion = new JTextField(dueno.getDireccion() != null ? dueno.getDireccion() : "");
 
-        JLabel lblNombre = new JLabel("Nombre:");
-        lblNombre.setFont(fuente);
-        panelCampos.add(lblNombre);
-        panelCampos.add(campoNombre);
+    	    JLabel lblNombre = new JLabel("Nombre:");
+    	    lblNombre.setFont(fuente);
+    	    panelCampos.add(lblNombre);
+    	    panelCampos.add(campoNombre);
 
-        JLabel lblApellidos = new JLabel("Apellidos:");
-        lblApellidos.setFont(fuente);
-        panelCampos.add(lblApellidos);
-        panelCampos.add(campoApellidos);
+    	    JLabel lblApellidos = new JLabel("Apellidos:");
+    	    lblApellidos.setFont(fuente);
+    	    panelCampos.add(lblApellidos);
+    	    panelCampos.add(campoApellidos);
 
-        JLabel lblTelefono = new JLabel("Teléfono:");
-        lblTelefono.setFont(fuente);
-        panelCampos.add(lblTelefono);
-        panelCampos.add(campoTelefono);
+    	    JLabel lblTelefono = new JLabel("Teléfono:");
+    	    lblTelefono.setFont(fuente);
+    	    panelCampos.add(lblTelefono);
+    	    panelCampos.add(campoTelefono);
 
-        JLabel lblCorreo = new JLabel("Correo:");
-        lblCorreo.setFont(fuente);
-        panelCampos.add(lblCorreo);
-        panelCampos.add(campoCorreo);
+    	    JLabel lblCorreo = new JLabel("Correo:");
+    	    lblCorreo.setFont(fuente);
+    	    panelCampos.add(lblCorreo);
+    	    panelCampos.add(campoCorreo);
 
-        JLabel lblMascota = new JLabel("Mascota:");
-        lblMascota.setFont(fuente);
-        panelCampos.add(lblMascota);
-        panelCampos.add(campoMascota);
+    	    JLabel lblMascota = new JLabel("Mascota:");
+    	    lblMascota.setFont(fuente);
+    	    panelCampos.add(lblMascota);
+    	    panelCampos.add(campoMascota);
 
-        JLabel lblColonia = new JLabel("Colonia:");
-        lblColonia.setFont(fuente);
-        panelCampos.add(lblColonia);
-        panelCampos.add(campoColonia);
+    	    JLabel lblColonia = new JLabel("Colonia:");
+    	    lblColonia.setFont(fuente);
+    	    panelCampos.add(lblColonia);
+    	    panelCampos.add(campoColonia);
 
-        JLabel lblDireccion = new JLabel("Dirección:");
-        lblDireccion.setFont(fuente);
-        panelCampos.add(lblDireccion);
-        panelCampos.add(campoDireccion);
+    	    JLabel lblDireccion = new JLabel("Dirección:");
+    	    lblDireccion.setFont(fuente);
+    	    panelCampos.add(lblDireccion);
+    	    panelCampos.add(campoDireccion);
 
-        panelPrincipal.add(panelCampos);
+    	    panelPrincipal.add(panelCampos);
 
-        JPanel panelFoto = new JPanel();
-        panelFoto.setBackground(Color.decode("#8CACCB"));
-        panelFoto.setLayout(null);
+    	    JPanel panelFoto = new JPanel();
+    	    panelFoto.setBackground(Color.decode("#8CACCB"));
+    	    panelFoto.setLayout(null);
 
-        JLabel foto = new JLabel();
-        foto.setBounds(90, 30, 220, 220);
-        foto.setHorizontalAlignment(JLabel.CENTER);
-        foto.setVerticalAlignment(JLabel.CENTER);
-        foto.setOpaque(true);
-        foto.setBackground(Color.WHITE);
-        foto.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        panelFoto.add(foto);
+    	    JLabel foto = new JLabel();
+    	    foto.setBounds(90, 30, 220, 220);
+    	    foto.setHorizontalAlignment(JLabel.CENTER);
+    	    foto.setVerticalAlignment(JLabel.CENTER);
+    	    foto.setOpaque(true);
+    	    foto.setBackground(Color.WHITE);
+    	    foto.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    	    panelFoto.add(foto);
 
-        final String[] rutaFoto = {dueno.getFoto()};
+    	    final String[] rutaFoto = {dueno.getFoto()};
 
-        if (rutaFoto[0] != null && !rutaFoto[0].isEmpty()) {
-            ImageIcon icono = new ImageIcon(rutaFoto[0]);
-            Image imagen = icono.getImage().getScaledInstance(220, 220, Image.SCALE_SMOOTH);
-            foto.setIcon(new ImageIcon(imagen));
-        } else {
-            foto.setText("SIN FOTO");
-            foto.setFont(new Font("Arial", Font.BOLD, 22));
-            foto.setHorizontalAlignment(JLabel.CENTER);
-        }
+    	    if (rutaFoto[0] != null && !rutaFoto[0].isEmpty()) {
+    	        ImageIcon icono = new ImageIcon(rutaFoto[0]);
+    	        Image imagen = icono.getImage().getScaledInstance(220, 220, Image.SCALE_SMOOTH);
+    	        foto.setIcon(new ImageIcon(imagen));
+    	    } else {
+    	        foto.setText("SIN FOTO");
+    	        foto.setFont(new Font("Arial", Font.BOLD, 22));
+    	        foto.setHorizontalAlignment(JLabel.CENTER);
+    	    }
 
-        JButton agregarFoto = new JButton("Agregar foto");
-        agregarFoto.setBounds(120, 270, 160, 40);
-        agregarFoto.setBackground(Color.decode("#14508C"));
-        agregarFoto.setForeground(Color.WHITE);
-        agregarFoto.setFont(new Font("Inter", Font.BOLD, 14));
-        agregarFoto.setFocusPainted(false);
-        panelFoto.add(agregarFoto);
+    	    JButton agregarFoto = new JButton("Agregar foto");
+    	    agregarFoto.setBounds(120, 270, 160, 40);
+    	    agregarFoto.setBackground(Color.decode("#14508C"));
+    	    agregarFoto.setForeground(Color.WHITE);
+    	    agregarFoto.setFont(new Font("Inter", Font.BOLD, 14));
+    	    agregarFoto.setFocusPainted(false);
+    	    panelFoto.add(agregarFoto);
 
-        agregarFoto.addActionListener(e -> {
-            JFileChooser selector = new JFileChooser();
-            int resultado = selector.showOpenDialog(ventana);
-            if (resultado == JFileChooser.APPROVE_OPTION) {
-                File archivo = selector.getSelectedFile();
-                rutaFoto[0] = archivo.getAbsolutePath();
-                ImageIcon icono = new ImageIcon(rutaFoto[0]);
-                Image imagen = icono.getImage().getScaledInstance(220, 220, Image.SCALE_SMOOTH);
-                foto.setText("");
-                foto.setIcon(new ImageIcon(imagen));
-            }
-        });
+    	    agregarFoto.addActionListener(e -> {
+    	        JFileChooser selector = new JFileChooser();
+    	        int resultado = selector.showOpenDialog(ventana);
+    	        if (resultado == JFileChooser.APPROVE_OPTION) {
+    	            File archivo = selector.getSelectedFile();
+    	            rutaFoto[0] = archivo.getAbsolutePath();
+    	            ImageIcon icono = new ImageIcon(rutaFoto[0]);
+    	            Image imagen = icono.getImage().getScaledInstance(220, 220, Image.SCALE_SMOOTH);
+    	            foto.setText("");
+    	            foto.setIcon(new ImageIcon(imagen));
+    	        }
+    	    });
 
-        panelPrincipal.add(panelFoto);
+    	    panelPrincipal.add(panelFoto);
 
-        JButton botonGuardar = new JButton("Guardar");
-        botonGuardar.setBounds(760, 500, 180, 50);
-        botonGuardar.setBackground(Color.decode("#072548"));
-        botonGuardar.setForeground(Color.WHITE);
-        botonGuardar.setFont(new Font("Inter", Font.BOLD, 20));
-        botonGuardar.setFocusPainted(false);
-        fondo.add(botonGuardar);
+    	    JButton botonGuardar = new JButton("Guardar");
+    	    botonGuardar.setBounds(760, 500, 180, 50);
+    	    botonGuardar.setBackground(Color.decode("#072548"));
+    	    botonGuardar.setForeground(Color.WHITE);
+    	    botonGuardar.setFont(new Font("Inter", Font.BOLD, 20));
+    	    botonGuardar.setFocusPainted(false);
+    	    fondo.add(botonGuardar);
 
-        JButton botonRegresar = new JButton("Regresar");
-        botonRegresar.setBounds(40, 500, 180, 50);
-        botonRegresar.setBackground(Color.decode("#D81F10"));
-        botonRegresar.setForeground(Color.WHITE);
-        botonRegresar.setFont(new Font("Inter", Font.BOLD, 20));
-        botonRegresar.setFocusPainted(false);
-        fondo.add(botonRegresar);
+    	    JButton botonRegresar = new JButton("Regresar");
+    	    botonRegresar.setBounds(40, 500, 180, 50);
+    	    botonRegresar.setBackground(Color.decode("#D81F10"));
+    	    botonRegresar.setForeground(Color.WHITE);
+    	    botonRegresar.setFont(new Font("Inter", Font.BOLD, 20));
+    	    botonRegresar.setFocusPainted(false);
+    	    fondo.add(botonRegresar);
 
-        botonRegresar.addActionListener(e -> {
-            ventana.dispose();
-            PanelDuenos();
-        });
+    	    botonRegresar.addActionListener(e -> {
+    	        ventana.dispose();
+    	        PanelDuenos();
+    	    });
 
-        botonGuardar.addActionListener(e -> {
- 
-            if (campoNombre.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(ventana, "El nombre es obligatorio");
-                return;
-            }
-            
-            if (campoApellidos.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(ventana, "Los apellidos son obligatorios");
-                return;
-            }
+    	    botonGuardar.addActionListener(e -> {
+    	        if (campoNombre.getText().trim().isEmpty()) {
+    	            JOptionPane.showMessageDialog(ventana, "El nombre es obligatorio");
+    	            return;
+    	        }
+    	        
+    	        if (campoApellidos.getText().trim().isEmpty()) {
+    	            JOptionPane.showMessageDialog(ventana, "Los apellidos son obligatorios");
+    	            return;
+    	        }
 
-            Dueno duenoActualizado = new Dueno();
-            duenoActualizado.setId(dueno.getId());
-            duenoActualizado.setNombre(campoNombre.getText().trim());
-            duenoActualizado.setApellidos(campoApellidos.getText().trim());
-            duenoActualizado.setTelefono(campoTelefono.getText().trim());
-            duenoActualizado.setCorreo(campoCorreo.getText().trim());
-            duenoActualizado.setMascota(campoMascota.getText().trim());
-            duenoActualizado.setColonia(campoColonia.getText().trim());
-            duenoActualizado.setDireccion(campoDireccion.getText().trim());
-            duenoActualizado.setFoto(rutaFoto[0]);
+    	        Dueno duenoActualizado = new Dueno();
+    	        duenoActualizado.setId(dueno.getId());
+    	        duenoActualizado.setNombre(campoNombre.getText().trim());
+    	        duenoActualizado.setApellidos(campoApellidos.getText().trim());
+    	        duenoActualizado.setTelefono(campoTelefono.getText().trim());
+    	        duenoActualizado.setCorreo(campoCorreo.getText().trim());
+    	        duenoActualizado.setMascota(campoMascota.getText().trim());
+    	        duenoActualizado.setColonia(campoColonia.getText().trim());
+    	        duenoActualizado.setDireccion(campoDireccion.getText().trim());
+    	        duenoActualizado.setFoto(rutaFoto[0]);
 
-            boolean exito = controller.actualizarDueno(duenoActualizado);
+    	        boolean exito = controller.actualizarDueno(duenoActualizado);
 
-            if (exito) {
-                JOptionPane.showMessageDialog(ventana, "Dueño actualizado correctamente");
-                ventana.dispose();
-                PanelDuenos();
-            } else {
-                JOptionPane.showMessageDialog(ventana, "Error al actualizar el dueño");
-            }
-        });
+    	        if (exito) {
+    	            JOptionPane.showMessageDialog(ventana, "Dueño actualizado correctamente");
+    	            ventana.dispose();
+  
+    	            Paciente paciente = controller.obtenerPacientePorDueno(duenoActualizado.getId());
+    	            if (paciente != null) {
+    	                EditarPaciente(duenoActualizado, paciente);
+    	            } else {
+   
+    	                PanelDuenos();
+    	            }
+    	        } else {
+    	            JOptionPane.showMessageDialog(ventana, "Error al actualizar el dueño");
+    	        }
+    	    });
 
-        ventana.setVisible(true);
+    	    ventana.setVisible(true);
 
-        Image aplicacion = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg")).getImage();
-        ventana.setIconImage(aplicacion);
-    }
+    	    Image aplicacion = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg")).getImage();
+    	    ventana.setIconImage(aplicacion);
+    	}
 
     public void CrearPaciente(Dueno dueno) {
         JFrame ventana = new JFrame();
@@ -2467,7 +2473,7 @@ public class AuthView {
         fondo.add(titulo);
 
         JPanel panel = new JPanel();
-        panel.setBounds(40, 90, 900, 420);
+        panel.setBounds(40, 80, 920, 380);
         panel.setBackground(Color.decode("#8CACCB"));
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
         panel.setLayout(new GridLayout(1, 2, 20, 20));
@@ -2475,11 +2481,11 @@ public class AuthView {
 
         JPanel panelCampos = new JPanel();
         panelCampos.setOpaque(false);
-        panelCampos.setLayout(new GridLayout(11, 2, 10, 12));
+        panelCampos.setLayout(new GridLayout(6, 2, 10, 12));
         panelCampos.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
 
         Font fuenteLabel = new Font("Adamina", Font.BOLD, 14);
-        Font fuenteField = new Font("Adamina", Font.PLAIN, 14);
+        Font fuenteField = new Font("Adamina", Font.PLAIN, 13);
 
         JLabel lblNombre = new JLabel("Nombre:");
         lblNombre.setFont(fuenteLabel);
@@ -2502,6 +2508,7 @@ public class AuthView {
         campoRaza.setFont(fuenteField);
         panelCampos.add(campoRaza);
 
+        
         JLabel lblEdad = new JLabel("Edad:");
         lblEdad.setFont(fuenteLabel);
         panelCampos.add(lblEdad);
@@ -2509,6 +2516,7 @@ public class AuthView {
         campoEdad.setFont(fuenteField);
         panelCampos.add(campoEdad);
 
+        
         JLabel lblSexo = new JLabel("Sexo:");
         lblSexo.setFont(fuenteLabel);
         panelCampos.add(lblSexo);
@@ -2582,30 +2590,56 @@ public class AuthView {
         panelDerecho.add(lblHistorial);
 
         JTextArea areaHistorial = new JTextArea(paciente.getHistorial());
-        areaHistorial.setFont(new Font("Adamina", Font.PLAIN, 14));
+        areaHistorial.setFont(new Font("Adamina", Font.PLAIN, 13));
         areaHistorial.setLineWrap(true);
         areaHistorial.setWrapStyleWord(true);
         JScrollPane scrollHistorial = new JScrollPane(areaHistorial);
-        scrollHistorial.setBounds(20, 320, 280, 80);
+        scrollHistorial.setBounds(20, 320, 280, 40);
         panelDerecho.add(scrollHistorial);
 
         panel.add(panelDerecho);
 
-        JButton botonGuardar = new JButton("Guardar");
-        botonGuardar.setBounds(760, 520, 180, 45);
-        botonGuardar.setBackground(Color.decode("#072548"));
-        botonGuardar.setForeground(Color.WHITE);
-        botonGuardar.setFont(new Font("Inter", Font.BOLD, 20));
-        botonGuardar.setFocusPainted(false);
-        fondo.add(botonGuardar);
-
         JButton botonRegresar = new JButton("Regresar");
-        botonRegresar.setBounds(40, 520, 180, 45);
+        botonRegresar.setBounds(40, 490, 150, 45);
         botonRegresar.setBackground(Color.decode("#D81F10"));
         botonRegresar.setForeground(Color.WHITE);
-        botonRegresar.setFont(new Font("Inter", Font.BOLD, 20));
+        botonRegresar.setFont(new Font("Inter", Font.BOLD, 18));
         botonRegresar.setFocusPainted(false);
         fondo.add(botonRegresar);
+
+        botonRegresar.addActionListener(e -> {
+            ventana.dispose();
+            PanelDuenos();
+        });
+        
+        JButton botonBorrar = new JButton("Borrar todo");
+        botonBorrar.setBounds(220, 490, 150, 45);
+        botonBorrar.setBackground(Color.GRAY);
+        botonBorrar.setForeground(Color.WHITE);
+        botonBorrar.setFont(new Font("Inter", Font.BOLD, 18));
+        botonBorrar.setFocusPainted(false);
+        fondo.add(botonBorrar);
+        
+        botonBorrar.addActionListener(e -> {
+            campoNombre.setText("");
+            campoEspecie.setText("");
+            campoRaza.setText("");
+            campoEdad.setText("");
+            comboSexo.setSelectedIndex(0);
+            campoDiagnostico.setText("");
+            areaHistorial.setText("");
+            rutaFoto[0] = "";
+            foto.setText("SIN FOTO");
+            foto.setIcon(null);
+        });
+
+        JButton botonGuardar = new JButton("Guardar");
+        botonGuardar.setBounds(795, 490, 150, 45);
+        botonGuardar.setBackground(Color.decode("#072548"));
+        botonGuardar.setForeground(Color.WHITE);
+        botonGuardar.setFont(new Font("Inter", Font.BOLD, 18));
+        botonGuardar.setFocusPainted(false);
+        fondo.add(botonGuardar);
 
         botonGuardar.addActionListener(e -> {
             if (campoNombre.getText().trim().isEmpty()) {
@@ -2634,11 +2668,6 @@ public class AuthView {
             } else {
                 JOptionPane.showMessageDialog(ventana, "Error al actualizar el paciente");
             }
-        });
-
-        botonRegresar.addActionListener(e -> {
-            ventana.dispose();
-            PanelDuenos();
         });
 
         ventana.setVisible(true);
