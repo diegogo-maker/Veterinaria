@@ -1,325 +1,583 @@
 package Model;
 
+import Model.Dueno;
+import Model.Paciente;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class VeterinariaModel {
-
-    private Connection con;
-
+    
+    private Connection conn;
+    
     public VeterinariaModel() {
-        con = Conexion.getConnection();
+        conn = Conexion.getConnection();
     }
-
-    public boolean insertarDueno(String nombre, String apellidos,
-                                 String telefono, String correo,
-                                 String mascota, String colonia,
-                                 String direccion, String foto) {
-
-        String sql = "INSERT INTO duenos(nombre, apellidos, telefono, correo, mascota, colonia, direccion, foto) " +
-                     "VALUES(?,?,?,?,?,?,?,?)";
-
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, nombre);
-            ps.setString(2, apellidos);
-            ps.setString(3, telefono);
-            ps.setString(4, correo);
-            ps.setString(5, mascota);
-            ps.setString(6, colonia);
-            ps.setString(7, direccion);
-            ps.setString(8, foto);
-            return ps.executeUpdate() > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public boolean actualizarDueno(int id, String nombre, String apellidos,
-                                   String telefono, String correo,
-                                   String mascota, String colonia,
-                                   String direccion, String foto) {
-
-        String sql = "UPDATE duenos SET nombre=?, apellidos=?, telefono=?, correo=?, mascota=?, colonia=?, direccion=?, foto=? WHERE id=?";
-
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, nombre);
-            ps.setString(2, apellidos);
-            ps.setString(3, telefono);
-            ps.setString(4, correo);
-            ps.setString(5, mascota);
-            ps.setString(6, colonia);
-            ps.setString(7, direccion);
-            ps.setString(8, foto);
-            ps.setInt(9, id);
-            return ps.executeUpdate() > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public boolean eliminarDueno(int id) {
-        String sql = "DELETE FROM duenos WHERE id=?";
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            return ps.executeUpdate() > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public Dueno obtenerDuenoPorId(int id) {
-        String sql = "SELECT * FROM duenos WHERE id=?";
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, id);
+  
+    public boolean validarLogin(String correo, String password) {
+        boolean valido = false;
+        try {
+            String sql = "SELECT * FROM users WHERE correo = ? AND password = ? AND activo = "
+            		+ "TRUE";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, correo);
+            ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                Dueno d = new Dueno();
-                d.setId(rs.getInt("id"));
-                d.setNombre(rs.getString("nombre"));
-                d.setApellidos(rs.getString("apellidos"));
-                d.setTelefono(rs.getString("telefono"));
-                d.setCorreo(rs.getString("correo"));
-                d.setMascota(rs.getString("mascota"));
-                d.setColonia(rs.getString("colonia"));
-                d.setDireccion(rs.getString("direccion"));
-                d.setFoto(rs.getString("foto"));
-                return d;
+                valido = true;
             }
-        } catch (Exception e) {
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return valido;
     }
-
-    public ArrayList<Dueno> obtenerDuenos() {
-        ArrayList<Dueno> lista = new ArrayList<>();
-        String sql = "SELECT * FROM duenos";
-        try (Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            while (rs.next()) {
-                Dueno d = new Dueno();
-                d.setId(rs.getInt("id"));
-                d.setNombre(rs.getString("nombre"));
-                d.setApellidos(rs.getString("apellidos"));
-                d.setTelefono(rs.getString("telefono"));
-                d.setCorreo(rs.getString("correo"));
-                d.setMascota(rs.getString("mascota"));
-                d.setColonia(rs.getString("colonia"));
-                d.setDireccion(rs.getString("direccion"));
-                d.setFoto(rs.getString("foto"));
-                lista.add(d);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return lista;
-    }
-
-    public Dueno obtenerUltimoDueno() {
-        String sql = "SELECT * FROM duenos ORDER BY id DESC LIMIT 1";
-        try (Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            if (rs.next()) {
-                Dueno d = new Dueno();
-                d.setId(rs.getInt("id"));
-                d.setNombre(rs.getString("nombre"));
-                d.setApellidos(rs.getString("apellidos"));
-                d.setTelefono(rs.getString("telefono"));
-                d.setCorreo(rs.getString("correo"));
-                d.setMascota(rs.getString("mascota"));
-                d.setColonia(rs.getString("colonia"));
-                d.setDireccion(rs.getString("direccion"));
-                d.setFoto(rs.getString("foto"));
-                return d;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public boolean insertarPaciente(String nombre, String especie, String raza,
-                                    String edad, String sexo, String fecha,
-                                    String doctor, String diagnostico,
-                                    String historial, String foto,
-                                    int idDueno, String urgencia,
-                                    String tipoCita, String medicamento,
-                                    double costo) {
-
-        String sql = "INSERT INTO pacientes(nombre, especie, raza, edad, sexo, fecha, doctor, diagnostico, historial, foto, id_dueno, urgencia, tipo_cita, medicamento, costo) " +
-                     "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, nombre);
-            ps.setString(2, especie);
-            ps.setString(3, raza);
-            ps.setString(4, edad);
-            ps.setString(5, sexo);
-            ps.setString(6, fecha);
-            ps.setString(7, doctor);
-            ps.setString(8, diagnostico);
-            ps.setString(9, historial);
-            ps.setString(10, foto);
-            ps.setInt(11, idDueno);
-            ps.setString(12, urgencia);
-            ps.setString(13, tipoCita);
-            ps.setString(14, medicamento);
-            ps.setDouble(15, costo);
-            return ps.executeUpdate() > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public boolean actualizarPaciente(int id, String nombre, String especie,
-                                      String raza, String edad, String sexo,
-                                      String fecha, String doctor,
-                                      String diagnostico, String historial,
-                                      String foto, String urgencia,
-                                      String tipoCita) {
-
-        String sql = "UPDATE pacientes SET nombre=?, especie=?, raza=?, edad=?, sexo=?, fecha=?, doctor=?, diagnostico=?, historial=?, foto=?, urgencia=?, tipo_cita=? WHERE id=?";
-
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, nombre);
-            ps.setString(2, especie);
-            ps.setString(3, raza);
-            ps.setString(4, edad);
-            ps.setString(5, sexo);
-            ps.setString(6, fecha);
-            ps.setString(7, doctor);
-            ps.setString(8, diagnostico);
-            ps.setString(9, historial);
-            ps.setString(10, foto);
-            ps.setString(11, urgencia);
-            ps.setString(12, tipoCita);
-            ps.setInt(13, id);
-            return ps.executeUpdate() > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public ArrayList<Paciente> obtenerPacientes() {
-        ArrayList<Paciente> lista = new ArrayList<>();
-        String sql = "SELECT * FROM pacientes";
-        try (Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            while (rs.next()) {
-                Paciente p = new Paciente();
-                p.setId(rs.getInt("id"));
-                p.setNombre(rs.getString("nombre"));
-                p.setEspecie(rs.getString("especie"));
-                p.setRaza(rs.getString("raza"));
-                p.setEdad(rs.getString("edad"));
-                p.setSexo(rs.getString("sexo"));
-                p.setFecha(rs.getString("fecha"));
-                p.setDoctor(rs.getString("doctor"));
-                p.setDiagnostico(rs.getString("diagnostico"));
-                p.setHistorial(rs.getString("historial"));
-                p.setFoto(rs.getString("foto"));
-                p.setIdDueno(rs.getInt("id_dueno"));
-                p.setUrgencia(rs.getString("urgencia"));
-                p.setTipoCita(rs.getString("tipo_cita"));
-                p.setMedicamento(rs.getString("medicamento"));
-                p.setCosto(rs.getDouble("costo"));
-                lista.add(p);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return lista;
-    }
-
-    public Paciente obtenerPacientePorDueno(int idDueno) {
-        String sql = "SELECT * FROM pacientes WHERE id_dueno=?";
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-        	
-            ps.setInt(1, idDueno);
+    
+    public List<String> listarDoctores() {
+        List<String> doctores = new ArrayList<>();
+        try {
+            String sql = "SELECT CONCAT(nombre, ' ', apellidos) AS doctor FROM users WHERE "
+            		+ "activo = TRUE";
+            PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            
-            if (rs.next()) {
-                Paciente p = new Paciente();
-                p.setId(rs.getInt("id"));
-                p.setNombre(rs.getString("nombre"));
-                p.setEspecie(rs.getString("especie"));
-                p.setRaza(rs.getString("raza"));
-                p.setEdad(rs.getString("edad"));
-                p.setSexo(rs.getString("sexo"));
-                p.setFecha(rs.getString("fecha"));
-                p.setDoctor(rs.getString("doctor"));
-                p.setDiagnostico(rs.getString("diagnostico"));
-                p.setHistorial(rs.getString("historial"));
-                p.setFoto(rs.getString("foto"));
-                p.setIdDueno(rs.getInt("id_dueno"));
-                p.setUrgencia(rs.getString("urgencia"));
-                p.setTipoCita(rs.getString("tipo_cita"));
-                p.setMedicamento(rs.getString("medicamento"));
-                p.setCosto(rs.getDouble("costo"));
-                return p;
-            }          
-        } 
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public boolean eliminarPaciente(int id) {
-        String sql = "DELETE FROM pacientes WHERE id=?";
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            return ps.executeUpdate() > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public ArrayList<String> obtenerDoctores() {
-        ArrayList<String> doctores = new ArrayList<>();
-        String sql = "SELECT DISTINCT doctor FROM pacientes WHERE doctor IS NOT NULL AND doctor != ''";
-        try (Statement st = con.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
                 doctores.add(rs.getString("doctor"));
             }
-        } catch (Exception e) {
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
             e.printStackTrace();
-        }
-        
-        if (doctores.isEmpty()) {
-            doctores.add("Dr. Pérez");
-            doctores.add("Dra. García");
-            doctores.add("Dr. López");
-            doctores.add("Dra. Martínez");
         }
         return doctores;
     }
-
-    public String login(String email, String password) {
- 
-        String sql = "SELECT nombre FROM users WHERE correo = ? AND password = ?";
-        
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, email);
-            ps.setString(2, password);
-            
+    
+    public Map<Integer, String> listarDoctoresConId() {
+        Map<Integer, String> doctores = new HashMap<>();
+        try {
+            String sql = "SELECT id, CONCAT(nombre, ' ', apellidos) AS nombre FROM "
+            		+ "users WHERE activo = TRUE";
+            PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            
-            if (rs.next()) {
-                return rs.getString("nombre");
+            while (rs.next()) {
+                doctores.put(rs.getInt("id"), rs.getString("nombre"));
             }
-            
-        } catch (Exception e) {
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        return null;
+        return doctores;
+    }
+    
+    public int obtenerDoctorIdPorNombre(String nombreDoctor) {
+        int idDoctor = -1;
+        try {
+            String sql = "SELECT id FROM users WHERE CONCAT(nombre, ' ', apellidos) = ? "
+            		+ "AND activo = TRUE";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, nombreDoctor);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                idDoctor = rs.getInt("id");
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return idDoctor;
+    }
+
+    public List<Dueno> obtenerTodosLosDuenos() {
+        List<Dueno> duenos = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM duenos ORDER BY id DESC";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Dueno dueno = new Dueno();
+                dueno.setId(rs.getInt("id"));
+                dueno.setNombre(rs.getString("nombre"));
+                dueno.setApellidos(rs.getString("apellidos"));
+                dueno.setTelefono(rs.getString("telefono"));
+                dueno.setCorreo(rs.getString("correo"));
+                dueno.setMascota(rs.getString("mascota"));
+                dueno.setColonia(rs.getString("colonia"));
+                dueno.setDireccion(rs.getString("direccion"));
+                dueno.setFoto(rs.getString("foto"));
+                duenos.add(dueno);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return duenos;
+    }
+    
+    public Dueno obtenerDuenoPorId(int id) {
+        Dueno dueno = null;
+        try {
+            String sql = "SELECT * FROM duenos WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                dueno = new Dueno();
+                dueno.setId(rs.getInt("id"));
+                dueno.setNombre(rs.getString("nombre"));
+                dueno.setApellidos(rs.getString("apellidos"));
+                dueno.setTelefono(rs.getString("telefono"));
+                dueno.setCorreo(rs.getString("correo"));
+                dueno.setMascota(rs.getString("mascota"));
+                dueno.setColonia(rs.getString("colonia"));
+                dueno.setDireccion(rs.getString("direccion"));
+                dueno.setFoto(rs.getString("foto"));
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dueno;
+    }
+    
+    public Dueno obtenerUltimoDueno() {
+        Dueno dueno = null;
+        try {
+            String sql = "SELECT * FROM duenos ORDER BY id DESC LIMIT 1";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                dueno = new Dueno();
+                dueno.setId(rs.getInt("id"));
+                dueno.setNombre(rs.getString("nombre"));
+                dueno.setApellidos(rs.getString("apellidos"));
+                dueno.setTelefono(rs.getString("telefono"));
+                dueno.setCorreo(rs.getString("correo"));
+                dueno.setMascota(rs.getString("mascota"));
+                dueno.setColonia(rs.getString("colonia"));
+                dueno.setDireccion(rs.getString("direccion"));
+                dueno.setFoto(rs.getString("foto"));
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dueno;
+    }
+    
+    public boolean insertarDueno(Dueno dueno) {
+        boolean exito = false;
+        try {
+            String sql = "INSERT INTO duenos (nombre, apellidos, telefono, correo, "
+            		+ "mascota, colonia, direccion, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            
+            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, dueno.getNombre());
+            ps.setString(2, dueno.getApellidos());
+            ps.setString(3, dueno.getTelefono());
+            ps.setString(4, dueno.getCorreo());
+            ps.setString(5, dueno.getMascota());
+            ps.setString(6, dueno.getColonia());
+            ps.setString(7, dueno.getDireccion());
+            ps.setString(8, dueno.getFoto());
+            exito = ps.executeUpdate() > 0;
+            if (exito) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    dueno.setId(rs.getInt(1));
+                }
+                rs.close();
+            }
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exito;
+    }
+    
+    public boolean actualizarDueno(Dueno dueno) {
+        boolean exito = false;
+        try {
+            String sql = "UPDATE duenos SET nombre=?, apellidos=?, telefono=?, "
+            		+ "correo=?, mascota=?, colonia=?, direccion=?, foto=? WHERE id=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, dueno.getNombre());
+            ps.setString(2, dueno.getApellidos());
+            ps.setString(3, dueno.getTelefono());
+            ps.setString(4, dueno.getCorreo());
+            ps.setString(5, dueno.getMascota());
+            ps.setString(6, dueno.getColonia());
+            ps.setString(7, dueno.getDireccion());
+            ps.setString(8, dueno.getFoto());
+            ps.setInt(9, dueno.getId());
+            exito = ps.executeUpdate() > 0;
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exito;
+    }
+    
+    public boolean eliminarDueno(int id) {
+        boolean exito = false;
+        try {
+            String sql = "DELETE FROM duenos WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            exito = ps.executeUpdate() > 0;
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exito;
+    }
+ 
+    public List<Paciente> obtenerTodosLosPacientes() {
+        List<Paciente> pacientes = new ArrayList<>();
+        try {
+            String sql = "SELECT p.*, d.nombre AS dueno_nombre, d.apellidos AS dueno_apellidos FROM pacientes p LEFT JOIN duenos d ON p.id_dueno = d.id ORDER BY p.id DESC";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Paciente paciente = new Paciente();
+                paciente.setId(rs.getInt("id"));
+                paciente.setNombre(rs.getString("nombre"));
+                paciente.setEspecie(rs.getString("especie"));
+                paciente.setRaza(rs.getString("raza"));
+                paciente.setEdad(rs.getString("edad"));
+                paciente.setSexo(rs.getString("sexo"));
+                paciente.setDiagnostico(rs.getString("diagnostico"));
+                paciente.setHistorial(rs.getString("historial"));
+                paciente.setFoto(rs.getString("foto"));
+                paciente.setIdDueno(rs.getInt("id_dueno"));
+                pacientes.add(paciente);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pacientes;
+    }
+    
+    public Paciente obtenerPacientePorId(int id) {
+        Paciente paciente = null;
+        try {
+            String sql = "SELECT * FROM pacientes WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                paciente = new Paciente();
+                paciente.setId(rs.getInt("id"));
+                paciente.setNombre(rs.getString("nombre"));
+                paciente.setEspecie(rs.getString("especie"));
+                paciente.setRaza(rs.getString("raza"));
+                paciente.setEdad(rs.getString("edad"));
+                paciente.setSexo(rs.getString("sexo"));
+                paciente.setDiagnostico(rs.getString("diagnostico"));
+                paciente.setHistorial(rs.getString("historial"));
+                paciente.setFoto(rs.getString("foto"));
+                paciente.setIdDueno(rs.getInt("id_dueno"));
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return paciente;
+    }
+    
+    public Paciente obtenerPacientePorDueno(int duenoId) {
+        Paciente paciente = null;
+        try {
+            String sql = "SELECT * FROM pacientes WHERE id_dueno = ? "
+            		+ "ORDER BY id DESC LIMIT 1";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, duenoId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                paciente = new Paciente();
+                paciente.setId(rs.getInt("id"));
+                paciente.setNombre(rs.getString("nombre"));
+                paciente.setEspecie(rs.getString("especie"));
+                paciente.setRaza(rs.getString("raza"));
+                paciente.setEdad(rs.getString("edad"));
+                paciente.setSexo(rs.getString("sexo"));
+                paciente.setDiagnostico(rs.getString("diagnostico"));
+                paciente.setHistorial(rs.getString("historial"));
+                paciente.setFoto(rs.getString("foto"));
+                paciente.setIdDueno(rs.getInt("id_dueno"));
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return paciente;
+    }
+    
+    public boolean insertarPaciente(Paciente paciente) {
+        boolean exito = false;
+        try {
+            String sql = "INSERT INTO pacientes (nombre, especie, raza, "
+            		+ "edad, sexo, diagnostico, historial, foto, id_dueno) "
+            		+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            
+            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, paciente.getNombre());
+            ps.setString(2, paciente.getEspecie());
+            ps.setString(3, paciente.getRaza());
+            ps.setString(4, paciente.getEdad());
+            ps.setString(5, paciente.getSexo());
+            ps.setString(6, paciente.getDiagnostico());
+            ps.setString(7, paciente.getHistorial());
+            ps.setString(8, paciente.getFoto());
+            ps.setInt(9, paciente.getIdDueno());
+            exito = ps.executeUpdate() > 0;
+            if (exito) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    paciente.setId(rs.getInt(1));
+                }
+                rs.close();
+            }
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exito;
+    }
+    
+    public boolean actualizarPaciente(Paciente paciente) {
+        boolean exito = false;
+        try {
+            String sql = "UPDATE pacientes SET nombre=?, especie=?, raza=?, edad=?, sexo=?, diagnostico=?, "
+            		+ "historial=?, foto=?, id_dueno=? WHERE id=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, paciente.getNombre());
+            ps.setString(2, paciente.getEspecie());
+            ps.setString(3, paciente.getRaza());
+            ps.setString(4, paciente.getEdad());
+            ps.setString(5, paciente.getSexo());
+            ps.setString(6, paciente.getDiagnostico());
+            ps.setString(7, paciente.getHistorial());
+            ps.setString(8, paciente.getFoto());
+            ps.setInt(9, paciente.getIdDueno());
+            ps.setInt(10, paciente.getId());
+            exito = ps.executeUpdate() > 0;
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exito;
+    }
+    
+    public boolean eliminarPaciente(int id) {
+        boolean exito = false;
+        try {
+            String sql = "DELETE FROM pacientes WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            exito = ps.executeUpdate() > 0;
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exito;
+    }
+ 
+    public List<Object[]> obtenerTodasLasCitas() {
+        List<Object[]> citas = new ArrayList<>();
+        try {
+            String sql = "SELECT c.id, p.nombre AS mascota, CONCAT(u.nombre, ' ', u.apellidos) AS doctor, c.fecha, "
+            		+ "c.hora, c.tipo_cita, c.urgencia, c.costo, c.estado FROM citas c LEFT JOIN "
+            		+ "pacientes p ON c.id_paciente = p.id LEFT JOIN users u ON c.id_doctor = u.id ORDER BY c.fecha DESC";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Object[] cita = new Object[9];
+                cita[0] = rs.getInt("id");
+                cita[1] = rs.getString("mascota");
+                cita[2] = rs.getString("doctor");
+                cita[3] = rs.getString("fecha");
+                cita[4] = rs.getString("hora");
+                cita[5] = rs.getString("tipo_cita");
+                cita[6] = rs.getString("urgencia");
+                cita[7] = rs.getDouble("costo");
+                cita[8] = rs.getString("estado");
+                citas.add(cita);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return citas;
+    }
+    
+    public boolean insertarCita(int idPaciente, int idDoctor, String fecha, String hora, String tipoCita, 
+    		String urgencia, String medicamento, double costo, String estado, 
+    		String diagnostico) {
+        boolean exito = false;
+        try {
+            String sql = "INSERT INTO citas (id_paciente, id_doctor, fecha, hora, tipo_cita, "
+            		+ "urgencia, medicamento, costo, estado, diagnostico) "
+            		+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, idPaciente);
+            ps.setInt(2, idDoctor);
+            ps.setString(3, fecha);
+            ps.setString(4, hora);
+            ps.setString(5, tipoCita);
+            ps.setString(6, urgencia);
+            ps.setString(7, medicamento);
+            ps.setDouble(8, costo);
+            ps.setString(9, estado);
+            ps.setString(10, diagnostico);
+            exito = ps.executeUpdate() > 0;
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exito;
+    }
+    
+    public boolean actualizarCita(int id, int idDoctor, String fecha, String hora, 
+    		String tipoCita, String urgencia, String medicamento, double costo, 
+    		String estado, String diagnostico) {
+    	
+        boolean exito = false;
+        try {
+            String sql = "UPDATE citas SET id_doctor=?, fecha=?, hora=?, tipo_cita=?, "
+            		+ "urgencia=?, medicamento=?, costo=?, estado=?, diagnostico=? WHERE id=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, idDoctor);
+            ps.setString(2, fecha);
+            ps.setString(3, hora);
+            ps.setString(4, tipoCita);
+            ps.setString(5, urgencia);
+            ps.setString(6, medicamento);
+            ps.setDouble(7, costo);
+            ps.setString(8, estado);
+            ps.setString(9, diagnostico);
+            ps.setInt(10, id);
+            exito = ps.executeUpdate() > 0;
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exito;
+    }
+    
+    public boolean eliminarCita(int id) {
+        boolean exito = false;
+        try {
+            String sql = "DELETE FROM citas WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            exito = ps.executeUpdate() > 0;
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exito;
+    }
+    
+    public boolean actualizarEstadoCita(int id, String estado) {
+        boolean exito = false;
+        try {
+            String sql = "UPDATE citas SET estado = ? WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, estado);
+            ps.setInt(2, id);
+            exito = ps.executeUpdate() > 0;
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exito;
+    }
+    
+    public String obtenerNombreUsuario(String correo) {
+        String nombreCompleto = null;
+        try {
+            String sql = "SELECT CONCAT(nombre, ' ', apellidos) AS nombre FROM users WHERE correo = ? AND activo = TRUE";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, correo);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                nombreCompleto = rs.getString("nombre");
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nombreCompleto;
+    }
+    
+    public List<Object[]> obtenerCitasPorPaciente(int idPaciente) {
+        List<Object[]> citas = new ArrayList<>();
+        try {
+            String sql = "SELECT c.id, c.fecha, c.hora, c.tipo_cita, c.urgencia,"
+            		+ " c.medicamento, c.costo, c.estado FROM citas c "
+            		+ "WHERE c.id_paciente = ? ORDER BY c.fecha DESC";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, idPaciente);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+            	Object[] cita = new Object[8];
+            	cita[0] = rs.getInt("id");
+            	cita[1] = rs.getString("fecha");
+            	cita[2] = rs.getString("hora");
+            	cita[3] = rs.getString("tipo_cita");
+            	cita[4] = rs.getString("urgencia");
+            	cita[5] = rs.getString("medicamento"); 
+            	cita[6] = rs.getDouble("costo");
+            	cita[7] = rs.getString("estado");
+                citas.add(cita);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return citas;
+    }
+    
+    public List<Object[]> obtenerCitasConDoctor(int idPaciente) {
+        List<Object[]> citas = new ArrayList<>();
+        try {
+            String sql = "SELECT c.id, CONCAT(u.nombre, ' ', u.apellidos) AS doctor, "
+            		+ "c.fecha, c.tipo_cita, c.urgencia FROM citas c LEFT JOIN "
+            		+ "users u ON c.id_doctor = u.id WHERE c.id_paciente = ? ORDER BY c.fecha DESC";
+            
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, idPaciente);
+            ResultSet rs = ps.executeQuery();
+           
+            while (rs.next()) {
+                Object[] cita = new Object[5];
+                cita[0] = rs.getInt("id");
+                cita[1] = rs.getString("doctor");
+                cita[2] = rs.getString("fecha");
+                cita[3] = rs.getString("tipo_cita");
+                cita[4] = rs.getString("urgencia");
+                citas.add(cita);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return citas;
     }
 }

@@ -1,82 +1,118 @@
 package Controller;
 
-import Model.*;
-import java.util.ArrayList;
+import Model.VeterinariaModel;
+import Model.Dueno;
+import Model.Paciente;
+import java.util.List;
+import java.util.Map;
 
 public class AuthController {
-
-    private VeterinariaModel modelo = new VeterinariaModel();
-
-    public boolean crearDueno(String nombre, String apellidos, String telefono,
-                              String correo, String mascota, String colonia,
-                              String direccion, String foto) {
-        return modelo.insertarDueno(nombre, apellidos, telefono, correo, 
-        		mascota, colonia, direccion, foto);
+    
+    private VeterinariaModel model;
+    
+    public AuthController() {
+        model = new VeterinariaModel();
     }
-
-    public boolean actualizarDueno(int id, String nombre, String apellidos,
-                                   String telefono, String correo,
-                                   String mascota, String colonia,
-                                   String direccion, String foto) {
-        return modelo.actualizarDueno(id, nombre, apellidos, telefono, correo, mascota, colonia, direccion, foto);
+    
+    public boolean validarLogin(String correo, String password) {
+        return model.validarLogin(correo, password);
     }
-
-    public boolean eliminarDueno(int id) {
-        return modelo.eliminarDueno(id);
+    
+    public List<String> listarDoctores() {
+        return model.listarDoctores();
     }
-
-    public ArrayList<Dueno> listarDuenos() {
-        return modelo.obtenerDuenos();
+    
+    public Map<Integer, String> listarDoctoresConId() {
+        return model.listarDoctoresConId();
     }
-
+    
+    public int obtenerDoctorIdPorNombre(String nombreDoctor) {
+        return model.obtenerDoctorIdPorNombre(nombreDoctor);
+    }
+    
+    public List<Dueno> listarDuenos() {
+        return model.obtenerTodosLosDuenos();
+    }
+    
     public Dueno obtenerDuenoPorId(int id) {
-        return modelo.obtenerDuenoPorId(id);
+        return model.obtenerDuenoPorId(id);
     }
-
+    
     public Dueno obtenerUltimoDueno() {
-        return modelo.obtenerUltimoDueno();
+        return model.obtenerUltimoDueno();
     }
-
-    public boolean crearPaciente(String nombre, String especie, String raza,
-                                 String edad, String sexo, String fecha,
-                                 String doctor, String diagnostico,
-                                 String historial, String foto, int idDueno,
-                                 String urgencia, String tipoCita,
-                                 String medicamento, double costo) {
-        return modelo.insertarPaciente(nombre, especie, raza, edad, sexo, fecha,
-                                       doctor, diagnostico, historial, foto,
-                                       idDueno, urgencia, tipoCita, medicamento, costo);
+    
+    public boolean crearDueno(Dueno dueno) {
+        return model.insertarDueno(dueno);
     }
-
-    public boolean actualizarPaciente(int id, String nombre, String especie,
-            String raza, String edad, String sexo,
-            String fecha, String doctor,
-            String diagnostico, String historial,
-            String foto, String urgencia,
-            String tipoCita) {
-	
-    	return modelo.actualizarPaciente(id, nombre, especie, raza, edad, sexo,
-	               fecha, doctor, diagnostico, historial,
-	               foto, urgencia, tipoCita);
-	}
-
-    public ArrayList<Paciente> listarPacientes() {
-        return modelo.obtenerPacientes();
+    
+    public boolean actualizarDueno(Dueno dueno) {
+        return model.actualizarDueno(dueno);
     }
-
-    public Paciente obtenerPacientePorDueno(int idDueno) {
-        return modelo.obtenerPacientePorDueno(idDueno);
+    
+    public boolean eliminarDueno(int id) {
+        return model.eliminarDueno(id);
     }
-
+    
+    public List<Paciente> listarPacientes() {
+        return model.obtenerTodosLosPacientes();
+    }
+    
+    public Paciente obtenerPacientePorId(int id) {
+        return model.obtenerPacientePorId(id);
+    }
+    
+    public Paciente obtenerPacientePorDueno(int duenoId) {
+        return model.obtenerPacientePorDueno(duenoId);
+    }
+    
+    public boolean crearPaciente(Paciente paciente) {
+        return model.insertarPaciente(paciente);
+    }
+    
+    public boolean actualizarPaciente(Paciente paciente) {
+        return model.actualizarPaciente(paciente);
+    }
+    
     public boolean eliminarPaciente(int id) {
-        return modelo.eliminarPaciente(id);
+        return model.eliminarPaciente(id);
+    }
+   
+    public List<Object[]> listarCitas() {
+        return model.obtenerTodasLasCitas();
+    }
+    
+    public boolean crearCita(int idPaciente, int idDoctor, String fecha, String hora, 
+                             String tipoCita, String urgencia, String medicamento, 
+                             double costo, String estado, String diagnostico) {
+        return model.insertarCita(idPaciente, idDoctor, fecha, hora, tipoCita, 
+                                   urgencia, medicamento, costo, estado, diagnostico);
+    }
+    
+    public boolean actualizarCita(int id, int idDoctor, String fecha, String hora, 
+                                  String tipoCita, String urgencia, String medicamento, 
+                                  double costo, String estado, String diagnostico) {
+        return model.actualizarCita(id, idDoctor, fecha, hora, tipoCita, 
+                                     urgencia, medicamento, costo, estado, diagnostico);
+    }
+    
+    public boolean eliminarCita(int id) {
+        return model.eliminarCita(id);
+    }
+    
+    public boolean actualizarEstadoCita(int id, String estado) {
+        return model.actualizarEstadoCita(id, estado);
     }
 
-    public ArrayList<String> listarDoctores() {
-        return modelo.obtenerDoctores();
+    public String obtenerNombreUsuario(String correo) {
+        return model.obtenerNombreUsuario(correo);
     }
-
-    public String login(String email, String password) {
-        return modelo.login(email, password);
+    
+    public List<Object[]> listarCitasPorPaciente(int idPaciente) {
+        return model.obtenerCitasPorPaciente(idPaciente);
     }
+    
+    public List<Object[]> listarCitasConDoctor(int idPaciente) {
+        return model.obtenerCitasConDoctor(idPaciente);
+    }   
 }
