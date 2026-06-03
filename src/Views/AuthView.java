@@ -3,6 +3,7 @@ package Views;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -12,11 +13,16 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -47,7 +53,9 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import Controller.AuthController;
+import Grafo.GrafoCitas;
 import Model.Dueno;
+import Model.Medicamento;
 import Model.Paciente;
 import Model.VeterinariaModel;
 
@@ -199,6 +207,7 @@ public class AuthView {
                  JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
          JDialog dialog = optionPane.createDialog("Salir");
          dialog.setIconImage(icono.getImage());
+         Inicio(nombreUsuarioActual);
 
          confirmar.addActionListener(e -> {
              dialog.dispose();
@@ -207,6 +216,7 @@ public class AuthView {
 
          cancelar.addActionListener(e -> {
              dialog.dispose();
+             //Inicio(nombreUsuarioActual);
              
          });
 
@@ -262,7 +272,7 @@ public class AuthView {
          panel.add(cerrar);
 
          cerrar.addActionListener(e -> {
-             
+        	 ventana.dispose();
              Salir();
          });
 
@@ -357,112 +367,122 @@ public class AuthView {
      }
 
      public void Costos() {
-         JFrame ventana = new JFrame();
-         ventana.setSize(1000, 600);
-         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         ventana.setLocationRelativeTo(null);
-         ventana.setMinimumSize(new Dimension(200, 200));
-         ventana.setTitle("Costos de consultas");
-         ventana.setResizable(true);
-         ventana.setLayout(null);
+    	    JFrame ventana = new JFrame();
+    	    ventana.setSize(1000, 600);
+    	    ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	    ventana.setLocationRelativeTo(null);
+    	    ventana.setMinimumSize(new Dimension(200, 200));
+    	    ventana.setTitle("Costos de consultas");
+    	    ventana.setResizable(true);
+    	    ventana.setLayout(null);
 
-         JPanel fondo = new JPanel();
-         fondo.setBounds(0, 0, 1000, 600);
-         fondo.setBackground(Color.decode("#FFFFFF"));
-         fondo.setLayout(null);
-         ventana.add(fondo);
+    	    JPanel fondo = new JPanel();
+    	    fondo.setBounds(0, 0, 1000, 600);
+    	    fondo.setBackground(Color.decode("#FFFFFF"));
+    	    fondo.setLayout(null);
+    	    ventana.add(fondo);
 
-         JLabel titulo = new JLabel("Costo de consultas y medicamentos");
-         titulo.setFont(new Font("Adamina", Font.BOLD, 32));
-         titulo.setBounds(50, 30, 900, 40);
-         fondo.add(titulo);
+    	    JLabel titulo = new JLabel("Costo de consultas y medicamentos");
+    	    titulo.setFont(new Font("Adamina", Font.BOLD, 32));
+    	    titulo.setBounds(50, 30, 900, 40);
+    	    fondo.add(titulo);
 
-         JPanel panel1 = new JPanel();
-         panel1.setBounds(50, 90, 400, 380);
-         panel1.setBackground(Color.decode("#8CACCB"));
-         panel1.setLayout(null);
-         panel1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
-         fondo.add(panel1);
+    	    JButton btnGestionMedicamentos = new JButton("Medicamentos");
+    	    btnGestionMedicamentos.setBounds(700, 490, 200, 60); 
+    	    btnGestionMedicamentos.setFont(new Font("Inter", Font.BOLD, 24));
+    	    btnGestionMedicamentos.setBackground(Color.decode("#14518C"));
+    	    btnGestionMedicamentos.setForeground(Color.WHITE);
+    	    btnGestionMedicamentos.setFocusPainted(false);
+    	    btnGestionMedicamentos.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
+    	    fondo.add(btnGestionMedicamentos);
+    	    
+    	    btnGestionMedicamentos.addActionListener(e -> {
+    	        ventana.dispose();
+    	        GestionMedicamentos();
+    	    }); 
 
-         JLabel label1 = new JLabel("Tipo de consultas:");
-         label1.setFont(new Font("Adamina", Font.PLAIN, 22));
-         label1.setBounds(10, 10, 300, 30);
-         panel1.add(label1);
+    	    JPanel panel1 = new JPanel();
+    	    panel1.setBounds(50, 90, 400, 380);
+    	    panel1.setBackground(Color.decode("#8CACCB"));
+    	    panel1.setLayout(null);
+    	    panel1.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
+    	    fondo.add(panel1);
 
-         String[] columnas1 = {"Consultas", "Costo"};
-         String[][] datos1 = {
-                 {"Consulta rutinaria", "$700 MXN"},
-                 {"Consulta urgencias", "$2,000 MXN"},
-                 {"Consulta especializada", "$2,000 MXN"},
-                 {"Vacunación", "$1,500 MXN"},
-                 {"Desparasitación", "$600 MXN"},
-                 {"Consulta a domicilio", "$1,800 MXN"}
-         };
+    	    JLabel label1 = new JLabel("Tipo de consultas:");
+    	    label1.setFont(new Font("Adamina", Font.PLAIN, 22));
+    	    label1.setBounds(10, 10, 300, 30);
+    	    panel1.add(label1);
 
-         JTable tabla1 = new JTable(datos1, columnas1);
-         tabla1.setFont(new Font("Adamina", Font.PLAIN, 16));
-         tabla1.setRowHeight(30);
-         JTableHeader header1 = tabla1.getTableHeader();
-         header1.setFont(new Font("Adamina", Font.BOLD, 18));
-         JScrollPane scroll1 = new JScrollPane(tabla1);
-         scroll1.setBounds(10, 50, 380, 300);
-         panel1.add(scroll1);
+    	    String[] columnas1 = {"Consultas", "Costo"};
+    	    String[][] datos1 = {
+    	            {"Consulta rutinaria", "$700 MXN"},
+    	            {"Consulta urgencias", "$2,000 MXN"},
+    	            {"Consulta especializada", "$2,000 MXN"},
+    	            {"Vacunación", "$1,500 MXN"},
+    	            {"Desparasitación", "$600 MXN"},
+    	            {"Consulta a domicilio", "$1,800 MXN"}
+    	    };
 
-         JPanel panel2 = new JPanel();
-         panel2.setBounds(500, 90, 400, 380);
-         panel2.setBackground(Color.decode("#8CACCB"));
-         panel2.setLayout(null);
-         panel2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
-         fondo.add(panel2);
+    	    JTable tabla1 = new JTable(datos1, columnas1);
+    	    tabla1.setFont(new Font("Adamina", Font.PLAIN, 16));
+    	    tabla1.setRowHeight(30);
+    	    JTableHeader header1 = tabla1.getTableHeader();
+    	    header1.setFont(new Font("Adamina", Font.BOLD, 18));
+    	    JScrollPane scroll1 = new JScrollPane(tabla1);
+    	    scroll1.setBounds(10, 50, 380, 300);
+    	    panel1.add(scroll1);
 
-         JLabel label2 = new JLabel("Medicamentos:");
-         label2.setFont(new Font("Adamina", Font.PLAIN, 22));
-         label2.setBounds(10, 10, 300, 30);
-         panel2.add(label2);
+    	    JPanel panel2 = new JPanel();
+    	    panel2.setBounds(500, 90, 400, 380);
+    	    panel2.setBackground(Color.decode("#8CACCB"));
+    	    panel2.setLayout(null);
+    	    panel2.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
+    	    fondo.add(panel2);
 
-         String[] columnas2 = {"Medicamentos", "Costo"};
-         String[][] datos2 = {
-                 {"Antibiótico clavoxivet (20 tabletas)", "$295 MXN"},
-                 {"Desparacitante Care Max", "$85 MXN"},
-                 {"Antiparasitarios", "$300 MXN"},
-                 {"Analgésicos", "$200 MXN"},
-                 {"Suplementos", "$400 MXN"},
-                 {"Vendaje", "$45 MXN"}
-         };
+    	    JLabel label2 = new JLabel("Medicamentos:");
+    	    label2.setFont(new Font("Adamina", Font.PLAIN, 22));
+    	    label2.setBounds(10, 10, 300, 30);
+    	    panel2.add(label2);
 
-         JTable tabla2 = new JTable(datos2, columnas2);
-         tabla2.setFont(new Font("Adamina", Font.PLAIN, 16));
-         tabla2.setRowHeight(30);
-         JTableHeader header2 = tabla2.getTableHeader();
-         header2.setFont(new Font("Adamina", Font.BOLD, 18));
-         JScrollPane scroll2 = new JScrollPane(tabla2);
-         scroll2.setBounds(10, 50, 380, 300);
-         panel2.add(scroll2);
+    	    List<Medicamento> medicamentos = controller.listarMedicamentos();
+    	    String[][] datos2 = new String[medicamentos.size()][2];
+    	    for (int i = 0; i < medicamentos.size(); i++) {
+    	        datos2[i][0] = medicamentos.get(i).getNombre();
+    	        datos2[i][1] = "$" + medicamentos.get(i).getPrecio() + " MXN";
+    	    }
 
-         JButton regresar = new JButton("Regresar");
-         regresar.setBounds(50, 490, 180, 60);
-         regresar.setFont(new Font("Inter", Font.BOLD, 24));
-         regresar.setBackground(Color.decode("#D81F10"));
-         regresar.setForeground(Color.WHITE);
-         regresar.setFocusPainted(false);
-         regresar.setBorder(BorderFactory.createLineBorder(Color.black, 2, true));
-         fondo.add(regresar);
+    	    String[] columnas2 = {"Medicamentos", "Costo"};
+    	    JTable tabla2 = new JTable(datos2, columnas2);
+    	    tabla2.setFont(new Font("Adamina", Font.PLAIN, 16));
+    	    tabla2.setRowHeight(30);
+    	    JTableHeader header2 = tabla2.getTableHeader();
+    	    header2.setFont(new Font("Adamina", Font.BOLD, 18));
+    	    JScrollPane scroll2 = new JScrollPane(tabla2);
+    	    scroll2.setBounds(10, 50, 380, 300);
+    	    panel2.add(scroll2);
 
-         regresar.addActionListener(e -> {
-             ventana.dispose();
-             Inicio(nombreUsuarioActual);
-         });
+    	    JButton regresar = new JButton("Regresar");
+    	    regresar.setBounds(50, 490, 180, 60);
+    	    regresar.setFont(new Font("Inter", Font.BOLD, 24));
+    	    regresar.setBackground(Color.decode("#D81F10"));
+    	    regresar.setForeground(Color.WHITE);
+    	    regresar.setFocusPainted(false);
+    	    regresar.setBorder(BorderFactory.createLineBorder(Color.black, 2, true));
+    	    fondo.add(regresar);
 
-         ventana.setVisible(true);
-         
-         Image aplicacion = new ImageIcon(
-  	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
-  	    	).getImage();
+    	    regresar.addActionListener(e -> {
+    	        ventana.dispose();
+    	        Inicio(nombreUsuarioActual);
+    	    }); 
 
-  	    	ventana.setIconImage(aplicacion);
-     }
+    	    ventana.setVisible(true);
+    	    
+    	    Image aplicacion = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg")).getImage();
+    	    ventana.setIconImage(aplicacion);
+    	}
 
      public void RegistroCitas() {
+    	 
     	    JFrame ventana = new JFrame("Registro de citas");
     	    ventana.setSize(1000, 600);
     	    ventana.setLocationRelativeTo(null);
@@ -491,6 +511,33 @@ public class AuthView {
     	    fondo.add(scroll);
 
     	    List<Paciente> listaPacientes = controller.listarPacientes();
+    	    
+    	    GrafoCitas grafoCitas = new GrafoCitas();
+    	    Map<Integer, List<Object[]>> citasPorPaciente = new HashMap<>();
+    	    
+    	    for (Paciente paciente : listaPacientes) {
+    	    	
+    	        List<Object[]> citas = controller.listarCitasPorPaciente(paciente.getId());
+    	        citasPorPaciente.put(paciente.getId(), citas);
+    	        
+    	        for (Object[] cita : citas) {
+    	            if (cita[1] != null && !cita[1].toString().equals("No asignada")) {
+    	                grafoCitas.agregarCita(cita);
+    	            }
+    	        }
+    	    }
+    	    
+    	    grafoCitas.construirAristas();
+    	    
+    	    List<Object[]> citasOrdenadas = grafoCitas.obtenerCitasOrdenadas();
+    	    
+    	    Map<Integer, Integer> prioridadCita = new HashMap<>();
+    	    
+    	    for (int i = 0; i < citasOrdenadas.size(); i++) {
+    	        Object[] cita = citasOrdenadas.get(i);
+    	        int idCita = Integer.parseInt(cita[0].toString());
+    	        prioridadCita.put(idCita, i + 1);
+    	    }
 
     	    for (Paciente paciente : listaPacientes) {
     	        JPanel panel = new JPanel();
@@ -529,23 +576,52 @@ public class AuthView {
     	        desc.setBounds(120, 50, 300, 30);
     	        panel.add(desc);
 
+    	        List<Object[]> citas = citasPorPaciente.get(paciente.getId());
     	        String fechaCita = "No asignada";
-    	        List<Object[]> citas = controller.listarCitasPorPaciente(paciente.getId());
+    	        String urgenciaCita = "";
+    	        int prioridad = -1;
+    	        
     	        if (citas != null && !citas.isEmpty()) {
     	            Object[] ultimaCita = citas.get(0);
-  
     	            fechaCita = ultimaCita[1] != null ? ultimaCita[1].toString() : "No asignada";
+    	            urgenciaCita = ultimaCita[4] != null ? ultimaCita[4].toString() : "";
+    	            
+    	            int idCita = Integer.parseInt(ultimaCita[0].toString());
+    	            prioridad = prioridadCita.getOrDefault(idCita, -1);
     	        }
     	        
-    	        JLabel cita = new JLabel("Próxima cita: " + fechaCita);
-    	        cita.setFont(new Font("Adamina", Font.PLAIN, 18));
-    	        cita.setBounds(450, 20, 300, 30);
-    	        panel.add(cita);
+    	        JLabel citaLabel = new JLabel("Próxima cita: " + fechaCita);
+    	        citaLabel.setFont(new Font("Adamina", Font.PLAIN, 18));
+    	        citaLabel.setBounds(450, 20, 300, 30);
+    	        panel.add(citaLabel);
+    	        
+    	        if (!urgenciaCita.isEmpty()) {
+    	            JLabel urgenciaLabel = new JLabel("Urgencia: " + urgenciaCita);
+    	            urgenciaLabel.setFont(new Font("Adamina", Font.BOLD, 14));
+    	            urgenciaLabel.setBounds(450, 45, 200, 20);
+    	            
+    	            if (urgenciaCita.equals("Alta")) {
+    	                urgenciaLabel.setForeground(Color.RED);
+    	            } else if (urgenciaCita.equals("Media")) {
+    	                urgenciaLabel.setForeground(Color.ORANGE);
+    	            } else if (urgenciaCita.equals("Baja")) {
+    	                urgenciaLabel.setForeground(Color.GREEN);
+    	            }
+    	            panel.add(urgenciaLabel);
+    	        }
+    	        
+    	        if (prioridad > 0) {
+    	            JLabel prioridadLabel = new JLabel("Prioridad: #" + prioridad);
+    	            prioridadLabel.setFont(new Font("Adamina", Font.BOLD, 12));
+    	            prioridadLabel.setBounds(450, 65, 200, 20);
+    	            prioridadLabel.setForeground(Color.BLUE);
+    	            panel.add(prioridadLabel);
+    	        }
 
     	        ImageIcon iconoHistorial = new ImageIcon(getClass().getResource("/Imagenes/historial.png"));
     	        Image imgHistorial = iconoHistorial.getImage().getScaledInstance(80, 45, Image.SCALE_SMOOTH);
     	        JButton historial = new JButton(new ImageIcon(imgHistorial));
-    	        historial.setBounds(450, 55, 80, 45);
+    	        historial.setBounds(550, 55, 80, 45);
     	        historial.setBackground(Color.decode("#14518C"));
     	        historial.setFocusPainted(false);
     	        historial.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1, true));
@@ -559,7 +635,7 @@ public class AuthView {
     	        ImageIcon iconoCrear = new ImageIcon(getClass().getResource("/Imagenes/crearcita.jpg"));
     	        Image imgCrear = iconoCrear.getImage().getScaledInstance(80, 45, Image.SCALE_SMOOTH);
     	        JButton crear = new JButton(new ImageIcon(imgCrear));
-    	        crear.setBounds(545, 55, 80, 45);
+    	        crear.setBounds(640, 55, 80, 45);
     	        crear.setBackground(Color.decode("#14518C"));
     	        crear.setFocusPainted(false);
     	        crear.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1, true));
@@ -572,7 +648,7 @@ public class AuthView {
     	        ImageIcon iconoEditar = new ImageIcon(getClass().getResource("/Imagenes/Editar.jpg"));
     	        Image imgEditar = iconoEditar.getImage().getScaledInstance(80, 45, Image.SCALE_SMOOTH);
     	        JButton editar = new JButton(new ImageIcon(imgEditar));
-    	        editar.setBounds(640, 55, 80, 45);
+    	        editar.setBounds(730, 55, 80, 45);
     	        editar.setBackground(Color.decode("#14518C"));
     	        editar.setFocusPainted(false);
     	        editar.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1, true));
@@ -602,10 +678,56 @@ public class AuthView {
     	        Inicio(nombreUsuarioActual);
     	    });
 
+    	    JButton verCitasOrdenadas = new JButton("Ver orden de citas");
+    	    verCitasOrdenadas.setBounds(250, 490, 200, 60);
+    	    verCitasOrdenadas.setFont(new Font("Inter", Font.BOLD, 16));
+    	    verCitasOrdenadas.setBackground(Color.decode("#14518C"));
+    	    verCitasOrdenadas.setForeground(Color.white);
+    	    verCitasOrdenadas.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+    	    verCitasOrdenadas.setFocusPainted(false);
+    	    verCitasOrdenadas.addActionListener(e -> mostrarOrdenCitas(citasOrdenadas));
+    	    fondo.add(verCitasOrdenadas);
+
     	    Image aplicacion = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg")).getImage();
     	    ventana.setIconImage(aplicacion);
 
     	    ventana.setVisible(true);
+    	}
+
+    	private void mostrarOrdenCitas(List<Object[]> citasOrdenadas) {
+    		
+    	    JFrame ventanaOrden = new JFrame("Orden de citas");
+    	    ventanaOrden.setSize(600, 400);
+    	    ventanaOrden.setLocationRelativeTo(null);
+    	    ventanaOrden.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    	    
+    	    JTextArea textoArea = new JTextArea();
+    	    textoArea.setEditable(false);
+    	    textoArea.setFont(new Font("Adamina", Font.BOLD, 14));
+    	    
+    	    StringBuilder sb = new StringBuilder();
+    	    sb.append("ORDEN DE CITAS POR PRIORIDAD\n");
+    	    sb.append("(Ordenado por: Urgencia > Fecha)\n\n");
+    	    
+    	    for (int i = 0; i < citasOrdenadas.size(); i++) {
+    	    	
+    	        Object[] cita = citasOrdenadas.get(i);
+    	        sb.append(String.format("%d. ", i + 1));
+    	        sb.append(String.format("ID: %s | ", cita[0].toString()));
+    	        sb.append(String.format("Fecha: %s | ", cita[1].toString()));
+    	        sb.append(String.format("Hora: %s | ", cita[2].toString()));
+    	        sb.append(String.format("Urgencia: %s | ", cita[4].toString()));
+    	        sb.append(String.format("Tipo: %s\n", cita[3].toString()));
+    	        
+    	        if (i < citasOrdenadas.size() - 1) {
+    	            sb.append("   \n");
+    	        }
+    	    }
+    	    
+    	    textoArea.setText(sb.toString());
+    	    JScrollPane scroll = new JScrollPane(textoArea);
+    	    ventanaOrden.add(scroll);
+    	    ventanaOrden.setVisible(true);
     	}
 
      public void DetallesPaciente(Paciente paciente) {
@@ -1694,6 +1816,7 @@ public class AuthView {
     	}
 	
     	public void PanelDuenos() {
+
     	    JFrame ventana = new JFrame("Registro de dueños");
     	    ventana.setSize(1000, 600);
     	    ventana.setLocationRelativeTo(null);
@@ -2043,6 +2166,7 @@ public class AuthView {
     	}
 
     	public void EditarDueno(Dueno dueno) {
+
     	    JFrame ventana = new JFrame();
     	    ventana.setSize(1000, 600);
     	    ventana.setTitle("Editar dueño");
@@ -2445,12 +2569,6 @@ public class AuthView {
 
         Image aplicacion = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg")).getImage();
         ventana.setIconImage(aplicacion);
-    }
-
-    private JLabel crearLabel(String texto, Font fuente) {
-        JLabel label = new JLabel(texto);
-        label.setFont(fuente);
-        return label;
     }
 
     public void EditarPaciente(Dueno dueno, Paciente paciente) {
@@ -3046,4 +3164,484 @@ public class AuthView {
         Image aplicacion = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg")).getImage();
         ventana.setIconImage(aplicacion);
     }
+    
+    public void GestionMedicamentos() {
+    	
+        JFrame ventana = new JFrame("Gestión de Medicamentos");
+        ventana.setSize(1000, 600);
+        ventana.setLocationRelativeTo(null);
+        ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        ventana.setLayout(null);
+
+        JPanel fondo = new JPanel();
+        fondo.setBounds(0, 0, 1000, 600);
+        fondo.setBackground(Color.WHITE);
+        fondo.setLayout(null);
+        ventana.add(fondo);
+
+        JLabel titulo = new JLabel("Gestión de Medicamentos");
+        titulo.setFont(new Font("Adamina", Font.BOLD, 34));
+        titulo.setBounds(40, 20, 500, 40);
+        fondo.add(titulo);
+
+        String[] columnas = {"ID", "Nombre", "Precio", "Stock", "Stock Mínimo", "Categoría", "Laboratorio", "Requiere Receta"};
+        
+        javax.swing.table.DefaultTableModel modeloTabla = new javax.swing.table.DefaultTableModel(columnas, 0) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        JTable tabla = new JTable(modeloTabla);
+        tabla.setRowHeight(35);
+        tabla.setFont(new Font("Adamina", Font.PLAIN, 14));
+        tabla.getTableHeader().setFont(new Font("Adamina", Font.BOLD, 16));
+        
+        JScrollPane scrollTabla = new JScrollPane(tabla);
+        scrollTabla.setBounds(40, 80, 920, 350);
+        scrollTabla.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        fondo.add(scrollTabla);
+        
+        Runnable cargarTabla = () -> {
+            modeloTabla.setRowCount(0);
+            List<Medicamento> medicamentos = controller.listarMedicamentos();
+            for (Medicamento m : medicamentos) {
+                Object[] fila = {
+                    m.getId(),
+                    m.getNombre(),
+                    "$" + m.getPrecio(),
+                    m.getStock(),
+                    m.getStockMinimo(),
+                    m.getCategoria() != null ? m.getCategoria() : "General",
+                    m.getLaboratorio() != null ? m.getLaboratorio() : "No especificado",
+                    m.isRequiereReceta() ? "Sí" : "No"
+                };
+                modeloTabla.addRow(fila);
+            }
+        };
+        cargarTabla.run();
+
+        JPanel panelBotones = new JPanel();
+        panelBotones.setBounds(40, 445, 920, 70);
+        panelBotones.setLayout(new FlowLayout(FlowLayout.RIGHT, 15, 15));
+        panelBotones.setBackground(Color.decode("#8CACCB"));
+        panelBotones.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
+        fondo.add(panelBotones);
+
+        JButton regresar = new JButton("Regresar");
+        regresar.setBackground(Color.decode("#D81F10"));
+        regresar.setForeground(Color.WHITE);
+        regresar.setFont(new Font("Inter", Font.BOLD, 16));
+        regresar.setFocusPainted(false);
+        regresar.setPreferredSize(new Dimension(130, 45));
+        panelBotones.add(regresar);
+
+        panelBotones.add(Box.createHorizontalStrut(280));
+
+        JButton btnActualizar = new JButton("Actualizar");
+        btnActualizar.setBackground(Color.decode("#6C757D"));
+        btnActualizar.setForeground(Color.WHITE);
+        btnActualizar.setFont(new Font("Inter", Font.BOLD, 14));
+        btnActualizar.setFocusPainted(false);
+        btnActualizar.setPreferredSize(new Dimension(110, 45));
+        panelBotones.add(btnActualizar);
+
+        JButton btnAgregar = new JButton("Agregar");
+        btnAgregar.setBackground(Color.decode("#28A745"));
+        btnAgregar.setForeground(Color.WHITE);
+        btnAgregar.setFont(new Font("Inter", Font.BOLD, 14));
+        btnAgregar.setFocusPainted(false);
+        btnAgregar.setPreferredSize(new Dimension(110, 45));
+        panelBotones.add(btnAgregar);
+
+        JButton btnEditar = new JButton("Editar");
+        btnEditar.setBackground(Color.decode("#14518C"));
+        btnEditar.setForeground(Color.WHITE);
+        btnEditar.setFont(new Font("Inter", Font.BOLD, 14));
+        btnEditar.setFocusPainted(false);
+        btnEditar.setPreferredSize(new Dimension(110, 45));
+        panelBotones.add(btnEditar);
+
+        JButton btnEliminar = new JButton("Eliminar");
+        btnEliminar.setBackground(Color.decode("#D81F10"));
+        btnEliminar.setForeground(Color.WHITE);
+        btnEliminar.setFont(new Font("Inter", Font.BOLD, 14));
+        btnEliminar.setFocusPainted(false);
+        btnEliminar.setPreferredSize(new Dimension(110, 45));
+        panelBotones.add(btnEliminar);
+
+        regresar.addActionListener(e -> {
+            ventana.dispose();
+            Costos();
+        });
+
+        btnActualizar.addActionListener(e -> cargarTabla.run());
+
+        btnAgregar.addActionListener(e -> {
+            AgregarEditarMedicamento(null, ventana, cargarTabla);
+        });
+
+        btnEditar.addActionListener(e -> {
+            int fila = tabla.getSelectedRow();
+            if (fila == -1) {
+                JOptionPane.showMessageDialog(ventana, "Seleccione un medicamento");
+                return;
+            }
+            int id = (int) modeloTabla.getValueAt(fila, 0);
+            Medicamento m = controller.obtenerMedicamentoPorId(id);
+            if (m != null) {
+                AgregarEditarMedicamento(m, ventana, cargarTabla);
+            }
+        });
+
+        btnEliminar.addActionListener(e -> {
+            int fila = tabla.getSelectedRow();
+            if (fila == -1) {
+                JOptionPane.showMessageDialog(ventana, "Seleccione un medicamento para eliminar");
+                return;
+            }
+            
+            int id = (int) modeloTabla.getValueAt(fila, 0);
+            String nombre = modeloTabla.getValueAt(fila, 1).toString();
+            
+            int confirm = JOptionPane.showConfirmDialog(ventana, 
+                "¿Eliminar el medicamento: " + nombre + "?", 
+                "Confirmar eliminación", 
+                JOptionPane.YES_NO_OPTION);
+                
+            if (confirm == JOptionPane.YES_OPTION) {
+                boolean exito = controller.eliminarMedicamento(id);
+                if (exito) {
+                    JOptionPane.showMessageDialog(ventana, "Medicamento eliminado");
+                    cargarTabla.run();
+                } else {
+                    JOptionPane.showMessageDialog(ventana, "Error al eliminar");
+                }
+            }
+        });
+
+        ventana.setVisible(true);
+        
+        Image aplicacion = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg")).getImage();
+        ventana.setIconImage(aplicacion);
+    }
+    
+    private void AgregarEditarMedicamento(Medicamento medicamentoExistente, JFrame ventanaPadre, Runnable cargarTabla) {
+        
+    	JDialog dialog = new JDialog(ventanaPadre, medicamentoExistente == null ? "Agregar Medicamento" : "Editar Medicamento", true);
+        dialog.setSize(650, 680);
+        dialog.setLocationRelativeTo(ventanaPadre);
+        dialog.setLayout(null);
+        dialog.getContentPane().setBackground(Color.WHITE);
+
+        JPanel panelPrincipal = new JPanel();
+        panelPrincipal.setBounds(10, 10, 615, 610);
+        panelPrincipal.setLayout(new BorderLayout());
+        
+        JPanel panelFormulario = new JPanel();
+        panelFormulario.setBackground(Color.decode("#8CACCB"));
+        panelFormulario.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
+        panelFormulario.setLayout(null);
+        panelFormulario.setPreferredSize(new Dimension(590, 750));
+        
+        JScrollPane scrollFormulario = new JScrollPane(panelFormulario);
+        scrollFormulario.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollFormulario.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        panelPrincipal.add(scrollFormulario, BorderLayout.CENTER);
+        dialog.add(panelPrincipal);
+
+        Font labelFont = new Font("Adamina", Font.BOLD, 14);
+        Font fieldFont = new Font("Adamina", Font.PLAIN, 13);
+
+        int y = 20;
+        int anchoLabel = 140;
+        int anchoCampo = 380;
+        
+        JLabel lblNombre = new JLabel("Nombre:");
+        lblNombre.setBounds(30, y, anchoLabel, 30);
+        lblNombre.setFont(labelFont);
+        panelFormulario.add(lblNombre);
+        
+        JTextField txtNombre = new JTextField();
+        txtNombre.setBounds(180, y, anchoCampo, 35);
+        txtNombre.setFont(fieldFont);
+        panelFormulario.add(txtNombre);
+        y += 55;
+        
+        JLabel lblDescripcion = new JLabel("Descripción:");
+        lblDescripcion.setBounds(30, y, anchoLabel, 30);
+        lblDescripcion.setFont(labelFont);
+        panelFormulario.add(lblDescripcion);
+        
+        JTextArea txtDescripcion = new JTextArea();
+        txtDescripcion.setFont(fieldFont);
+        txtDescripcion.setLineWrap(true);
+        txtDescripcion.setWrapStyleWord(true);
+        JScrollPane scrollDesc = new JScrollPane(txtDescripcion);
+        scrollDesc.setBounds(180, y, anchoCampo, 80);
+        panelFormulario.add(scrollDesc);
+        y += 100;
+
+        JLabel lblPrecio = new JLabel("Precio:");
+        lblPrecio.setBounds(30, y, anchoLabel, 30);
+        lblPrecio.setFont(labelFont);
+        panelFormulario.add(lblPrecio);
+        
+        JTextField txtPrecio = new JTextField();
+        txtPrecio.setBounds(180, y, anchoCampo, 35);
+        txtPrecio.setFont(fieldFont);
+        txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                char c = evt.getKeyChar();
+                if (!Character.isDigit(c) && c != '.' && c != '\b') {
+                    evt.consume();
+                }
+            }
+        });
+        panelFormulario.add(txtPrecio);
+        y += 55;
+
+        JLabel lblStock = new JLabel("Stock:");
+        lblStock.setBounds(30, y, anchoLabel, 30);
+        lblStock.setFont(labelFont);
+        panelFormulario.add(lblStock);
+        
+        JTextField txtStock = new JTextField();
+        txtStock.setBounds(180, y, anchoCampo, 35);
+        txtStock.setFont(fieldFont);
+        txtStock.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                char c = evt.getKeyChar();
+                if (!Character.isDigit(c) && c != '\b') {
+                    evt.consume();
+                }
+            }
+        });
+        panelFormulario.add(txtStock);
+        y += 55;
+
+        JLabel lblStockMinimo = new JLabel("Stock Mínimo:");
+        lblStockMinimo.setBounds(30, y, anchoLabel, 30);
+        lblStockMinimo.setFont(labelFont);
+        panelFormulario.add(lblStockMinimo);
+        
+        JTextField txtStockMinimo = new JTextField();
+        txtStockMinimo.setBounds(180, y, anchoCampo, 35);
+        txtStockMinimo.setFont(fieldFont);
+        txtStockMinimo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                char c = evt.getKeyChar();
+                if (!Character.isDigit(c) && c != '\b') {
+                    evt.consume();
+                }
+            }
+        });
+        panelFormulario.add(txtStockMinimo);
+        y += 55;
+
+        JLabel lblCategoria = new JLabel("Categoría:");
+        lblCategoria.setBounds(30, y, anchoLabel, 30);
+        lblCategoria.setFont(labelFont);
+        panelFormulario.add(lblCategoria);
+        
+        JComboBox<String> comboCategoria = new JComboBox<>();
+        comboCategoria.addItem("General");
+        comboCategoria.addItem("Antibióticos");
+        comboCategoria.addItem("Analgésicos");
+        comboCategoria.addItem("Parasiticidas");
+        comboCategoria.addItem("Vacunas");
+        comboCategoria.addItem("Suplementos");
+        comboCategoria.setBounds(180, y, anchoCampo, 35);
+        comboCategoria.setFont(fieldFont);
+        panelFormulario.add(comboCategoria);
+        y += 55;
+
+        JLabel lblLaboratorio = new JLabel("Laboratorio:");
+        lblLaboratorio.setBounds(30, y, anchoLabel, 30);
+        lblLaboratorio.setFont(labelFont);
+        panelFormulario.add(lblLaboratorio);
+        
+        JTextField txtLaboratorio = new JTextField();
+        txtLaboratorio.setBounds(180, y, anchoCampo, 35);
+        txtLaboratorio.setFont(fieldFont);
+        panelFormulario.add(txtLaboratorio);
+        y += 55;
+
+        JLabel lblProveedor = new JLabel("Proveedor:");
+        lblProveedor.setBounds(30, y, anchoLabel, 30);
+        lblProveedor.setFont(labelFont);
+        panelFormulario.add(lblProveedor);
+        
+        JTextField txtProveedor = new JTextField();
+        txtProveedor.setBounds(180, y, anchoCampo, 35);
+        txtProveedor.setFont(fieldFont);
+        panelFormulario.add(txtProveedor);
+        y += 55;
+
+        JLabel lblLote = new JLabel("Lote:");
+        lblLote.setBounds(30, y, anchoLabel, 30);
+        lblLote.setFont(labelFont);
+        panelFormulario.add(lblLote);
+        
+        JTextField txtLote = new JTextField();
+        txtLote.setBounds(180, y, anchoCampo, 35);
+        txtLote.setFont(fieldFont);
+        panelFormulario.add(txtLote);
+        y += 55;
+
+        JLabel lblFechaVen = new JLabel("Fecha Vencimiento:");
+        lblFechaVen.setBounds(30, y, anchoLabel, 30);
+        lblFechaVen.setFont(labelFont);
+        panelFormulario.add(lblFechaVen);
+        
+        JSpinner spinnerFecha = new JSpinner(new SpinnerDateModel());
+        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(spinnerFecha, "yyyy-MM-dd");
+        spinnerFecha.setEditor(dateEditor);
+        spinnerFecha.setBounds(180, y, anchoCampo, 35);
+        panelFormulario.add(spinnerFecha);
+        y += 55;
+
+        JLabel lblReceta = new JLabel("Requiere Receta:");
+        lblReceta.setBounds(30, y, anchoLabel, 30);
+        lblReceta.setFont(labelFont);
+        panelFormulario.add(lblReceta);
+        
+        JCheckBox chkReceta = new JCheckBox();
+        chkReceta.setBounds(180, y, 50, 35);
+        chkReceta.setBackground(Color.decode("#8CACCB"));
+        panelFormulario.add(chkReceta);
+        y += 80;
+
+        JPanel panelBotonesForm = new JPanel();
+        panelBotonesForm.setBounds(0, y, 590, 80);
+        panelBotonesForm.setBackground(Color.decode("#8CACCB"));
+        panelBotonesForm.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 15));
+        
+        JButton btnGuardar = new JButton("Guardar");
+        btnGuardar.setBackground(Color.decode("#28A745"));
+        btnGuardar.setForeground(Color.WHITE);
+        btnGuardar.setFont(new Font("Inter", Font.BOLD, 16));
+        btnGuardar.setPreferredSize(new Dimension(120, 45));
+        panelBotonesForm.add(btnGuardar);
+
+        JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar.setBackground(Color.decode("#6C757D"));
+        btnCancelar.setForeground(Color.WHITE);
+        btnCancelar.setFont(new Font("Inter", Font.BOLD, 16));
+        btnCancelar.setPreferredSize(new Dimension(120, 45));
+        panelBotonesForm.add(btnCancelar);
+
+        JButton btnEliminarForm = new JButton("Eliminar");
+        btnEliminarForm.setBackground(Color.decode("#D81F10"));
+        btnEliminarForm.setForeground(Color.WHITE);
+        btnEliminarForm.setFont(new Font("Inter", Font.BOLD, 16));
+        btnEliminarForm.setPreferredSize(new Dimension(120, 45));
+        
+        if (medicamentoExistente != null) {
+            panelBotonesForm.add(btnEliminarForm);
+        }
+        
+        panelFormulario.add(panelBotonesForm);
+        
+        panelFormulario.setPreferredSize(new Dimension(590, y + 100));
+
+        if (medicamentoExistente != null) {
+            txtNombre.setText(medicamentoExistente.getNombre());
+            txtDescripcion.setText(medicamentoExistente.getDescripcion());
+            txtPrecio.setText(String.valueOf(medicamentoExistente.getPrecio()));
+            txtStock.setText(String.valueOf(medicamentoExistente.getStock()));
+            txtStockMinimo.setText(String.valueOf(medicamentoExistente.getStockMinimo()));
+            comboCategoria.setSelectedItem(medicamentoExistente.getCategoria() != null ? medicamentoExistente.getCategoria() : "General");
+            txtLaboratorio.setText(medicamentoExistente.getLaboratorio() != null ? medicamentoExistente.getLaboratorio() : "");
+            txtProveedor.setText(medicamentoExistente.getProveedor() != null ? medicamentoExistente.getProveedor() : "");
+            txtLote.setText(medicamentoExistente.getLote() != null ? medicamentoExistente.getLote() : "");
+            if (medicamentoExistente.getFechaVencimiento() != null) {
+                spinnerFecha.setValue(medicamentoExistente.getFechaVencimiento());
+            }
+            chkReceta.setSelected(medicamentoExistente.isRequiereReceta());
+        }
+
+        btnGuardar.addActionListener(e -> {
+            if (txtNombre.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(dialog, "El nombre es obligatorio");
+                return;
+            }
+            if (txtPrecio.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(dialog, "El precio es obligatorio");
+                return;
+            }
+            if (txtStock.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(dialog, "El stock es obligatorio");
+                return;
+            }
+            if (txtStockMinimo.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(dialog, "El stock mínimo es obligatorio");
+                return;
+            }
+
+            try {
+                Medicamento m = new Medicamento();
+                if (medicamentoExistente != null) {
+                    m.setId(medicamentoExistente.getId());
+                }
+                m.setNombre(txtNombre.getText().trim());
+                m.setDescripcion(txtDescripcion.getText().trim());
+                m.setPrecio(Double.parseDouble(txtPrecio.getText().trim()));
+                m.setStock(Integer.parseInt(txtStock.getText().trim()));
+                m.setStockMinimo(Integer.parseInt(txtStockMinimo.getText().trim()));
+                m.setCategoria(comboCategoria.getSelectedItem().toString());
+                m.setLaboratorio(txtLaboratorio.getText().trim());
+                m.setProveedor(txtProveedor.getText().trim());
+                m.setLote(txtLote.getText().trim());
+                m.setFechaVencimiento(new java.sql.Date(((java.util.Date) spinnerFecha.getValue()).getTime()));
+                m.setRequiereReceta(chkReceta.isSelected());
+                m.setActivo(true);
+
+                boolean exito;
+                if (medicamentoExistente == null) {
+                    exito = controller.crearMedicamento(m);
+                } else {
+                    exito = controller.actualizarMedicamento(m);
+                }
+
+                if (exito) {
+                    JOptionPane.showMessageDialog(dialog, "Medicamento guardado correctamente");
+                    dialog.dispose();
+                    cargarTabla.run();
+                } else {
+                    JOptionPane.showMessageDialog(dialog, "Error al guardar el medicamento");
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(dialog, "Verifique que precio y stock sean números válidos");
+            }
+        });
+
+        btnCancelar.addActionListener(e -> dialog.dispose());
+
+        if (medicamentoExistente != null) {
+            btnEliminarForm.addActionListener(e -> {
+                int confirm = JOptionPane.showConfirmDialog(dialog, 
+                    "¿Eliminar permanentemente este medicamento?\n\n" +
+                    "Nombre: " + medicamentoExistente.getNombre() + "\n" +
+                    "Esta acción no se puede deshacer.", 
+                    "Confirmar eliminación", 
+                    JOptionPane.YES_NO_OPTION, 
+                    JOptionPane.WARNING_MESSAGE);
+                    
+                if (confirm == JOptionPane.YES_OPTION) {
+                    boolean exito = controller.eliminarMedicamento(medicamentoExistente.getId());
+                    if (exito) {
+                        JOptionPane.showMessageDialog(dialog, "Medicamento eliminado correctamente");
+                        dialog.dispose();
+                        cargarTabla.run();
+                    } else {
+                        JOptionPane.showMessageDialog(dialog, "Error al eliminar el medicamento");
+                    }
+                }
+            });
+        }
+
+        dialog.setVisible(true);
+    }
+    
 }

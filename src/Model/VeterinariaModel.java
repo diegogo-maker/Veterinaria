@@ -580,4 +580,237 @@ public class VeterinariaModel {
         }
         return citas;
     }
+    
+    public List<Medicamento> obtenerTodosLosMedicamentos() {
+        List<Medicamento> medicamentos = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM medicamentos WHERE activo = TRUE ORDER BY nombre";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Medicamento m = new Medicamento();
+                m.setId(rs.getInt("id"));
+                m.setNombre(rs.getString("nombre"));
+                m.setDescripcion(rs.getString("descripcion"));
+                m.setPrecio(rs.getDouble("precio"));
+                m.setStock(rs.getInt("stock"));
+                m.setStockMinimo(rs.getInt("stock_minimo"));
+                m.setRequiereReceta(rs.getBoolean("requiere_receta"));
+                m.setCategoria(rs.getString("categoria"));
+                m.setProveedor(rs.getString("proveedor"));
+                m.setLote(rs.getString("lote"));
+                m.setFechaVencimiento(rs.getDate("fecha_vencimiento"));
+                m.setLaboratorio(rs.getString("laboratorio"));
+                m.setActivo(rs.getBoolean("activo"));
+                m.setFechaRegistro(rs.getTimestamp("fecha_registro"));
+                medicamentos.add(m);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return medicamentos;
+    }
+
+    public Medicamento obtenerMedicamentoPorId(int id) {
+        Medicamento m = null;
+        try {
+            String sql = "SELECT * FROM medicamentos WHERE id = ? AND activo = TRUE";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                m = new Medicamento();
+                m.setId(rs.getInt("id"));
+                m.setNombre(rs.getString("nombre"));
+                m.setDescripcion(rs.getString("descripcion"));
+                m.setPrecio(rs.getDouble("precio"));
+                m.setStock(rs.getInt("stock"));
+                m.setStockMinimo(rs.getInt("stock_minimo"));
+                m.setRequiereReceta(rs.getBoolean("requiere_receta"));
+                m.setCategoria(rs.getString("categoria"));
+                m.setProveedor(rs.getString("proveedor"));
+                m.setLote(rs.getString("lote"));
+                m.setFechaVencimiento(rs.getDate("fecha_vencimiento"));
+                m.setLaboratorio(rs.getString("laboratorio"));
+                m.setActivo(rs.getBoolean("activo"));
+                m.setFechaRegistro(rs.getTimestamp("fecha_registro"));
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return m;
+    }
+
+    public Medicamento obtenerMedicamentoPorNombre(String nombre) {
+        Medicamento m = null;
+        try {
+            String sql = "SELECT * FROM medicamentos WHERE nombre = ? AND activo = TRUE";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, nombre);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                m = new Medicamento();
+                m.setId(rs.getInt("id"));
+                m.setNombre(rs.getString("nombre"));
+                m.setDescripcion(rs.getString("descripcion"));
+                m.setPrecio(rs.getDouble("precio"));
+                m.setStock(rs.getInt("stock"));
+                m.setStockMinimo(rs.getInt("stock_minimo"));
+                m.setRequiereReceta(rs.getBoolean("requiere_receta"));
+                m.setCategoria(rs.getString("categoria"));
+                m.setProveedor(rs.getString("proveedor"));
+                m.setLote(rs.getString("lote"));
+                m.setFechaVencimiento(rs.getDate("fecha_vencimiento"));
+                m.setLaboratorio(rs.getString("laboratorio"));
+                m.setActivo(rs.getBoolean("activo"));
+                m.setFechaRegistro(rs.getTimestamp("fecha_registro"));
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return m;
+    }
+
+    public List<String> obtenerCategoriasMedicamentos() {
+        List<String> categorias = new ArrayList<>();
+        try {
+            String sql = "SELECT DISTINCT categoria FROM medicamentos WHERE activo = TRUE AND categoria IS NOT NULL ORDER BY categoria";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                categorias.add(rs.getString("categoria"));
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categorias;
+    }
+
+    public List<Medicamento> obtenerMedicamentosConStockBajo() {
+        List<Medicamento> medicamentos = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM medicamentos WHERE activo = TRUE AND stock <= stock_minimo ORDER BY stock ASC";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Medicamento m = new Medicamento();
+                m.setId(rs.getInt("id"));
+                m.setNombre(rs.getString("nombre"));
+                m.setStock(rs.getInt("stock"));
+                m.setStockMinimo(rs.getInt("stock_minimo"));
+                m.setPrecio(rs.getDouble("precio"));
+                m.setCategoria(rs.getString("categoria"));
+                medicamentos.add(m);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return medicamentos;
+    }
+
+    public boolean insertarMedicamento(Medicamento medicamento) {
+        boolean exito = false;
+        try {
+            String sql = "INSERT INTO medicamentos (nombre, descripcion, precio, stock, stock_minimo, "
+                    + "requiere_receta, categoria, proveedor, lote, fecha_vencimiento, laboratorio, activo) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            
+            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, medicamento.getNombre());
+            ps.setString(2, medicamento.getDescripcion());
+            ps.setDouble(3, medicamento.getPrecio());
+            ps.setInt(4, medicamento.getStock());
+            ps.setInt(5, medicamento.getStockMinimo());
+            ps.setBoolean(6, medicamento.isRequiereReceta());
+            ps.setString(7, medicamento.getCategoria());
+            ps.setString(8, medicamento.getProveedor());
+            ps.setString(9, medicamento.getLote());
+            ps.setDate(10, medicamento.getFechaVencimiento());
+            ps.setString(11, medicamento.getLaboratorio());
+            ps.setBoolean(12, medicamento.isActivo());
+            
+            exito = ps.executeUpdate() > 0;
+            if (exito) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    medicamento.setId(rs.getInt(1));
+                }
+                rs.close();
+            }
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exito;
+    }
+
+    public boolean actualizarMedicamento(Medicamento medicamento) {
+        boolean exito = false;
+        try {
+            String sql = "UPDATE medicamentos SET nombre=?, descripcion=?, precio=?, stock=?, "
+                    + "stock_minimo=?, requiere_receta=?, categoria=?, proveedor=?, lote=?, "
+                    + "fecha_vencimiento=?, laboratorio=?, activo=? WHERE id=?";
+            
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, medicamento.getNombre());
+            ps.setString(2, medicamento.getDescripcion());
+            ps.setDouble(3, medicamento.getPrecio());
+            ps.setInt(4, medicamento.getStock());
+            ps.setInt(5, medicamento.getStockMinimo());
+            ps.setBoolean(6, medicamento.isRequiereReceta());
+            ps.setString(7, medicamento.getCategoria());
+            ps.setString(8, medicamento.getProveedor());
+            ps.setString(9, medicamento.getLote());
+            ps.setDate(10, medicamento.getFechaVencimiento());
+            ps.setString(11, medicamento.getLaboratorio());
+            ps.setBoolean(12, medicamento.isActivo());
+            ps.setInt(13, medicamento.getId());
+            
+            exito = ps.executeUpdate() > 0;
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exito;
+    }
+
+    public boolean actualizarStock(int id, int cantidad) {
+        boolean exito = false;
+        try {
+            String sql = "UPDATE medicamentos SET stock = stock + ? WHERE id = ? AND (stock + ?) >= 0";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, cantidad);
+            ps.setInt(2, id);
+            ps.setInt(3, cantidad);
+            exito = ps.executeUpdate() > 0;
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exito;
+    }
+
+    public boolean eliminarMedicamento(int id) {
+        boolean exito = false;
+        try {
+            String sql = "UPDATE medicamentos SET activo = FALSE WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            exito = ps.executeUpdate() > 0;
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exito;
+    }
 }

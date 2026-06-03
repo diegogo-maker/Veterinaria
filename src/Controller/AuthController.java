@@ -2,6 +2,7 @@ package Controller;
 
 import Model.VeterinariaModel;
 import Model.Dueno;
+import Model.Medicamento;
 import Model.Paciente;
 import java.util.List;
 import java.util.Map;
@@ -115,4 +116,40 @@ public class AuthController {
     public List<Object[]> listarCitasConDoctor(int idPaciente) {
         return model.obtenerCitasConDoctor(idPaciente);
     }   
+    
+    public List<Medicamento> listarMedicamentos() {
+        return model.obtenerTodosLosMedicamentos();
+    }
+
+    public Medicamento obtenerMedicamentoPorId(int id) {
+        return model.obtenerMedicamentoPorId(id);
+    }
+
+    public Medicamento obtenerMedicamentoPorNombre(String nombre) {
+        return model.obtenerMedicamentoPorNombre(nombre);
+    }
+
+    public List<String> listarCategoriasMedicamentos() {
+        return model.obtenerCategoriasMedicamentos();
+    }
+
+    public List<Medicamento> listarMedicamentosConStockBajo() {
+        return model.obtenerMedicamentosConStockBajo();
+    }
+
+    public boolean crearMedicamento(Medicamento medicamento) {
+        return model.insertarMedicamento(medicamento);
+    }
+
+    public boolean actualizarMedicamento(Medicamento medicamento) {
+        return model.actualizarMedicamento(medicamento);
+    }
+
+    public boolean actualizarStock(int id, int cantidad) {
+        return model.actualizarStock(id, cantidad);
+    }
+
+    public boolean eliminarMedicamento(int id) {
+        return model.eliminarMedicamento(id);
+    }
 }
