@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -16,7 +18,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -28,6 +29,7 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -40,9 +42,11 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-
+import com.itextpdf.awt.geom.AffineTransform;
 import com.itextpdf.awt.geom.Rectangle;
+import com.itextpdf.awt.geom.misc.RenderingHints;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
@@ -63,7 +67,7 @@ public class AuthView {
 
 	 private AuthController controller = new AuthController();
      private String nombreUsuarioActual;
-
+     
      public void Login() {
     	    JFrame ventana = new JFrame();
     	    ventana.setSize(1000, 600);
@@ -158,7 +162,7 @@ public class AuthView {
     	    });
 
     	    ventana.setVisible(true);
-    	    
+    	     	    
     	    Image aplicacion = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg")).getImage();
     	    ventana.setIconImage(aplicacion);
     	}
@@ -215,9 +219,8 @@ public class AuthView {
          });
 
          cancelar.addActionListener(e -> {
-             dialog.dispose();
-             //Inicio(nombreUsuarioActual);
-             
+             dialog.dispose();  
+             Inicio(nombreUsuarioActual);
          });
 
          dialog.setLocationRelativeTo(null);
@@ -268,7 +271,7 @@ public class AuthView {
          cerrar.setBackground(Color.decode("#D81F10"));
          cerrar.setForeground(Color.WHITE);
          cerrar.setFocusPainted(false);
-         cerrar.setBorder(BorderFactory.createLineBorder(Color.decode("#FFFFFF"), 3, true));
+         cerrar.setBorder(BorderFactory.createLineBorder(Color.decode("#000000"), 2, true));
          panel.add(cerrar);
 
          cerrar.addActionListener(e -> {
@@ -356,14 +359,15 @@ public class AuthView {
              ventana.dispose();
              Costos();
          });
-
-         ventana.setVisible(true);
         
          Image aplicacion = new ImageIcon(
  	    	    getClass().getResource("/Imagenes/Logo_Inicio.jpeg")
  	    	).getImage();
-
+         
  	    	ventana.setIconImage(aplicacion);
+
+ 	     ventana.setVisible(true);
+ 
      }
 
      public void Costos() {
@@ -505,18 +509,18 @@ public class AuthView {
     	    contenedor.setBackground(Color.decode("#FFFFFF"));
 
     	    JScrollPane scroll = new JScrollPane(contenedor);
-    	    scroll.setBounds(50, 80, 900, 380);
+    	    scroll.setBounds(30, 80, 900, 380);
     	    scroll.setBorder(null);
     	    scroll.getVerticalScrollBar().setUnitIncrement(16);
     	    fondo.add(scroll);
 
-    	    List<Paciente> listaPacientes = controller.listarPacientes();
-    	    
+    	    List<Paciente> listaPacientesOriginal = controller.listarPacientes();
+
     	    GrafoCitas grafoCitas = new GrafoCitas();
     	    Map<Integer, List<Object[]>> citasPorPaciente = new HashMap<>();
-    	    
-    	    for (Paciente paciente : listaPacientes) {
-    	    	
+
+    	    for (Paciente paciente : listaPacientesOriginal) {
+    	        
     	        List<Object[]> citas = controller.listarCitasPorPaciente(paciente.getId());
     	        citasPorPaciente.put(paciente.getId(), citas);
     	        
@@ -526,9 +530,10 @@ public class AuthView {
     	            }
     	        }
     	    }
-    	    
+
+    	    List<Paciente> listaPacientes = ordenarPacientesPorUrgencia(listaPacientesOriginal, citasPorPaciente);
+
     	    grafoCitas.construirAristas();
-    	    
     	    List<Object[]> citasOrdenadas = grafoCitas.obtenerCitasOrdenadas();
     	    
     	    Map<Integer, Integer> prioridadCita = new HashMap<>();
@@ -641,7 +646,7 @@ public class AuthView {
     	        crear.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1, true));
     	        crear.addActionListener(e -> {
     	            ventana.dispose();
-    	            CrearCita();
+    	            CrearCita(paciente);
     	        });
     	        panel.add(crear);
 
@@ -678,57 +683,62 @@ public class AuthView {
     	        Inicio(nombreUsuarioActual);
     	    });
 
-    	    JButton verCitasOrdenadas = new JButton("Ver orden de citas");
-    	    verCitasOrdenadas.setBounds(250, 490, 200, 60);
-    	    verCitasOrdenadas.setFont(new Font("Inter", Font.BOLD, 16));
-    	    verCitasOrdenadas.setBackground(Color.decode("#14518C"));
-    	    verCitasOrdenadas.setForeground(Color.white);
-    	    verCitasOrdenadas.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-    	    verCitasOrdenadas.setFocusPainted(false);
-    	    verCitasOrdenadas.addActionListener(e -> mostrarOrdenCitas(citasOrdenadas));
-    	    fondo.add(verCitasOrdenadas);
-
     	    Image aplicacion = new ImageIcon(getClass().getResource("/Imagenes/Logo_Inicio.jpeg")).getImage();
     	    ventana.setIconImage(aplicacion);
 
     	    ventana.setVisible(true);
     	}
 
-    	private void mostrarOrdenCitas(List<Object[]> citasOrdenadas) {
-    		
-    	    JFrame ventanaOrden = new JFrame("Orden de citas");
-    	    ventanaOrden.setSize(600, 400);
-    	    ventanaOrden.setLocationRelativeTo(null);
-    	    ventanaOrden.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    	    
-    	    JTextArea textoArea = new JTextArea();
-    	    textoArea.setEditable(false);
-    	    textoArea.setFont(new Font("Adamina", Font.BOLD, 14));
-    	    
-    	    StringBuilder sb = new StringBuilder();
-    	    sb.append("ORDEN DE CITAS POR PRIORIDAD\n");
-    	    sb.append("(Ordenado por: Urgencia > Fecha)\n\n");
-    	    
-    	    for (int i = 0; i < citasOrdenadas.size(); i++) {
-    	    	
-    	        Object[] cita = citasOrdenadas.get(i);
-    	        sb.append(String.format("%d. ", i + 1));
-    	        sb.append(String.format("ID: %s | ", cita[0].toString()));
-    	        sb.append(String.format("Fecha: %s | ", cita[1].toString()));
-    	        sb.append(String.format("Hora: %s | ", cita[2].toString()));
-    	        sb.append(String.format("Urgencia: %s | ", cita[4].toString()));
-    	        sb.append(String.format("Tipo: %s\n", cita[3].toString()));
-    	        
-    	        if (i < citasOrdenadas.size() - 1) {
-    	            sb.append("   \n");
-    	        }
-    	    }
-    	    
-    	    textoArea.setText(sb.toString());
-    	    JScrollPane scroll = new JScrollPane(textoArea);
-    	    ventanaOrden.add(scroll);
-    	    ventanaOrden.setVisible(true);
-    	}
+	public String getUrgenciaPaciente(Paciente paciente, Map<Integer, List<Object[]>> citasPorPaciente) {
+	    List<Object[]> citas = citasPorPaciente.get(paciente.getId());
+	    if (citas != null && !citas.isEmpty()) {
+	        Object[] ultimaCita = citas.get(0);
+	        return ultimaCita[4] != null ? ultimaCita[4].toString() : "";
+	    }
+	    return "";
+	}
+
+	public String getFechaCita(Paciente paciente, Map<Integer, List<Object[]>> citasPorPaciente) {
+	    List<Object[]> citas = citasPorPaciente.get(paciente.getId());
+	    if (citas != null && !citas.isEmpty()) {
+	        Object[] ultimaCita = citas.get(0);
+	        return ultimaCita[1] != null ? ultimaCita[1].toString() : "No asignada";
+	    }
+	    return "No asignada";
+	}
+
+	public List<Paciente> ordenarPacientesPorUrgencia(List<Paciente> pacientes, Map<Integer, List<Object[]>> citasPorPaciente) {
+	    List<Paciente> listaOrdenada = new ArrayList<>(pacientes);
+	    
+	    listaOrdenada.sort((p1, p2) -> {
+	        String urgencia1 = getUrgenciaPaciente(p1, citasPorPaciente);
+	        String urgencia2 = getUrgenciaPaciente(p2, citasPorPaciente);
+	        
+	        Map<String, Integer> pesoUrgencia = new HashMap<>();
+	        pesoUrgencia.put("Alta", 3);
+	        pesoUrgencia.put("Media", 2);
+	        pesoUrgencia.put("Baja", 1);
+	        pesoUrgencia.put("", 0);
+	        
+	        int peso1 = pesoUrgencia.getOrDefault(urgencia1, 0);
+	        int peso2 = pesoUrgencia.getOrDefault(urgencia2, 0);
+	        
+	        if (peso1 != peso2) {
+	            return Integer.compare(peso2, peso1);
+	        }
+	        
+	        String fecha1 = getFechaCita(p1, citasPorPaciente);
+	        String fecha2 = getFechaCita(p2, citasPorPaciente);
+	        
+	        if (!fecha1.equals("No asignada") && !fecha2.equals("No asignada")) {
+	            return fecha1.compareTo(fecha2);
+	        }
+	        
+	        return 0;
+	    });
+	    
+	    return listaOrdenada;
+	}
 
      public void DetallesPaciente(Paciente paciente) {
     	    JFrame ventana = new JFrame();
@@ -960,7 +970,6 @@ public class AuthView {
     	    ventana.setIconImage(aplicacion);
     	}
      
-
      public void HistorialCostos(Paciente paciente, Dueno dueno) {
     	    JFrame ventana = new JFrame("Historial de costos");
     	    ventana.setSize(1000, 600);
@@ -998,7 +1007,7 @@ public class AuthView {
     	    duenoPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
     	    
     	    JLabel duenoIcono = new JLabel("👤");
-    	    duenoIcono.setFont(new Font("Segoe UI", Font.PLAIN, 24));
+    	    duenoIcono.setFont(new Font("Adamina", Font.PLAIN, 24));
     	    duenoIcono.setBounds(10, 10, 40, 40);
     	    duenoPanel.add(duenoIcono);
     	    
@@ -1037,21 +1046,20 @@ public class AuthView {
     	    infoPanel.add(mascotaPanel);
 
     	    List<Object[]> citas = controller.listarCitasPorPaciente(paciente.getId());
-    	    String tipoCita;
-    	    String urgencia;
-    	    String medicamento;
-    	    double costoConsulta;
-    	    double costoMedicamento;
-    	    double total;
+    	    String tipoCita = "Consulta rutinaria";
+    	    String urgencia = "Baja";
+    	    String medicamento = "Ninguno";
+    	    double costoConsulta = 0;
+    	    double costoMedicamento = 0;
+    	    double total = 0;
     	    
     	    if (citas != null && !citas.isEmpty()) {
-
     	        Object[] ultimaCita = citas.get(0);
     	        
     	        tipoCita = ultimaCita[3] != null ? ultimaCita[3].toString() : "Consulta rutinaria";
     	        urgencia = ultimaCita[4] != null ? ultimaCita[4].toString() : "Baja";
     	        medicamento = ultimaCita[5] != null ? ultimaCita[5].toString() : "Ninguno";
-    	        
+    
     	        switch (tipoCita) {
     	            case "Consulta rutinaria":
     	                costoConsulta = 700;
@@ -1072,28 +1080,25 @@ public class AuthView {
     	                costoConsulta = 1800;
     	                break;
     	            default:
-    	                costoConsulta = 0;
+    	                costoConsulta = 500;
     	                break;
     	        }
-    	        
-    	        switch (medicamento) {
-    	            case "Antibiótico clavoxivet":
-    	                costoMedicamento = 295;
-    	                break;
-    	            case "Antiparasitarios":
-    	                costoMedicamento = 300;
-    	                break;
-    	            case "Desparacitante Care Max":
-    	                costoMedicamento = 85;
-    	                break;
-    	            default:
-    	                costoMedicamento = 0;
-    	                break;
+
+    	        costoMedicamento = 0;
+    	        if (!medicamento.equals("Ninguno")) {
+    	            Medicamento med = controller.obtenerMedicamentoPorNombre(medicamento);
+    	            if (med != null) {
+    	                costoMedicamento = med.getPrecio();
+    	            }
     	        }
-    	        
+    
     	        double costoRegistrado = 0;
     	        if (ultimaCita.length > 6 && ultimaCita[6] != null) {
-    	            costoRegistrado = Double.parseDouble(ultimaCita[6].toString());
+    	            try {
+    	                costoRegistrado = Double.parseDouble(ultimaCita[6].toString());
+    	            } catch (NumberFormatException e) {
+    	                costoRegistrado = 0;
+    	            }
     	        }
     	        
     	        if (costoRegistrado > 0) {
@@ -1101,23 +1106,22 @@ public class AuthView {
     	        } else {
     	            total = costoConsulta + costoMedicamento;
     	        }
-    	        
-    	    } else {
-    	        tipoCita = "Consulta rutinaria";
-    	        urgencia = "Baja";
-    	        medicamento = "Ninguno";
-    	        costoConsulta = 0;
-    	        costoMedicamento = 0;
-    	        total = 0;
     	    }
+
+    	    final String tipoCitaFinal = tipoCita;
+    	    final String urgenciaFinal = urgencia;
+    	    final String medicamentoFinal = medicamento;
+    	    final double costoConsultaFinal = costoConsulta;
+    	    final double costoMedicamentoFinal = costoMedicamento;
+    	    final double totalFinal = total;
 
     	    String[][] data = {{
     	        tipoCita,
     	        urgencia,
     	        medicamento,
-    	        "$" + costoConsulta,
-    	        (costoMedicamento > 0) ? "$" + costoMedicamento : "$0",
-    	        "$" + total
+    	        "$" + String.format("%.0f", costoConsulta),
+    	        (costoMedicamento > 0) ? "$" + String.format("%.0f", costoMedicamento) : "$0",
+    	        "$" + String.format("%.0f", total)
     	    }};
 
     	    String[] cols = {"Consulta", "Urgencia", "Medicamento", "Costo consulta", "Costo medicina", "Total"};
@@ -1151,7 +1155,7 @@ public class AuthView {
     	    totalTexto.setHorizontalAlignment(JLabel.CENTER);
     	    totalPanel.add(totalTexto);
 
-    	    JLabel totalLabel = new JLabel("$" + total + " MXN");
+    	    JLabel totalLabel = new JLabel("$" + String.format("%.0f", total) + " MXN");
     	    totalLabel.setBounds(0, 40, 400, 35);
     	    totalLabel.setFont(new Font("Adamina", Font.BOLD, 28));
     	    totalLabel.setForeground(Color.decode("#FFD700"));
@@ -1196,7 +1200,6 @@ public class AuthView {
     	                tituloticket.setAlignment(Element.ALIGN_CENTER);
     	                doc.add(tituloticket);
     	                doc.add(new Paragraph(" "));
-    	                doc.add(new Paragraph("________________________________________"));
     	                doc.add(new Paragraph(" "));
     	                
     	                doc.add(new Paragraph("DATOS DEL DUEÑO"));
@@ -1213,24 +1216,23 @@ public class AuthView {
     	                doc.add(new Paragraph(" "));
     	                
     	                doc.add(new Paragraph("DATOS DE LA CITA"));
-    	                doc.add(new Paragraph("Tipo de consulta: " + tipoCita));
-    	                doc.add(new Paragraph("Nivel de urgencia: " + urgencia));
-    	                doc.add(new Paragraph("Medicamento recetado: " + medicamento));
+    	                doc.add(new Paragraph("Tipo de consulta: " + tipoCitaFinal));
+    	                doc.add(new Paragraph("Nivel de urgencia: " + urgenciaFinal));
+    	                doc.add(new Paragraph("Medicamento recetado: " + medicamentoFinal));
     	                doc.add(new Paragraph(" "));
     	                
     	                doc.add(new Paragraph("PRECIOS POR SEPARADO"));
-    	                doc.add(new Paragraph("Costo de consulta: $" + costoConsulta));
-    	                doc.add(new Paragraph("Costo de medicamento: $" + costoMedicamento));
+    	                doc.add(new Paragraph("Costo de consulta: $" + String.format("%.0f", costoConsultaFinal)));
+    	                doc.add(new Paragraph("Costo de medicamento: $" + String.format("%.0f", costoMedicamentoFinal)));
     	                doc.add(new Paragraph(" "));
     	                
-    	                Paragraph totalPara = new Paragraph("TOTAL A PAGAR: $" + total + " MXN");
+    	                Paragraph totalPara = new Paragraph("TOTAL A PAGAR: $" + String.format("%.0f", totalFinal) + " MXN");
     	                totalPara.setAlignment(Element.ALIGN_CENTER);
     	                doc.add(totalPara);
     	                doc.add(new Paragraph(" "));
-    	                doc.add(new Paragraph("________________________________________"));
     	                
-    	                java.util.Date fecha = new java.util.Date();
-    	                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    	                Date fecha = new Date();
+    	                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     	                Paragraph fechaGen = new Paragraph("Generado: " + sdf.format(fecha));
     	                fechaGen.setAlignment(Element.ALIGN_CENTER);
     	                doc.add(fechaGen);
@@ -1253,10 +1255,10 @@ public class AuthView {
     	    ventana.setVisible(true);
     	}
 
-     public void CrearCita() {
+     public void CrearCita(Paciente paciente) {
     	    JFrame ventana = new JFrame();
     	    ventana.setSize(1000, 600);
-    	    ventana.setTitle("Crear cita");
+    	    ventana.setTitle("Crear cita para " + paciente.getNombre());
     	    ventana.setLocationRelativeTo(null);
     	    ventana.setLayout(null);
     	    ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -1279,21 +1281,12 @@ public class AuthView {
     	    panel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
     	    fondo.add(panel);
 
-    	    Dueno dueno = controller.obtenerUltimoDueno();
+    	    Dueno dueno = controller.obtenerDuenoPorId(paciente.getIdDueno());
     	    
     	    if (dueno == null) {
-    	        JOptionPane.showMessageDialog(null, "Primero debe registrar un dueño");
+    	        JOptionPane.showMessageDialog(null, "Error: No se encontró el dueño de la mascota");
     	        ventana.dispose();
-    	        CrearDueno();
-    	        return;
-    	    }
-    	    
-    	    Paciente paciente = controller.obtenerPacientePorDueno(dueno.getId());
-    	    
-    	    if (paciente == null) {
-    	        JOptionPane.showMessageDialog(null, "Este dueño no tiene mascota registrada.\nPrimero registre una mascota.");
-    	        ventana.dispose();
-    	        CrearPaciente(dueno);
+    	        RegistroCitas();
     	        return;
     	    }
 
@@ -1377,9 +1370,16 @@ public class AuthView {
     	    labelMed.setFont(new Font("Adamina", Font.BOLD, 16));
     	    panel.add(labelMed);
 
-    	    JComboBox<String> comboMed = new JComboBox<>(new String[]{
-    	            "Ninguno", "Antibiótico clavoxivet", "Antiparasitarios", "Desparacitante Care Max"
-    	    });
+    	    List<Medicamento> medicamentosDB = controller.listarMedicamentos();
+    	    List<String> nombresMedicamentos = new ArrayList<>();
+    	    nombresMedicamentos.add("Ninguno"); 
+
+    	    for (Medicamento m : medicamentosDB) {
+    	        nombresMedicamentos.add(m.getNombre());
+    	    }
+
+    	    JComboBox<String> comboMed = new JComboBox<>(nombresMedicamentos.toArray(new String[0]));
+    	    
     	    comboMed.setBounds(620, 220, 220, 30);
     	    panel.add(comboMed);
 
@@ -1451,7 +1451,7 @@ public class AuthView {
     	        );
 
     	        if (exito) {
-    	            JOptionPane.showMessageDialog(null, "Cita creada correctamente");
+    	            JOptionPane.showMessageDialog(null, "Cita creada correctamente para " + pacienteFinal.getNombre());
     	            ventana.dispose();
     	            RegistroCitas();
     	        } else {
@@ -1478,31 +1478,52 @@ public class AuthView {
     	    ventana.setIconImage(aplicacion); 
     	}
 
-    	private void actualizarCosto(JComboBox<String> comboTipo, JComboBox<String> comboMed, JTextField campoCosto) {
+     public void actualizarCosto(JComboBox<String> comboTipo, JComboBox<String> comboMedicina, JTextField txtCosto) {
+    	   
     	    String tipo = comboTipo.getSelectedItem().toString();
-    	    String medicamento = comboMed.getSelectedItem().toString();
-
+    	    String medicina = comboMedicina.getSelectedItem().toString();
+    	
     	    double costoConsulta = 0;
-    	    if (tipo.equals("Consulta rutinaria")) costoConsulta = 700;
-    	    else if (tipo.equals("Consulta urgencias")) costoConsulta = 2000;
-    	    else if (tipo.equals("Consulta especializada")) costoConsulta = 2000;
-    	    else if (tipo.equals("Vacunación")) costoConsulta = 1500;
-    	    else if (tipo.equals("Desparasitación")) costoConsulta = 600;
-    	    else if (tipo.equals("Consulta a domicilio")) costoConsulta = 1800;
-
-    	    double costoMedicamento = 0;
-    	    if (medicamento.equals("Antibiótico clavoxivet")) costoMedicamento = 295;
-    	    else if (medicamento.equals("Antiparasitarios")) costoMedicamento = 300;
-    	    else if (medicamento.equals("Desparacitante Care Max")) costoMedicamento = 85;
-
-    	    double total = costoConsulta + costoMedicamento;
-    	    campoCosto.setText("$" + total + " MXN");
+    	    switch (tipo) {
+    	        case "Consulta rutinaria":
+    	            costoConsulta = 700;
+    	            break;
+    	        case "Consulta urgencias":
+    	            costoConsulta = 2000;
+    	            break;
+    	        case "Consulta especializada":
+    	            costoConsulta = 2000;
+    	            break;
+    	        case "Vacunación":
+    	            costoConsulta = 1500;
+    	            break;
+    	        case "Desparasitación":
+    	            costoConsulta = 600;
+    	            break;
+    	        case "Consulta a domicilio":
+    	            costoConsulta = 1800;
+    	            break;
+    	        default:
+    	            costoConsulta = 500;
+    	            break;
+    	    }
+    
+    	    double costoMedicina = 0;
+    	    if (!medicina.equals("Ninguno")) {
+    	        Medicamento med = controller.obtenerMedicamentoPorNombre(medicina);
+    	        if (med != null) {
+    	            costoMedicina = med.getPrecio();
+    	        }
+    	    }
+    	    
+    	    double total = costoConsulta + costoMedicina;
+    	    txtCosto.setText(String.format("$%.0f MXN", total));
     	}
 
     	public void EdicionCita(Paciente paciente) {
     	    JFrame ventana = new JFrame();
     	    ventana.setSize(1000, 600);
-    	    ventana.setTitle("Edición de cita");
+    	    ventana.setTitle("Edición de cita - " + paciente.getNombre());
     	    ventana.setLocationRelativeTo(null);
     	    ventana.setLayout(null);
     	    ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -1590,7 +1611,6 @@ public class AuthView {
     	            Date fecha = sdf.parse(citaActual[1].toString());
     	            spinnerFecha.setValue(fecha);
     	        } catch (Exception ex) {
-
     	        }
     	    }
     	    panel.add(spinnerFecha);
@@ -1619,7 +1639,7 @@ public class AuthView {
     	    panel.add(lblDoctor);
 
     	    JComboBox<String> comboDoctor = new JComboBox<>(controller.listarDoctores().toArray(new String[0]));
-  
+
     	    List<Object[]> citasDoctor = controller.listarCitasConDoctor(paciente.getId());
     	    if (citasDoctor != null && !citasDoctor.isEmpty()) {
     	        Object[] citaDoc = citasDoctor.get(0);
@@ -1669,9 +1689,15 @@ public class AuthView {
     	    lblMedicina.setFont(labelFont);
     	    panel.add(lblMedicina);
 
-    	    JComboBox<String> comboMedicina = new JComboBox<>(new String[]{
-    	        "Ninguno", "Antibiótico clavoxivet", "Antiparasitarios", "Desparacitante Care Max"
-    	    });
+    	    List<Medicamento> medicamentosDB = controller.listarMedicamentos();
+    	    List<String> nombresMedicamentos = new ArrayList<>();
+    	    nombresMedicamentos.add("Ninguno");
+
+    	    for (Medicamento m : medicamentosDB) {
+    	        nombresMedicamentos.add(m.getNombre());
+    	    }
+
+    	    JComboBox<String> comboMedicina = new JComboBox<>(nombresMedicamentos.toArray(new String[0]));
     	    if (citaActual != null && citaActual.length > 5 && citaActual[5] != null) {
     	        comboMedicina.setSelectedItem(citaActual[5].toString());
     	    }
@@ -1712,17 +1738,23 @@ public class AuthView {
     	        String medicina = comboMedicina.getSelectedItem().toString();
 
     	        double costoConsulta = 0;
-    	        if (tipo.equals("Consulta rutinaria")) costoConsulta = 700;
-    	        else if (tipo.equals("Consulta urgencias")) costoConsulta = 2000;
-    	        else if (tipo.equals("Consulta especializada")) costoConsulta = 2000;
-    	        else if (tipo.equals("Vacunación")) costoConsulta = 1500;
-    	        else if (tipo.equals("Desparasitación")) costoConsulta = 600;
-    	        else if (tipo.equals("Consulta a domicilio")) costoConsulta = 1800;
+    	        switch (tipo) {
+    	            case "Consulta rutinaria": costoConsulta = 700; break;
+    	            case "Consulta urgencias": costoConsulta = 2000; break;
+    	            case "Consulta especializada": costoConsulta = 2000; break;
+    	            case "Vacunación": costoConsulta = 1500; break;
+    	            case "Desparasitación": costoConsulta = 600; break;
+    	            case "Consulta a domicilio": costoConsulta = 1800; break;
+    	            default: costoConsulta = 500; break;
+    	        }
 
     	        double costoMedicina = 0;
-    	        if (medicina.equals("Antibiótico clavoxivet")) costoMedicina = 295;
-    	        else if (medicina.equals("Antiparasitarios")) costoMedicina = 300;
-    	        else if (medicina.equals("Desparacitante Care Max")) costoMedicina = 85;
+    	        if (!medicina.equals("Ninguno")) {
+    	            Medicamento med = controller.obtenerMedicamentoPorNombre(medicina);
+    	            if (med != null) {
+    	                costoMedicina = med.getPrecio();
+    	            }
+    	        }
 
     	        double total = costoConsulta + costoMedicina;
     	        txtCosto.setText(String.format("$%.0f MXN", total));
@@ -1764,19 +1796,25 @@ public class AuthView {
     	        String medicamento = comboMedicina.getSelectedItem().toString();
     	        String doctor = comboDoctor.getSelectedItem().toString();
     	        String estado = comboEstado.getSelectedItem().toString();
-    	        
+
     	        double costoConsulta = 0;
-    	        if (tipo.equals("Consulta rutinaria")) costoConsulta = 700;
-    	        else if (tipo.equals("Consulta urgencias")) costoConsulta = 2000;
-    	        else if (tipo.equals("Consulta especializada")) costoConsulta = 2000;
-    	        else if (tipo.equals("Vacunación")) costoConsulta = 1500;
-    	        else if (tipo.equals("Desparasitación")) costoConsulta = 600;
-    	        else if (tipo.equals("Consulta a domicilio")) costoConsulta = 1800;
+    	        switch (tipo) {
+    	            case "Consulta rutinaria": costoConsulta = 700; break;
+    	            case "Consulta urgencias": costoConsulta = 2000; break;
+    	            case "Consulta especializada": costoConsulta = 2000; break;
+    	            case "Vacunación": costoConsulta = 1500; break;
+    	            case "Desparasitación": costoConsulta = 600; break;
+    	            case "Consulta a domicilio": costoConsulta = 1800; break;
+    	            default: costoConsulta = 500; break;
+    	        }
 
     	        double costoMedicamento = 0;
-    	        if (medicamento.equals("Antibiótico clavoxivet")) costoMedicamento = 295;
-    	        else if (medicamento.equals("Antiparasitarios")) costoMedicamento = 300;
-    	        else if (medicamento.equals("Desparacitante Care Max")) costoMedicamento = 85;
+    	        if (!medicamento.equals("Ninguno")) {
+    	            Medicamento med = controller.obtenerMedicamentoPorNombre(medicamento);
+    	            if (med != null) {
+    	                costoMedicamento = med.getPrecio();
+    	            }
+    	        }
 
     	        double costo = costoConsulta + costoMedicamento;
     	        
@@ -3186,7 +3224,7 @@ public class AuthView {
 
         String[] columnas = {"ID", "Nombre", "Precio", "Stock", "Stock Mínimo", "Categoría", "Laboratorio", "Requiere Receta"};
         
-        javax.swing.table.DefaultTableModel modeloTabla = new javax.swing.table.DefaultTableModel(columnas, 0) {
+        DefaultTableModel modeloTabla = new DefaultTableModel(columnas, 0) {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
