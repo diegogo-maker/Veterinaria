@@ -170,7 +170,7 @@ public class AuthView {
     	    ventana.setIconImage(aplicacion);
     	}
 
-     public void Salir() {
+      public void Salir(JFrame ventanaActual) {
          JPanel panel = new JPanel();
          panel.setLayout(null);
          panel.setBackground(Color.WHITE);
@@ -214,23 +214,21 @@ public class AuthView {
                  JOptionPane.DEFAULT_OPTION, null, new Object[]{}, null);
          JDialog dialog = optionPane.createDialog("Salir");
          dialog.setIconImage(icono.getImage());
-         Inicio(nombreUsuarioActual);
+        
 
          confirmar.addActionListener(e -> {
-             dialog.dispose();
-             Login();
-         });
+        	    ventanaActual.dispose();
+        	    dialog.dispose();
+        	    Login();
+        	});
 
          cancelar.addActionListener(e -> {
              dialog.dispose();  
-             Inicio(nombreUsuarioActual);
          });
 
          dialog.setLocationRelativeTo(null);
          dialog.setVisible(true);
          
-         JDialog aplicacion = optionPane.createDialog("Salir");
-         dialog.setIconImage(icono.getImage());
      }
 	
      public void Inicio(String nombre) {
@@ -278,8 +276,9 @@ public class AuthView {
          panel.add(cerrar);
 
          cerrar.addActionListener(e -> {
-        	 ventana.dispose();
-             Salir();
+        	 
+        	 Salir(ventana);
+         
          });
 
          JLabel rol = new JLabel("Veterinario");
@@ -551,12 +550,10 @@ public class AuthView {
     	        JPanel panel = new JPanel();
     	        panel.setLayout(null);
     	        panel.setBackground(Color.decode("#8CACCB"));
-    	        panel.setPreferredSize(new Dimension(850, 120));
+    	        panel.setPreferredSize(new Dimension(850, 121));
     	        panel.setMaximumSize(new Dimension(850, 120));
     	        panel.setMinimumSize(new Dimension(850, 120));
-    	        panel.setBorder(BorderFactory.createCompoundBorder(
-    	                BorderFactory.createEmptyBorder(0, 0, 10, 0),
-    	                new LineBorder(Color.BLACK, 2, true)));
+    	        panel.setBorder(new LineBorder(Color.BLACK, 2, true));
 
     	        ImageIcon icono = new ImageIcon(getClass().getResource("/Imagenes/fotomascota.jpg"));
     	        Image img = icono.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
@@ -667,6 +664,7 @@ public class AuthView {
     	        panel.add(editar);
 
     	        contenedor.add(panel);
+    	        contenedor.add(Box.createVerticalStrut(10));
     	    }
 
     	    contenedor.revalidate();
@@ -744,7 +742,8 @@ public class AuthView {
 	}
 
      public void DetallesPaciente(Paciente paciente) {
-    	    JFrame ventana = new JFrame();
+    	    
+    	 JFrame ventana = new JFrame();
     	    ventana.setSize(1000, 600);
     	    ventana.setTitle("Detalles del paciente");
     	    ventana.setLocationRelativeTo(null);
@@ -1768,7 +1767,7 @@ public class AuthView {
     	    actualizarCosto.run();
 
     	    JButton guardar = new JButton("Guardar");
-    	    guardar.setBounds(690, 500, 200, 50);
+    	    guardar.setBounds(740, 508, 200, 50);
     	    guardar.setBackground(Color.decode("#14518C"));
     	    guardar.setForeground(Color.WHITE);
     	    guardar.setFont(new Font("Inter", Font.BOLD, 20));
@@ -1776,7 +1775,7 @@ public class AuthView {
     	    fondo.add(guardar);
 
     	    JButton regresar = new JButton("Regresar");
-    	    regresar.setBounds(40, 500, 200, 50);
+    	    regresar.setBounds(40, 508, 200, 50);
     	    regresar.setBackground(Color.decode("#D81F10"));
     	    regresar.setForeground(Color.WHITE);
     	    regresar.setFont(new Font("Inter", Font.BOLD, 20));
@@ -1894,9 +1893,7 @@ public class AuthView {
     	        panel.setPreferredSize(new Dimension(850, 120));
     	        panel.setMaximumSize(new Dimension(850, 120));
     	        panel.setMinimumSize(new Dimension(850, 120));
-    	        panel.setBorder(BorderFactory.createCompoundBorder(
-    	                BorderFactory.createEmptyBorder(0, 0, 10, 0),
-    	                new LineBorder(Color.BLACK, 2, true)));
+    	        panel.setBorder(new LineBorder(Color.BLACK, 2, true));
 
     	        if (dueno.getFoto() != null && !dueno.getFoto().isEmpty()) {
     	            ImageIcon icono = new ImageIcon(dueno.getFoto());
@@ -1991,6 +1988,7 @@ public class AuthView {
     	        panel.add(eliminar);
 
     	        contenedor.add(panel);
+    	        contenedor.add(Box.createVerticalStrut(10));
     	    }
 
     	    contenedor.revalidate();
@@ -2078,6 +2076,17 @@ public class AuthView {
     	    panelCampos.add(lblTelefono);
     	    JTextField campoTelefono = new JTextField();
     	    panelCampos.add(campoTelefono);
+    	    campoTelefono.addKeyListener(new KeyAdapter() {
+    	        @Override
+    	        public void keyTyped(KeyEvent e) {
+    	            char c = e.getKeyChar();
+   
+    	            if (!Character.isDigit(c) && c != KeyEvent.VK_BACK_SPACE && c != KeyEvent.VK_DELETE) {
+    	                e.consume(); 
+    	                Toolkit.getDefaultToolkit().beep();
+    	            }
+    	        }
+    	    });
 
     	    JLabel lblCorreo = new JLabel("Correo:");
     	    lblCorreo.setFont(fuente);
