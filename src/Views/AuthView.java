@@ -1965,7 +1965,7 @@ public class AuthView {
     	        });
     	        panel.add(editar);
 
-    	        ImageIcon iconoEliminar = new ImageIcon(getClass().getResource("/Imagenes/eliminar.png"));
+    	        ImageIcon iconoEliminar = new ImageIcon(getClass().getResource("/Imagenes/ELIMINAR.jpg"));
     	        Image imgEliminar = iconoEliminar.getImage().getScaledInstance(80, 45, Image.SCALE_SMOOTH);
     	        JButton eliminar = new JButton(new ImageIcon(imgEliminar));
     	        eliminar.setBounds(640, 55, 80, 45);
