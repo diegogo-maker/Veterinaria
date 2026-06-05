@@ -2184,6 +2184,12 @@ public class AuthView {
     	            JOptionPane.showMessageDialog(ventana, "Los apellidos son obligatorios");
     	            return;
     	        }
+    	            
+    	            if (campoTelefono.getText().trim().isEmpty()) {
+        	            JOptionPane.showMessageDialog(ventana, "Los apellidos son obligatorios");
+        	            return;
+    	            
+    	        }
     	        
     	        Dueno dueno = new Dueno();
     	        dueno.setNombre(campoNombre.getText().trim());
