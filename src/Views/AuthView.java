@@ -597,20 +597,20 @@ public class AuthView {
     	        
     	        JLabel citaLabel = new JLabel("Próxima cita: " + fechaCita);
     	        citaLabel.setFont(new Font("Adamina", Font.PLAIN, 18));
-    	        citaLabel.setBounds(450, 20, 300, 30);
+    	        citaLabel.setBounds(430, 20, 300, 30);
     	        panel.add(citaLabel);
     	        
     	        if (!urgenciaCita.isEmpty()) {
     	            JLabel urgenciaLabel = new JLabel("Urgencia: " + urgenciaCita);
     	            urgenciaLabel.setFont(new Font("Adamina", Font.BOLD, 14));
-    	            urgenciaLabel.setBounds(450, 45, 200, 20);
+    	            urgenciaLabel.setBounds(430, 45, 200, 20);
     	            
     	            if (urgenciaCita.equals("Alta")) {
-    	                urgenciaLabel.setForeground(Color.RED);
+    	                urgenciaLabel.setForeground(Color.decode("#C42712"));
     	            } else if (urgenciaCita.equals("Media")) {
-    	                urgenciaLabel.setForeground(Color.ORANGE);
+    	                urgenciaLabel.setForeground(Color.decode("#C49E04"));
     	            } else if (urgenciaCita.equals("Baja")) {
-    	                urgenciaLabel.setForeground(Color.GREEN);
+    	                urgenciaLabel.setForeground(Color.decode("#079902"));
     	            }
     	            panel.add(urgenciaLabel);
     	        }
@@ -618,8 +618,8 @@ public class AuthView {
     	        if (prioridad > 0) {
     	            JLabel prioridadLabel = new JLabel("Prioridad: #" + prioridad);
     	            prioridadLabel.setFont(new Font("Adamina", Font.BOLD, 12));
-    	            prioridadLabel.setBounds(450, 65, 200, 20);
-    	            prioridadLabel.setForeground(Color.BLUE);
+    	            prioridadLabel.setBounds(430, 65, 200, 20);
+    	            prioridadLabel.setForeground(Color.decode("#362FB5"));
     	            panel.add(prioridadLabel);
     	        }
 
@@ -1029,7 +1029,7 @@ public class AuthView {
     	    mascotaPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
     	    
     	    JLabel mascotaIcono = new JLabel("🐾");
-    	    mascotaIcono.setFont(new Font("Segoe UI", Font.PLAIN, 24));
+    	    mascotaIcono.setFont(new Font("Adamina", Font.PLAIN, 24));
     	    mascotaIcono.setBounds(10, 10, 40, 40);
     	    mascotaPanel.add(mascotaIcono);
     	    
@@ -2189,7 +2189,6 @@ public class AuthView {
     	        if (exito) {
     	            JOptionPane.showMessageDialog(ventana, "Dueño registrado correctamente");
     	            ventana.dispose();
-    	            PanelDuenos();
     	        } else {
     	            JOptionPane.showMessageDialog(ventana, "Error al guardar el dueño");
     	        }
@@ -3271,7 +3270,8 @@ public class AuthView {
         regresar.setForeground(Color.WHITE);
         regresar.setFont(new Font("Inter", Font.BOLD, 16));
         regresar.setFocusPainted(false);
-        regresar.setPreferredSize(new Dimension(130, 45));
+        regresar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
+        regresar.setPreferredSize(new Dimension(100, 45));
         panelBotones.add(regresar);
 
         panelBotones.add(Box.createHorizontalStrut(280));
@@ -3281,6 +3281,7 @@ public class AuthView {
         btnActualizar.setForeground(Color.WHITE);
         btnActualizar.setFont(new Font("Inter", Font.BOLD, 14));
         btnActualizar.setFocusPainted(false);
+        btnActualizar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
         btnActualizar.setPreferredSize(new Dimension(110, 45));
         panelBotones.add(btnActualizar);
 
@@ -3289,6 +3290,7 @@ public class AuthView {
         btnAgregar.setForeground(Color.WHITE);
         btnAgregar.setFont(new Font("Inter", Font.BOLD, 14));
         btnAgregar.setFocusPainted(false);
+        btnAgregar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
         btnAgregar.setPreferredSize(new Dimension(110, 45));
         panelBotones.add(btnAgregar);
 
@@ -3305,6 +3307,7 @@ public class AuthView {
         btnEliminar.setForeground(Color.WHITE);
         btnEliminar.setFont(new Font("Inter", Font.BOLD, 14));
         btnEliminar.setFocusPainted(false);
+        btnEliminar.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
         btnEliminar.setPreferredSize(new Dimension(110, 45));
         panelBotones.add(btnEliminar);
 
