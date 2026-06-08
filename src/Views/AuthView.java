@@ -148,7 +148,7 @@ public class AuthView {
     	        String password = new String(campoPass.getPassword()).trim();
     	        
     	        if (usuario.isEmpty() || password.isEmpty()) {
-    	            JOptionPane.showMessageDialog(null, "Por favor ingrese correo y contraseña");
+    	            JOptionPane.showMessageDialog(null, "Por favor ingrese su correo y contraseña");
     	            return;
     	        }
     	        
@@ -170,7 +170,7 @@ public class AuthView {
     	    ventana.setIconImage(aplicacion);
     	}
 
-      public void Salir(JFrame ventanaActual) {
+     public void Salir(JFrame ventanaActual) {
          JPanel panel = new JPanel();
          panel.setLayout(null);
          panel.setBackground(Color.WHITE);
@@ -2186,7 +2186,7 @@ public class AuthView {
     	        }
     	            
     	            if (campoTelefono.getText().trim().isEmpty()) {
-        	            JOptionPane.showMessageDialog(ventana, "Los apellidos son obligatorios");
+        	            JOptionPane.showMessageDialog(ventana, "El telefono es obligatorio");
         	            return;
     	            
     	        }
